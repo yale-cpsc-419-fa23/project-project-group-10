@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Partiticipant Homepage</title>
+
+    <style>
+        /* Style the box with CSS */
+        .box {
+            width: 300px;
+            border: 1px solid #999;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Style the image */
+        .box img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        ul li {
+            text-align: left; /* Align text to the left within list items */
+        }
+    </style>
+
+
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <h2>Participant Homepage</h2>
+    <p>this is the homepage for participants</p>
+
+    <div class="box">
+        <a href="profile.html">
+        <h3>Profile Information</h3>
+        </a>
+        <img src="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png">
+        <ul>
+            <li><strong>Name:</strong> Jane Doe</li>
+            <li><strong>Email:</strong> jane.doe@gmail.com</li>
+            <li><strong>DOB:</strong> 01/01/2000</li>
+        </ul>
+    </div>
+    
+
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>search</title>
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <h2>Search for Open Trials</h2>
+
+    <form id="searchForm" action="something" method="get">
+        <input type="text" name="query" placeholder="Enter your search query">
+        <button type="submit">Search</button>
+    </form>
+
+
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            });
+    </script>
+    
+</body>
+</html>

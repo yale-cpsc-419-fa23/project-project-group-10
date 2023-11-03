@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+    <title>Profile</title>
+
+    <style>
+        .max-size-image {
+            max-width: 300px; /* Set the maximum width */
+            max-height: 300px; /* Set the maximum height */
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="navbar-container"></div>
+
+    <h2>Profile Information</h2>
+        </a>
+        <img class="max-size-image" src="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png">
+        <ul>
+            <li><strong>Name:</strong> Jane Doe</li>
+            <li><strong>Email:</strong> jane.doe@gmail.com</li>
+            <li><strong>DOB:</strong> 01/01/2000</li>
+            <li><strong>Sex:</strong> F</li>
+            <li><strong>Gender:</strong> Non-binary</li>
+            <li><strong>Sexual Orientation:</strong> Bisexual</li>
+        </ul>
+
+
+        <script>
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbar-container').innerHTML = data;
+                });
+        </script>
+
+</body>
+</html>
