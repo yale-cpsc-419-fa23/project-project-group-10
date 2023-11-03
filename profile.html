@@ -8,12 +8,46 @@
             max-width: 300px; /* Set the maximum width */
             max-height: 300px; /* Set the maximum height */
         }
+
+        ul li {
+            text-align: left; /* Align text to the left within list items */
+        }
+
+        /* Add CSS styles to format the navigation bar */
+        ul.navbar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            overflow: hidden;
+            text-align: center; 
+        }
+
+        ul.navbar li {
+            display: inline;
+        }
+
+        ul.navbar li a {
+            display: inline;
+            color: white; /* Text color for the links */
+            text-align: center;
+            padding: 14px 16px; 
+            text-decoration: none;
+        }
+
+        ul.navbar li a:hover {
+            background-color: darkred; /* Background color on hover */
+        }
     </style>
 
 </head>
 <body>
 
-    <div id="navbar-container"></div>
+    <ul class="navbar">
+        <li><a href="/homepage">Home</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/search">Search</a></li>
+    </ul> 
 
     <h2>Profile Information</h2>
         </a>

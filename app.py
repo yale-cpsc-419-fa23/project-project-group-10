@@ -108,6 +108,10 @@ def aboutus():
 def browser():
     return render_template('search.html')
 
+@app.route("/homepage")
+def homepage():
+    return render_template('participant.html')
+
 
 
 @app.route("/register", methods=["GET", "POST"])
