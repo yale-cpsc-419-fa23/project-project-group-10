@@ -52,15 +52,17 @@ def login_submit():
 
         email = request.form.get("email")
         password = request.form.get("password")
-
+        print(email)
 
         # Ensure field submissions
         if not email:
-            return render_template('error.html', errormessage='Please enter an email')
+            return render_template('templates/error.html', errormessage='Please enter an email')
         elif not password:
-            return render_template('error.html', errormessage='Please enter a passwork')
+            return render_template('templates/error.html', errormessage='Please enter a passwork')
 
-        user = login_user(username, email, password)
+        user = login_user(email, password)
+        if len(user) != 1:
+            return render_template('templates/error.html', errormessage='No such user exists')
         if user:
             return render_template('participant.html', email=email, password=password)
 

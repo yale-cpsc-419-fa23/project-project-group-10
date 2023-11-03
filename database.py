@@ -16,13 +16,15 @@ def login_user(email, password):
         with closing(connection.cursor()) as cursor:
 
             query = "SELECT * FROM users WHERE email = ? AND password = ?"
-            cursor.execute(query, (email, password)
+            cursor.execute(query, (email, password))
             row = cursor.fetchall()
+            return row
 
-            if not row:
-                raise error
-            else:
-                return row #in app you will only get result if everything is correct
+
+            # if not row:
+            #     raise Exception("error")
+            # else:
+            #     return row #in app you will only get result if everything is correct
 
     
 
