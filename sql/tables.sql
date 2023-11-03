@@ -18,7 +18,7 @@ CREATE TABLE participant_info (
     diseases VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
+ 
 CREATE TABLE researcher_info (
     researcher_id INTEGER PRIMARY KEY,
     user_id INTEGER,

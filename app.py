@@ -2,15 +2,19 @@ from flask import Flask, request, render_template, session, redirect
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
-from flask_cas import CAS
+from database import login_user
+
+from flask import Flask, request, make_response, render_template, jsonify
+import requests
+# from flask_cas import CAS
 
 # Configure application
-app = Flask(__name__)
+app = Flask(__name__, template_folder='.')
 
 # CAS stuff
-CAS(app)
-app.config['CAS_SERVER'] = 'https://secure6.its.yale.edu/cas/login'
-app.config['CAS_AFTER_LOGIN'] = '/login'
+# CAS(app)
+# app.config['CAS_SERVER'] = 'https://secure6.its.yale.edu/cas/login'
+# app.config['CAS_AFTER_LOGIN'] = '/login'
 
 # Connect to the SQLite database
 conn = sqlite3.connect('labrats.db')
@@ -22,45 +26,61 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
+@app.route('/index', methods=['GET'])
 def index():
-    return render_template('index.html')
+    html = render_template('index.html')
+    response = make_response(html)
+    return response
+
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    
+    html = render_template('login.html')
+    response = make_response(html)
+    return response
+
+@app.route("/usersearch", methods=["GET", "POST"])
+def login_submit():
+
     # Forget any user_id
     session.clear()
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
-        # Ensure email was submitted
-        if not request.form.get("email"):
-            return render_template('error.html', errormessage='Please enter a username')
+        email = request.form.get("email")
+        password = request.form.get("password")
 
-        # Ensure password was submitted
-        elif not request.form.get("password"):
+
+        # Ensure field submissions
+        if not email:
+            return render_template('error.html', errormessage='Please enter an email')
+        elif not password:
             return render_template('error.html', errormessage='Please enter a passwork')
 
-        # Query database for username
-        rows = cursor.execute("SELECT * FROM users WHERE email = ?", request.form.get("email"))
+        user = login_user(username, email, password)
+        if user:
+            return render_template('participant.html', email=email, password=password)
 
-        # Ensure email exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return render_template('error.html', errormessage='Invalid email or password')
+        # # Query database for username
+        # rows = cursor.execute("SELECT * FROM users WHERE email = ?", request.form.get("email"))
 
-        # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        # # Ensure email exists and password is correct
+        # if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        #     return render_template('error.html', errormessage='Invalid email or password')
 
-        # Redirect user to home page
-        return redirect("/")
+        # # Remember which user has logged in
+        # session["user_id"] = rows[0]["id"]
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("login.html")
+        return redirect("/login")
 
+    # html = render_template('profile.html')
+    # response = make_response(html)
+    # return response
 
 @app.route("/logout")
 def logout():
@@ -70,6 +90,22 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
+
+
+@app.route("/profile")
+def user_profile():
+    return render_template('profile.html')
+
+
+@app.route("/aboutus")
+def aboutus():
+    return render_template('aboutus.html')
+
+
+@app.route("/search") # TODO: change url name
+def browser():
+    return render_template('search.html')
+
 
 
 @app.route("/register", methods=["GET", "POST"])

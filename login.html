@@ -1,19 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    .label {
+    flex: 1;
+    padding: 5px;
+    }
+
+    .input-box {
+    flex: 2;
+    padding: 5px;
+    }
+    
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      max-width: 300px;
+    }
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+</style>
 <head>
     <title>Login/RegistrationPage</title>
 </head>
 <body>
-    <h1>Please Login Below</h1>
-    <form id="searchForm" action="searchresults" method="get">
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" value=""><br><br>
 
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password" value=""><br><br>
-        
-        <input type="submit" value="Login">
-    </form>
+    <h1>Please Login Below</h1>
+    <form action="/usersearch" method="GET" id="searchForm">
+        <div class="form-container">
+          <div class="form-group">
+            <label class="label">Email:</label>
+            <input class="input-box" name="email" type="text" id="email" value="{{label}}">
+          </div>
+          <div class="form-group">
+            <label class="label">Password:</label>
+            <input class="input-box" name="password" type="text" id="password" value="{{classifier}}">
+          </div>
+        </div>
+        <input type="submit" value="Search" id="sendToServerButton">
+      </form>
 
     <br>
     <hr>
