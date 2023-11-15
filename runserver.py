@@ -17,7 +17,7 @@ def main():
     try:
         app.run(host='0.0.0.0', port=port, debug=True)
     except Exception as ex:
-        print(ex, file=stderr)
+        stderr.write(f"Port {port} is unavailable. Please try another port.\n")
         exit(1)
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@ import sqlite3
 from database import login_user
 
 from flask import Flask, request, make_response, render_template, jsonify
-import requests
+# import requests
 # from flask_cas import CAS
 
 # Configure application
@@ -29,68 +29,34 @@ Session(app)
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def index():
-    html = render_template('index.html')
-    response = make_response(html)
-    return response
-
+    return render_template('templates/index.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    html = render_template('login.html')
-    response = make_response(html)
-    return response
-
-@app.route("/usersearch", methods=["GET", "POST"])
-def login_submit():
-
-    # Forget any user_id
     session.clear()
-
-    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         email = request.form.get("email")
         password = request.form.get("password")
-        print(email)
 
-        # Ensure field submissions
         if not email:
             return render_template('templates/error.html', errormessage='Please enter an email')
         elif not password:
-            return render_template('templates/error.html', errormessage='Please enter a passwork')
-
+            return render_template('templates/error.html', errormessage='Please enter a password')
+        
         user = login_user(email, password)
         if len(user) != 1:
             return render_template('templates/error.html', errormessage='No such user exists')
         if user:
-            return render_template('participant.html', email=email, password=password)
-
-        # # Query database for username
-        # rows = cursor.execute("SELECT * FROM users WHERE email = ?", request.form.get("email"))
-
-        # # Ensure email exists and password is correct
-        # if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-        #     return render_template('error.html', errormessage='Invalid email or password')
-
-        # # Remember which user has logged in
-        # session["user_id"] = rows[0]["id"]
-
-    # User reached route via GET (as by clicking a link or via redirect)
+            session["user_id"] = cursor.execute("SELECT id FROM users WHERE email = ?", email)
+            return redirect('participant.html', email=email, password=password)
     else:
-        return redirect("/login")
+        return render_template("templates/login.html")
 
-    # html = render_template('profile.html')
-    # response = make_response(html)
-    # return response
 
 @app.route("/logout")
 def logout():
-
-    # Forget any user_id
     session.clear()
-
-    # Redirect user to login form
     return redirect("/")
 
 
@@ -113,41 +79,37 @@ def homepage():
     return render_template('participant.html')
 
 
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
-
-    # Return registration page
-    if request.method == "GET":
-        return render_template("register.html")
-
-    # Update users database to register new user and return to homepage
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
 
-        # Ensure username was submitted
-        if not request.form.get("username"):
-            return render_template('error.html', errormessage='Please enter a username')
-
-        # Ensure password was submitted
-        elif not request.form.get("password"):
-            return render_template('error.html', errormessage='Please enter a password')
+        # TODO: make html input fields required so we don't have to check that user filled out everything?
+        # TODO: make participant info form
+        
+        if not email:
+            return render_template('templates/error.html', errormessage='Please enter an email')
+        elif password:
+            return render_template('templates/error.html', errormessage='Please enter a password')
 
         # Ensure password confirmation matches
         confirmation = request.form.get("confirmation")
         if password != confirmation:
-            return render_template('error.html', errormessage='Passwords do not match')
+            return render_template('templates/error.html', errormessage='Passwords do not match')
 
         # Update users database with new user
-        cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", email, generate_password_hash(password))
+        cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", email, password)
 
         # Session id / cookies with user's id
         session["user_id"] = cursor.execute("SELECT id FROM users WHERE email = ?", email)
 
         # Redirect to login
         return redirect("/login")
+    
+    else:
+        return render_template("register.html")
     
 
 conn.commit()
