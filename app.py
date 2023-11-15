@@ -78,6 +78,8 @@ def browser():
 def homepage():
     return render_template('participant.html')
 
+# TODO: make html input fields required so we don't have to check that user filled out everything?
+# TODO: make participant info form
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -86,9 +88,6 @@ def register():
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
 
-        # TODO: make html input fields required so we don't have to check that user filled out everything?
-        # TODO: make participant info form
-        
         if not email:
             return render_template('templates/error.html', errormessage='Please enter an email')
         elif password:
