@@ -27,9 +27,9 @@ Session(app)
 
 
 @app.route('/', methods=['GET'])
-@app.route('/index', methods=['GET'])
+@app.route('/general_page', methods=['GET'])
 def index():
-    return render_template('templates/index.html')
+    return render_template('templates/general_page.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
