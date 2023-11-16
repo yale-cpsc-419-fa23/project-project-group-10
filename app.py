@@ -34,6 +34,9 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+
     session.clear()
     if request.method == "POST":
         email = request.form.get("email")
@@ -47,9 +50,10 @@ def login():
         user = login_user(email, password)
         if len(user) != 1:
             return render_template('templates/error.html', errormessage='No such user exists')
-        if user:
-            session["user_id"] = cursor.execute("SELECT id FROM users WHERE email = ?", email)
-            return redirect('participant.html', email=email, password=password)
+        
+        user_id = cursor.execute("SELECT id FROM users WHERE email = ?", (email, ))
+        session["user_id"] = user_id
+        return redirect('participant.html', email=email, password=password)
     else:
         return render_template("templates/login.html")
 
@@ -102,7 +106,8 @@ def register():
         cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", email, password)
 
         # Session id / cookies with user's id
-        session["user_id"] = cursor.execute("SELECT id FROM users WHERE email = ?", email)
+        user_id = cursor.execute("SELECT id FROM users WHERE email = ?", email)
+        session["user_id"] = user_id
 
         # Redirect to login
         return redirect("/login")
