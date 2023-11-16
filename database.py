@@ -9,17 +9,14 @@ from sys import stderr
 _DATABASE_URL = "labrats.db"
 
 def login_user(email, password):
-    # if not email or not password:
-    #     return
-
      with connect(_DATABASE_URL, uri=True) as connection:
         with closing(connection.cursor()) as cursor:
 
             query = "SELECT * FROM users WHERE email = ? AND password = ?"
             cursor.execute(query, (email, password))
             row = cursor.fetchall()
+            print(row)
             return row
-
 
             # if not row:
             #     raise Exception("error")
