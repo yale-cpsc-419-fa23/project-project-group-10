@@ -146,9 +146,6 @@ def researcherinfo():
         cursor.execute(query)
         rows = cursor.fetchall()
         conn.commit()
-
-        print(rows)
-
         return render_template("templates/researcher_info.html", labs=rows)
 
 conn.commit()
