@@ -6,7 +6,6 @@
 
 {% block main %}
     <h1>Enter your information</h1>
-    <p>These questions are completely optional. Your answers will help us match you with trials.</p>
 
     <form action="/researcherinfo" method="POST">
 
@@ -17,7 +16,7 @@
                 <select name="lab" id="lab">
                     <option disabled selected value="">Select</option>
                     {% for lab in labs %}
-                        <option>{{ lab }}</option>
+                        <option>{{ lab.name }}</option>
                     {% endfor %}
                 </select>
             </div>

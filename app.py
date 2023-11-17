@@ -28,7 +28,7 @@ Session(app)
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('templates/index.html')
+    return render_template('templates/register.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -114,7 +114,12 @@ def register():
         # session["user_id"] = user_id
 
         # Redirect to participant information page
-        return redirect("/participantinfo")
+        selected_option = request.form.get('account_type')
+        print(selected_option)
+        if selected_option == 'participant':
+            return redirect("/participantinfo")
+        elif selected_option == 'researcher':
+            return redirect("/researcherinfo")
     
     else:
         return render_template("templates/register.html")
@@ -128,19 +133,23 @@ def participantinfo():
     else:
         return render_template("templates/participant_info.html")
     
+
 @app.route("/researcherinfo", methods=["GET", "POST"])
-def participantinfo():
+def researcherinfo():
     conn = sqlite3.connect('labrats.db')
     cursor = conn.cursor()
     if request.method == "POST":
         # Insert info into db
-        return render_template("templates/participant_info.html")
+        return render_template("templates/researcher_info.html")
     else:
         query = "SELECT * FROM labs"
         cursor.execute(query)
-        row = cursor.fetchall()
+        rows = cursor.fetchall()
         conn.commit()
-        return render_template("templates/researcher_info.html")
+
+        print(rows)
+
+        return render_template("templates/researcher_info.html", labs=rows)
 
 conn.commit()
 conn.close()
