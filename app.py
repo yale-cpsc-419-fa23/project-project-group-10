@@ -94,7 +94,7 @@ def register():
             return render_template('templates/register.html', errormessage='Passwords do not match')
 
         # Update users database with new user
-        cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", email, password)
+        cursor.execute("INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)", (first_name, last_name, email, generate_password_hash(password), ))
 
         # Session id / cookies with user's id
         user_id = cursor.execute("SELECT id FROM users WHERE email = ?", (email, ))
