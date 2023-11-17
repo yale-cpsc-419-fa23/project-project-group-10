@@ -46,7 +46,6 @@ def login():
         values = (email, )
         cursor.execute(query, values)
         row = cursor.fetchall()
-        print(row)
         conn.commit()
 
         # Ensure username exists and password is correct
@@ -128,6 +127,20 @@ def participantinfo():
         return render_template("templates/participant_info.html")
     else:
         return render_template("templates/participant_info.html")
+    
+@app.route("/researcherinfo", methods=["GET", "POST"])
+def participantinfo():
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+    if request.method == "POST":
+        # Insert info into db
+        return render_template("templates/participant_info.html")
+    else:
+        query = "SELECT * FROM labs"
+        cursor.execute(query)
+        row = cursor.fetchall()
+        conn.commit()
+        return render_template("templates/researcher_info.html")
 
 conn.commit()
 conn.close()

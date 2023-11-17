@@ -8,7 +8,7 @@
   <h1>Enter your information</h1>
   <p>These questions are completely optional. Your answers will help us match you with trials.</p>
 
-  <form action="/register" method="POST">
+  <form action="/participantinfo" method="POST">
 
       <div class="form-container">
         <div class="form-group">
@@ -47,14 +47,9 @@
             <label class="label">Do you have any diseases?</label>
             <input class="input-box" name="diseases" type="text" id="diseases">
         </div>
-        
-      </div>
-      <input type="submit" value="Register" id="sendToServerButton">
-    </form>
 
-  {% if errormessage %}
-      <h1>Error</h1>
-      {{ errormessage }}
-  {% endif %}
+      </div>
+      <button>Save Info</button>
+    </form>
 
   {% endblock %}

@@ -1,0 +1,29 @@
+{% extends "templates/layout.html" %}
+
+{% block title %}
+  Researcher Information
+{% endblock %}
+
+{% block main %}
+    <h1>Enter your information</h1>
+    <p>These questions are completely optional. Your answers will help us match you with trials.</p>
+
+    <form action="/researcherinfo" method="POST">
+
+        <div class="form-container"></div>
+
+            <div class="form-group">
+                <label class="label">What lab are you affiliated with?</label>
+                <select name="lab" id="lab">
+                    <option disabled selected value="">Select</option>
+                    {% for lab in labs %}
+                        <option>{{ lab }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+        <button>Save Info</button>
+        </form>
+
+    {% endblock %}
