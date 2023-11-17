@@ -105,12 +105,14 @@ def register():
 
         # Update users database with new user
         query = "INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)"
-        values = (firstname, lastname, email, generate_password_hash(password))
+        values = (firstname, lastname, email, password)
         cursor.execute(query, values)
+        row = cursor.fetchall()
+        print(row)
         conn.commit()
 
         # Session id / cookies with user's id
-        user_id = cursor.execute("SELECT id FROM users WHERE email = ?", (email, ))
+        # user_id = cursor.execute("SELECT id FROM users WHERE email = ?", (email, ))
         # session["user_id"] = user_id
 
         # Redirect to participant information page
@@ -127,8 +129,19 @@ def register():
 
 @app.route("/participantinfo", methods=["GET", "POST"])
 def participantinfo():
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
     if request.method == "POST":
-        # Insert info into db
+        dob = request.form.get("dob")
+        sex = request.form.get("sex")
+        drink = request.form.get("drink")
+        smoke = request.form.get("smoke")
+        diseases = request.form.get("diseases")
+        query2 = "INSERT INTO participant_info (age, sex, drink, smoke, diseases) VALUES (?, ?, ?, ?, ?)"
+        values2 = (dob, sex, drink, smoke, diseases)
+        cursor.execute(query2, values2)
+        cursor.fetchall()
+        conn.commit()
         return render_template("templates/participant_info.html")
     else:
         return render_template("templates/participant_info.html")
@@ -148,5 +161,5 @@ def researcherinfo():
         conn.commit()
         return render_template("templates/researcher_info.html", labs=rows)
 
-conn.commit()
-conn.close()
+# conn.commit()
+# conn.close()
