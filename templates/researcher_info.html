@@ -13,10 +13,10 @@
 
             <div class="form-group">
                 <label class="label">What lab are you affiliated with?</label>
-                <select name="lab" id="lab">
+                <select name="lab" class="input-box" id="lab">
                     <option disabled selected value="">Select</option>
                     {% for lab in labs %}
-                        <option>{{ lab.name }}</option>
+                        <option>{{ lab[3] }}</option>
                     {% endfor %}
                 </select>
             </div>
