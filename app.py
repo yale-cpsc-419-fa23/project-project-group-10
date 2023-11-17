@@ -79,10 +79,14 @@ def homepage():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
 
         # Ensure password confirmation matches
         confirmation = request.form.get("confirmation")
@@ -90,10 +94,10 @@ def register():
             return render_template('templates/register.html', errormessage='Passwords do not match')
 
         # Update users database with new user
-        cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", email, password)
-
+        cursor.execute("INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)", (first_name, last_name, email, password, ))
+        print("WE DID IT")
         # Session id / cookies with user's id
-        user_id = cursor.execute("SELECT id FROM users WHERE email = ?", email)
+        user_id = cursor.execute("SELECT id FROM users WHERE email = ?", (email, ))
         # session["user_id"] = user_id
 
         # Redirect to participant information page
