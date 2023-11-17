@@ -40,13 +40,24 @@ def login():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
-        
-        user = login_user(email, password)
-        if len(user) != 1:
+
+        # Query database for username
+        query = "SELECT * FROM users WHERE email = ?"
+        values = (email, )
+        cursor.execute(query, values)
+        row = cursor.fetchall()
+        print(row)
+        conn.commit()
+
+        # Ensure username exists and password is correct
+        if len(row) != 1 or not check_password_hash(row[0]["password"], password):
             return render_template('templates/error.html', errormessage='No such user exists')
         
-        user_id = cursor.execute("SELECT id FROM users WHERE email = ?", (email, ))
-        # session["user_id"] = user_id               # doesn't work
+        query = "SELECT id FROM users WHERE email = ?"
+        user_id = cursor.execute(query, (email, ))
+
+        session["user_id"] = user_id               # doesn't work
+
         return render_template("templates/participant.html")
     else:
         return render_template("templates/login.html")
@@ -82,11 +93,11 @@ def register():
     conn = sqlite3.connect('labrats.db')
     cursor = conn.cursor()
     if request.method == "POST":
+        firstname = request.form.get("first_name")
+        lastname = request.form.get("last_name")
         email = request.form.get("email")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
 
         # Ensure password confirmation matches
         confirmation = request.form.get("confirmation")
@@ -94,8 +105,11 @@ def register():
             return render_template('templates/register.html', errormessage='Passwords do not match')
 
         # Update users database with new user
-        cursor.execute("INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)", (first_name, last_name, email, password, ))
-        print("WE DID IT")
+        query = "INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)"
+        values = (firstname, lastname, email, generate_password_hash(password))
+        cursor.execute(query, values)
+        conn.commit()
+
         # Session id / cookies with user's id
         user_id = cursor.execute("SELECT id FROM users WHERE email = ?", (email, ))
         # session["user_id"] = user_id

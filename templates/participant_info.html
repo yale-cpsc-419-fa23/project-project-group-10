@@ -1,0 +1,60 @@
+{% extends "templates/layout.html" %}
+
+{% block title %}
+  Participant Information
+{% endblock %}
+
+{% block main %}
+  <h1>Enter your information</h1>
+  <p>These questions are completely optional. Your answers will help us match you with trials.</p>
+
+  <form action="/register" method="POST">
+
+      <div class="form-container">
+        <div class="form-group">
+          <label class="label">Date of Birth:</label>
+          <input class="input-box" name="dob" type="text" id="dob">
+        </div>
+
+        <div class="form-group">
+            <label class="label">Sex:</label>
+            <select name="sex" id="sex">
+                <option disabled selected value="">Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="label">Do you drink?</label>
+            <select name="sex">
+                <option disabled selected value="">Select</option>
+                <option value="male">Yes</option>
+                <option value="female">No</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="label">Do you smoke?</label>
+            <select name="smoke">
+                <option disabled selected value="">Select</option>
+                <option value="male">Yes</option>
+                <option value="female">No</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="label">Do you have any diseases?</label>
+            <input class="input-box" name="diseases" type="text" id="diseases">
+        </div>
+        
+      </div>
+      <input type="submit" value="Register" id="sendToServerButton">
+    </form>
+
+  {% if errormessage %}
+      <h1>Error</h1>
+      {{ errormessage }}
+  {% endif %}
+
+  {% endblock %}
