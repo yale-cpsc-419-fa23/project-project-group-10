@@ -46,7 +46,7 @@ def login():
             return render_template('templates/error.html', errormessage='No such user exists')
         
         user_id = cursor.execute("SELECT id FROM users WHERE email = ?", (email, ))
-        # session["id"] = user_id               doesn't work
+        # session["user_id"] = user_id               # doesn't work
         return render_template("templates/participant.html")
     else:
         return render_template("templates/login.html")

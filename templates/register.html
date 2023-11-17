@@ -1,60 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<style>
-    .label {
-    flex: 1;
-    padding: 5px;
-    }
+{% extends "templates/layout.html" %}
 
-    .input-box {
-    flex: 2;
-    padding: 5px;
-    }
-    
-    .form-container {
-      display: flex;
-      flex-direction: column;
-      max-width: 300px;
-    }
+{% block title %}
+  Register
+{% endblock %}
 
-    .form-group {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-</style>
-<head>
-    <title>Register</title>
-</head>
-<body>
-    <h1>Please Register an Account</h1>
+{% block main %}
+  <h1>Please Register an Account</h1>
 
-    <form action="/register" method="POST">
+  <form action="/register" method="POST">
 
-        <div class="form-container">
-          <div class="form-group">
-            <label class="label">Email:</label>
-            <input required class="input-box" name="email" type="text" id="email" value="{{label}}">
-          </div>
-
-          <div class="form-group">
-            <label class="label">Password:</label>
-            <input required class="input-box" name="password" type="text" id="password" value="{{classifier}}">
-          </div>
-
-          <div class="form-group">
-            <label class="label">Confirm password:</label>
-            <input required class="input-box" name="confirmation" type="text" id="confirmation" value="{{classifier}}">
-          </div>
-
+      <div class="form-container">
+        <div class="form-group">
+          <label class="label">Email:</label>
+          <input required class="input-box" name="email" type="text" id="email" value="{{label}}">
         </div>
-        <input type="submit" value="Register" id="sendToServerButton">
-      </form>
 
-    {% if errormessage %}
-        <h1>Error</h1>
-        {{ errormessage }}
-    {% endif %}
+        <div class="form-group">
+          <label class="label">Password:</label>
+          <input required class="input-box" name="password" type="text" id="password" value="{{classifier}}">
+        </div>
 
-</body>
-</html>
+        <div class="form-group">
+          <label class="label">Confirm password:</label>
+          <input required class="input-box" name="confirmation" type="text" id="confirmation" value="{{classifier}}">
+        </div>
+
+      </div>
+      <input type="submit" value="Register" id="sendToServerButton">
+    </form>
+
+  {% if errormessage %}
+      <h1>Error</h1>
+      {{ errormessage }}
+  {% endif %}
+
+  {% endblock %}

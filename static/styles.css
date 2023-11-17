@@ -89,3 +89,25 @@
     background-color: #d9d9d9;
     border-radius: 20px;
   }
+
+.label {
+  flex: 1;
+  padding: 5px;
+}
+
+.input-box {
+  flex: 2;
+  padding: 5px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
