@@ -46,7 +46,9 @@
       </div>
       <input type="submit" value="Register" id="sendToServerButton">
     </form>
-
+    <form action="/login" method="GET">
+      <button>Already have an account? LOGIN!</button>
+    </form>
   {% if errormessage %}
       <h1>Error</h1>
       {{ errormessage }}

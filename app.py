@@ -46,16 +46,15 @@ def login():
         values = (email, )
         cursor.execute(query, values) 
         row = cursor.fetchall()
-        conn.commit()
+        # conn.commit()
+        password2 = row[0][-1]
 
         # Ensure username exists and password is correct
-        if len(row) != 1 or not check_password_hash(row[0]["password"], password):
+        if len(row) != 1 or not check_password_hash(password2, password):
             return render_template('templates/error.html', errormessage='No such user exists')
-        
-        query = "SELECT id FROM users WHERE email = ?"
-        user_id = cursor.execute(query, (email, ))
+        user_id = row[0][0]
 
-        session["user_id"] = user_id               # doesn't work
+        session["user_id"] = user_id            
 
         return render_template("templates/participant.html")
     else:
@@ -97,6 +96,7 @@ def register():
         email = request.form.get("email")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
+        hash = generate_password_hash(password)
 
         # Ensure password confirmation matches
         confirmation = request.form.get("confirmation")
@@ -105,11 +105,17 @@ def register():
 
         # Update users database with new user
         query = "INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)"
-        values = (firstname, lastname, email, password)
+        values = (firstname, lastname, email, hash)
         cursor.execute(query, values)
         row = cursor.fetchall()
         print(row)
         conn.commit()
+        query = "SELECT id FROM users WHERE email = ?"
+        values = (email, )
+        cursor.execute(query, values)
+        new_user = cursor.fetchall()
+        new_user = new_user[0][0]
+        session["user_id"] = new_user
 
         # Session id / cookies with user's id
         # user_id = cursor.execute("SELECT id FROM users WHERE email = ?", (email, ))
@@ -142,7 +148,7 @@ def participantinfo():
         cursor.execute(query2, values2)
         cursor.fetchall()
         conn.commit()
-        return render_template("templates/participant_info.html")
+        return render_template("templates/participant.html")
     else:
         return render_template("templates/participant_info.html")
     
