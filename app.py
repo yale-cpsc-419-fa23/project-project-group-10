@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, redirect
+from flask import Flask, request, render_template, session, redirect, url_for
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
@@ -54,12 +54,34 @@ def login():
             return render_template('templates/error.html', errormessage='No such user exists')
         user_id = row[0][0]
 
-        session["user_id"] = user_id            
-
-        return render_template("templates/participant.html")
+        session["user_id"] = user_id
+        user_info = get_info(user_id) 
+        all_info = get_info2(user_id) 
+        print(user_info)        
+        return render_template("templates/participant.html", user_id=user_id, user_info=user_info, all_info=all_info)
     else:
         return render_template("templates/login.html")
 
+def get_info(user_id):
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+
+    query = 'SELECT * FROM users WHERE id = ?'
+    values = (user_id, )
+    cursor.execute(query, values)
+    user_info = cursor.fetchone()
+    conn.close()
+    return user_info
+def get_info2(user_id):
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+
+    query = 'SELECT * FROM participant_info WHERE user_id = ?'
+    values = (user_id, )
+    cursor.execute(query, values)
+    user_info = cursor.fetchone()
+    conn.close()
+    return user_info
 
 @app.route("/logout")
 def logout():
@@ -125,7 +147,11 @@ def register():
         selected_option = request.form.get('account_type')
         print(selected_option)
         if selected_option == 'participant':
-            return redirect("/participantinfo")
+            # return render_template("templates/participant_info.html", user_id=new_user)
+
+            # redirect_url = url_for('participant_info', user_id=new_user)
+            # return redirect(redirect_url)
+            return redirect("/participant_info")
         elif selected_option == 'researcher':
             return redirect("/researcherinfo")
     
@@ -133,8 +159,8 @@ def register():
         return render_template("templates/register.html")
     
 
-@app.route("/participantinfo", methods=["GET", "POST"])
-def participantinfo():
+@app.route("/participant_info", methods=["GET", "POST"])
+def participant_info():
     conn = sqlite3.connect('labrats.db')
     cursor = conn.cursor()
     if request.method == "POST":
@@ -143,8 +169,11 @@ def participantinfo():
         drink = request.form.get("drink")
         smoke = request.form.get("smoke")
         diseases = request.form.get("diseases")
-        query2 = "INSERT INTO participant_info (age, sex, drink, smoke, diseases) VALUES (?, ?, ?, ?, ?)"
-        values2 = (dob, sex, drink, smoke, diseases)
+        # user_id = request.args.get('user_id')
+        user_id = session["user_id"]
+        print(user_id)
+        query2 = "INSERT INTO participant_info (user_id, age, sex, drink, smoke, diseases) VALUES (?, ?, ?, ?, ?, ?)"
+        values2 = (user_id, dob, sex, drink, smoke, diseases)
         cursor.execute(query2, values2)
         cursor.fetchall()
         conn.commit()
