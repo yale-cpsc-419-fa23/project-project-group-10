@@ -28,7 +28,7 @@ Session(app)
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('templates/register.html')
+    return render_template('templates/index.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -142,7 +142,7 @@ def participantinfo():
         cursor.execute(query2, values2)
         cursor.fetchall()
         conn.commit()
-        return render_template("templates/participant_info.html")
+        return render_template("templates/participant.html")
     else:
         return render_template("templates/participant_info.html")
     
