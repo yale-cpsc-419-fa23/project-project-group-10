@@ -44,7 +44,7 @@ def login():
         # Query database for username
         query = "SELECT * FROM users WHERE email = ?"
         values = (email, )
-        cursor.execute(query, values)
+        cursor.execute(query, values) 
         row = cursor.fetchall()
         conn.commit()
 
