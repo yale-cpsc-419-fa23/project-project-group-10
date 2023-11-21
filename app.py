@@ -28,7 +28,7 @@ Session(app)
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('templates/register.html')
+    return render_template('templates/index.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -129,7 +129,7 @@ def register():
 def participantinfo():
     if request.method == "POST":
         # Insert info into db
-        return render_template("templates/participant_info.html")
+        return render_template("templates/participant.html")
     else:
         return render_template("templates/participant_info.html")
     
