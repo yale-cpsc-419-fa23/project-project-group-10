@@ -8,7 +8,7 @@
   <h1>Enter your information</h1>
   <p>These questions are completely optional. Your answers will help us match you with trials.</p>
 
-  <form action="/participantinfo" method="POST">
+  <form action="/participant_info" method="POST">
 
       <div class="form-container">
         <div class="form-group">
@@ -27,10 +27,10 @@
 
         <div class="form-group">
             <label class="label">Do you drink?</label>
-            <select name="sex">
+            <select name="drink">
                 <option disabled selected value="">Select</option>
-                <option value="male">Yes</option>
-                <option value="female">No</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
             </select>
         </div>
 
@@ -38,8 +38,8 @@
             <label class="label">Do you smoke?</label>
             <select name="smoke">
                 <option disabled selected value="">Select</option>
-                <option value="male">Yes</option>
-                <option value="female">No</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
             </select>
         </div>
 
@@ -49,7 +49,9 @@
         </div>
 
       </div>
-      <button>Save Info</button>
+      <form action="/participant" method="GET">
+        <button>save info</button>
+      </form>
     </form>
 
   {% endblock %}

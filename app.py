@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, redirect
+from flask import Flask, request, render_template, session, redirect, send_from_directory
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
@@ -46,15 +46,17 @@ def login():
         values = (email, )
         cursor.execute(query, values)
         row = cursor.fetchall()
-        conn.commit()
-
+        # print(row)
+        # conn.commit()
+        password2 = row[0][-1]
+        # print(password2)
         # Ensure username exists and password is correct
-        if len(row) != 1 or not check_password_hash(row[0]["password"], password):
+        if len(row) != 1 or not check_password_hash(password2, password):
             return render_template('templates/error.html', errormessage='No such user exists')
-        
-        query = "SELECT id FROM users WHERE email = ?"
-        user_id = cursor.execute(query, (email, ))
-
+        # query = "SELECT id FROM users WHERE email = ?"
+        # user_id = cursor.execute(query, (email, ))
+        user_id = row[0][0]
+        print(user_id)
         session["user_id"] = user_id               # doesn't work
 
         return render_template("templates/participant.html")
@@ -97,6 +99,7 @@ def register():
         email = request.form.get("email")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
+        hash = generate_password_hash(password)
 
         # Ensure password confirmation matches
         confirmation = request.form.get("confirmation")
@@ -105,11 +108,18 @@ def register():
 
         # Update users database with new user
         query = "INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)"
-        values = (firstname, lastname, email, password)
+        values = (firstname, lastname, email, hash)
         cursor.execute(query, values)
         row = cursor.fetchall()
-        print(row)
         conn.commit()
+        query = "SELECT id FROM users WHERE email = ?"
+        values = (email, )
+        cursor.execute(query, values)
+        new_user = cursor.fetchall()
+        print(new_user)
+        new_user = new_user[0][0]
+        print(new_user)
+        session["user_id"] = new_user
 
         # Session id / cookies with user's id
         # user_id = cursor.execute("SELECT id FROM users WHERE email = ?", (email, ))
@@ -119,7 +129,7 @@ def register():
         selected_option = request.form.get('account_type')
         print(selected_option)
         if selected_option == 'participant':
-            return redirect("/participantinfo")
+            return redirect("/participant_info")
         elif selected_option == 'researcher':
             return redirect("/researcherinfo")
     
@@ -127,8 +137,8 @@ def register():
         return render_template("templates/register.html")
     
 
-@app.route("/participantinfo", methods=["GET", "POST"])
-def participantinfo():
+@app.route("/participant_info", methods=["GET", "POST"])
+def participant_info():
     conn = sqlite3.connect('labrats.db')
     cursor = conn.cursor()
     if request.method == "POST":
@@ -137,11 +147,17 @@ def participantinfo():
         drink = request.form.get("drink")
         smoke = request.form.get("smoke")
         diseases = request.form.get("diseases")
+        print("WE IN PARTICIPANT INFO")
         query2 = "INSERT INTO participant_info (age, sex, drink, smoke, diseases) VALUES (?, ?, ?, ?, ?)"
         values2 = (dob, sex, drink, smoke, diseases)
+        
         cursor.execute(query2, values2)
         cursor.fetchall()
         conn.commit()
+<<<<<<< Updated upstream
+=======
+        print("WE IN PARTICIPANT INFO")
+>>>>>>> Stashed changes
         return render_template("templates/participant.html")
     else:
         return render_template("templates/participant_info.html")
@@ -161,5 +177,9 @@ def researcherinfo():
         conn.commit()
         return render_template("templates/researcher_info.html", labs=rows)
 
+# @app.route("/participant", methods=["GET", "POST"])
+# def homepage():
+#     print("WE MADE IT")
+#     return render_template("templates/participant.html")
 # conn.commit()
 # conn.close()
