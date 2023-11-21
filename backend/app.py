@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, session, redirect
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
-from database import login_user
+from database.database import login_user
 
 from flask import Flask, request, make_response, render_template, jsonify
 # import requests

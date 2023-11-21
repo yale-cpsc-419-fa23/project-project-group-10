@@ -1,6 +1,6 @@
 
 from sys import argv, exit, stderr
-from app import app
+from backend.app import app
 
 def main():
 
