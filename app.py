@@ -56,8 +56,11 @@ def login():
 
         session["user_id"] = user_id
         user_info = get_info(user_id) 
-        all_info = get_info2(user_id) 
-        print(user_info)        
+        all_info = get_info2(user_id)
+        lab_info = get_lab(user_id)
+        lab_info = lab_info[0]
+        if lab_info:
+            return render_template("templates/researcher.html", user_info=user_info, lab_info=lab_info)
         return render_template("templates/participant.html", user_id=user_id, user_info=user_info, all_info=all_info)
     else:
         return render_template("templates/login.html")
@@ -129,8 +132,6 @@ def register():
         query = "INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)"
         values = (firstname, lastname, email, hash)
         cursor.execute(query, values)
-        row = cursor.fetchall()
-        print(row)
         conn.commit()
         query = "SELECT id FROM users WHERE email = ?"
         values = (email, )
@@ -145,7 +146,6 @@ def register():
 
         # Redirect to participant information page
         selected_option = request.form.get('account_type')
-        print(selected_option)
         if selected_option == 'participant':
             # return render_template("templates/participant_info.html", user_id=new_user)
 
@@ -171,7 +171,6 @@ def participant_info():
         diseases = request.form.get("diseases")
         # user_id = request.args.get('user_id')
         user_id = session["user_id"]
-        print(user_id)
         query2 = "INSERT INTO participant_info (user_id, age, sex, drink, smoke, diseases) VALUES (?, ?, ?, ?, ?, ?)"
         values2 = (user_id, dob, sex, drink, smoke, diseases)
         cursor.execute(query2, values2)
@@ -186,9 +185,28 @@ def participant_info():
 def researcherinfo():
     conn = sqlite3.connect('labrats.db')
     cursor = conn.cursor()
+    user_id = session["user_id"]
     if request.method == "POST":
-        # Insert info into db
-        return render_template("templates/researcher_info.html")
+        lab_name = request.form.get("lab_name")
+        about_lab = request.form.get("about_lab")
+        query = "INSERT INTO labs (pi_id, about, name) VALUES (?, ?, ?)"
+        values = (user_id, about_lab, lab_name)
+        cursor.execute(query, values)
+        # cursor.fetchall()
+        conn.commit()
+        lab_query = "SELECT id FROM labs WHERE name = ?"
+        values = (lab_name, )
+        cursor.execute(lab_query, values)
+        lab_id = cursor.fetchall()
+        lab_id = lab_id[0][0]
+        query = "INSERT INTO researcher_info (user_id, lab_id) VALUES (?, ?)"
+        values = (user_id, lab_id)
+        cursor.execute(query, values)
+        conn.commit()
+        user_info = get_info(user_id)
+        lab_info = get_lab(user_id)
+        print(lab_info)
+        return render_template("templates/researcher.html", user_info=user_info, lab_info=lab_info)
     else:
         query = "SELECT * FROM labs"
         cursor.execute(query)
@@ -196,5 +214,22 @@ def researcherinfo():
         conn.commit()
         return render_template("templates/researcher_info.html", labs=rows)
 
-# conn.commit()
-# conn.close()
+@app.route("/trial_form", methods=["GET", "POST"])
+def trial_form():
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+    user_id = session["user_id"]
+    
+
+
+
+def get_lab(user_id):
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+
+    query = 'SELECT name FROM labs WHERE pi_id = ?'
+    values = (user_id, )
+    cursor.execute(query, values)
+    user_info = cursor.fetchone()
+    conn.close()
+    return user_info

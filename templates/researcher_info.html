@@ -13,12 +13,15 @@
 
             <div class="form-group">
                 <label class="label">What lab are you affiliated with?</label>
-                <select name="lab" class="input-box" id="lab">
+                <input class="input-box" name="lab_name" type="text" id="lab_name">
+                <!-- <select name="lab" class="input-box" id="lab">
                     <option disabled selected value="">Select</option>
                     {% for lab in labs %}
                         <option>{{ lab[3] }}</option>
                     {% endfor %}
-                </select>
+                </select> -->
+                <label class="label">Tell us about your lab!</label>
+                <input class="input-box" name="about_lab" type="text" id="about_lab">
             </div>
 
         </div>
