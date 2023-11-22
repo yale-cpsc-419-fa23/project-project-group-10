@@ -50,38 +50,47 @@
     </style>
 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Researcher Homepage</title>
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
-    <ul class="navbar">
-        <li><a href="/homepage">Home</a></li>
-        <li><a href="/profile">Profile</a></li>
-        <li><a href="/search">Search</a></li>
-    </ul>    
-    <h2>Researcher Homepage</h2>
-    <p>this is the homepage for Researchers</p>
+    <ul class="navbar">
+        <li><a href="/homepage">Home</a></li>
+        <li><a href="/researcher">Profile</a></li>
+        <li><a href="/search">Search</a></li>
+    </ul>    
+    <h2 class="title">Researcher Homepage</h2>
+    <p class="center">this is the homepage for Researchers</p>
 
-    <div class="box">
-        <a href="profile.html">
-        <h3>Profile Information</h3>
-        </a>
-        <img src="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png">
-        <ul>
-            <p>Name: {{ user_info[1] }} {{ user_info[2] }}</p>
-            <p>Email: {{ user_info[3] }}</p>
-            <p>Lab: {{ lab_info }}</p>
-        </ul>
-    </div>
-    <form action="/trial_form" method="GET">
-        <button>Add a trial!</button>
-    </form>
-    
+    <body class="container">
+    <div class="p-box">
+        <a href="profile.html">
+        <h3>Profile Information</h3>
+        </a>
+        <img src="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png">
+        <ul>
+            <p>Name: {{ user_info[1] }} {{ user_info[2] }}</p>
+            <p>Email: {{ user_info[3] }}</p>
+            <p>Lab: {{ lab_info }}</p>
+        </ul>
+    
+    <form action="/trial_form" method="GET">
+        <button class="button">Add a trial!</button>
+    </form>
+</div>
+</body>
+<!-- <h2 class="title">My Projects</h2>
+<p class="center">Manage your owngoing projects</p> -->
 
-    <script>
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-container').innerHTML = data;
-            });
-    </script>
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            });
+    </script>
 </body>
 </html>
