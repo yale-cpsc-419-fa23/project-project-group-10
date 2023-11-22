@@ -2,65 +2,22 @@
 <html lang="en">
 <head>
     <title>Partiticipant Homepage</title>
-
-    <style>
-        /* Style the box with CSS */
-        .box {
-            width: 300px;
-            border: 1px solid #999;
-            padding: 10px;
-            text-align: center;
-        }
-
-        /* Style the image */
-        .box img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        ul li {
-            text-align: left; /* Align text to the left within list items */
-        }
-
-        /* Add CSS styles to format the navigation bar */
-        ul.navbar {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            background-color: #333;
-            overflow: hidden;
-            text-align: center; 
-        }
-
-        ul.navbar li {
-            display: inline;
-        }
-
-        ul.navbar li a {
-            display: inline;
-            color: white; /* Text color for the links */
-            text-align: center;
-            padding: 14px 16px; 
-            text-decoration: none;
-        }
-
-        ul.navbar li a:hover {
-            background-color: darkred; /* Background color on hover */
-        }
-    </style>
-
-
+    
+        <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <ul class="navbar">
-        <li><a href="/homepage">Home</a></li>
-        <li><a href="/profile">Profile</a></li>
+        <!-- <li><a href="templates/">Home</a></li> -->
+        <li><a href="templates/participant">Profile</a></li>
         <li><a href="/search">Search</a></li>
-    </ul>    
-    <h2>Participant Homepage</h2>
-    <p>this is the homepage for participants</p>
+    </ul>  
+    <div class="center"> 
+    <h2 class="title">Participant Homepage</h2>
+    <p>participant view</p>
+    </div>
 
-    <div class="box">
+    <body class="container">
+    <div class="p-box">
         <a href="profile.html">
         <h3>Profile Information</h3>
         </a>
@@ -71,6 +28,7 @@
             <p>Age: {{ all_info[1] }}</p>
         </ul>
     </div>
+</body>
     
 
     <script>

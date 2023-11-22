@@ -5,8 +5,13 @@
 {% endblock %}
 
 {% block main %}
-  <h1>Enter your information</h1>
-  <p>These questions are completely optional. Your answers will help us match you with trials.</p>
+  <head>
+    <link rel="stylesheet" href="static/styles.css">
+  </head>
+  <div class="title">
+    <h1>Enter your information</h1>
+  </div>
+  <p class="center">These questions are completely optional. Your answers will help us match you with trials.</p>
 
   <form action="/participant_info" method="POST">
 
@@ -49,7 +54,9 @@
         </div>
 
       </div>
-      <button>Save Info</button>
+      <div class="button-container">
+        <button class="button">Save Info</button>
+      </dib>
     </form>
 
   {% endblock %}

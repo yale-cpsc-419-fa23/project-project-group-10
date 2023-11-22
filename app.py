@@ -94,21 +94,21 @@ def logout():
 
 @app.route("/profile")
 def user_profile():
-    return render_template('profile.html')
+    return render_template('templates/profile.html')
 
 
 @app.route("/aboutus")
 def aboutus():
-    return render_template('aboutus.html')
+    return render_template('templates/aboutus.html')
 
 
 @app.route("/search") # TODO: change url name
 def browser():
-    return render_template('search.html')
+    return render_template('templates/search.html')
 
 @app.route("/homepage")
 def homepage():
-    return render_template('participant.html')
+    return render_template('templates/participant.html')
 
 
 @app.route("/register", methods=["GET", "POST"])
