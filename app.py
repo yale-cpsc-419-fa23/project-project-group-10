@@ -66,26 +66,6 @@ def login():
     else:
         return render_template("templates/login.html")
 
-def get_info(user_id):
-    conn = sqlite3.connect('labrats.db')
-    cursor = conn.cursor()
-
-    query = 'SELECT * FROM users WHERE id = ?'
-    values = (user_id, )
-    cursor.execute(query, values)
-    user_info = cursor.fetchone()
-    conn.close()
-    return user_info
-def get_info2(user_id):
-    conn = sqlite3.connect('labrats.db')
-    cursor = conn.cursor()
-
-    query = 'SELECT * FROM participant_info WHERE user_id = ?'
-    values = (user_id, )
-    cursor.execute(query, values)
-    user_info = cursor.fetchone()
-    conn.close()
-    return user_info
 
 @app.route("/logout")
 def logout():
@@ -111,7 +91,6 @@ def browser():
     cursor.execute(query)
     all_trials = cursor.fetchall()
     user_id = session["user_id"]
-    print(all_trials)
 
     return render_template('templates/search.html', all_trials=all_trials)
 
@@ -253,8 +232,27 @@ def trial_submit():
         user_info = get_info(user_id)
         lab_info = get_lab(user_id)
         return render_template("templates/researcher.html", user_info=user_info, lab_info=lab_info)
-    
 
+@app.route("/trial_info<int:trial_id>", methods=["GET"])
+def trial_info(trial_id):
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+    user_id = session["user_id"]
+    if request.method == "GET":
+        query = 'SELECT * FROM trials WHERE id = ?'
+        values = (trial_id, )
+        cursor.execute(query, values)
+        specific_trial = cursor.fetchone()
+        conn.close()
+        specific_trial = create_dict(specific_trial)
+        print(specific_trial)
+
+    return render_template("templates/trial_info.html", specific_trial=specific_trial)
+
+
+def create_dict(trial):
+    keys = ['id', 'researcher_id', 'department', 'description', 'location', 'min_age', 'max_age', 'sex', 'drink', 'smoke', 'diseases']
+    return dict(zip(keys, trial))
 
 def get_lab(user_id):
     conn = sqlite3.connect('labrats.db')
@@ -264,5 +262,27 @@ def get_lab(user_id):
     values = (user_id, )
     cursor.execute(query, values)
     user_info = cursor.fetchone()
+    conn.close()
+    return user_info
+
+def get_info(user_id):
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+
+    query = 'SELECT * FROM users WHERE id = ?'
+    values = (user_id, )
+    cursor.execute(query, values)
+    user_info = cursor.fetchone()
+    conn.close()
+    return user_info
+
+def get_info2(user_id):
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+
+    query = 'SELECT * FROM participant_info WHERE user_id = ?'
+    values = (user_id, )
+    cursor.execute(query, values)
+    user_info = cursor.fetchall()
     conn.close()
     return user_info
