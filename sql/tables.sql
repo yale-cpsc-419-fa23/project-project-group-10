@@ -36,13 +36,18 @@ CREATE TABLE labs (
     id INTEGER PRIMARY KEY,
     pi_id INTEGER,
     about VARCHAR(255),
+    name VARCHAR(255),
     FOREIGN KEY (pi_id) REFERENCES users(id)
 );
 
 CREATE TABLE trials (
     id INTEGER PRIMARY KEY,
     researcher_id INTEGER,
-    age INTEGER,
+    department VARCHAR(255),
+    description VARCHAR(255),
+    location VARCHAR(255),
+    age_min INTEGER,
+    age_max INTEGER, 
     sex VARCHAR(255),
     drink BOOLEAN,
     smoke BOOLEAN,
