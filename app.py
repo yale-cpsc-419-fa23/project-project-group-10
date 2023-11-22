@@ -47,7 +47,7 @@ def login():
         cursor.execute(query, values) 
         row = cursor.fetchall()
         # conn.commit()
-        password2 = row[0][-1]
+        password2 = row[0][4]
 
         # Ensure username exists and password is correct
         if len(row) != 1 or not check_password_hash(password2, password):
@@ -58,8 +58,9 @@ def login():
         user_info = get_info(user_id) 
         all_info = get_info2(user_id)
         lab_info = get_lab(user_id)
-        lab_info = lab_info[0]
+        # lab_info = lab_info[0]
         if lab_info:
+            lab_info = lab_info[0]
             return render_template("templates/researcher.html", user_info=user_info, lab_info=lab_info)
         return render_template("templates/participant.html", user_id=user_id, user_info=user_info, all_info=all_info)
     else:
@@ -104,7 +105,15 @@ def aboutus():
 
 @app.route("/search") # TODO: change url name
 def browser():
-    return render_template('templates/search.html')
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+    query = "SELECT * FROM trials"
+    cursor.execute(query)
+    all_trials = cursor.fetchall()
+    user_id = session["user_id"]
+    print(all_trials)
+
+    return render_template('templates/search.html', all_trials=all_trials)
 
 @app.route("/homepage")
 def homepage():
@@ -176,7 +185,9 @@ def participant_info():
         cursor.execute(query2, values2)
         cursor.fetchall()
         conn.commit()
-        return render_template("templates/participant.html")
+        user_info = get_info(user_id) 
+        all_info = get_info2(user_id)
+        return render_template("templates/participant.html", user_info=user_info, all_info=all_info)
     else:
         return render_template("templates/participant_info.html")
     
@@ -205,7 +216,6 @@ def researcherinfo():
         conn.commit()
         user_info = get_info(user_id)
         lab_info = get_lab(user_id)
-        print(lab_info)
         return render_template("templates/researcher.html", user_info=user_info, lab_info=lab_info)
     else:
         query = "SELECT * FROM labs"
@@ -219,8 +229,31 @@ def trial_form():
     conn = sqlite3.connect('labrats.db')
     cursor = conn.cursor()
     user_id = session["user_id"]
+    return render_template("templates/trial_form.html")
     
-
+@app.route("/trial_submit", methods=["GET", "POST"])
+def trial_submit():
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+    user_id = session["user_id"]
+    if request.method == "POST":
+        department = request.form.get("department")
+        description = request.form.get("trial_description")
+        location = request.form.get("location")
+        sex = request.form.get("sex")
+        age_min = request.form.get("age_min")
+        age_max = request.form.get("age_max")
+        drink = request.form.get("drinking_habits")
+        smoke = request.form.get("smoking_habits")
+        diseases = request.form.get("diseases")
+        query = "INSERT INTO trials (researcher_id, department, description, location, age_min, age_max, sex, drink, smoke, diseases) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        values = (user_id, department, description, location, age_min, age_max, sex, drink, smoke, diseases)
+        cursor.execute(query, values)
+        conn.commit()
+        user_info = get_info(user_id)
+        lab_info = get_lab(user_id)
+        return render_template("templates/researcher.html", user_info=user_info, lab_info=lab_info)
+    
 
 
 def get_lab(user_id):
