@@ -1,0 +1,99 @@
+{% extends "templates/layout.html" %}
+
+{% block title %}
+  Trial Form
+{% endblock %}
+
+{% block main %}
+  <head>
+    <link rel="stylesheet" href="static/styles.css">
+  </head>
+  <div class="title">
+    <h1>Enter Your Trial Information</h1>
+  </div>
+  <p class="center">Tell us about your trial. This will be displayed to participants</p>
+
+  <form action="/trial_form" method="POST">
+      <div class="form-container">
+        <div class="form-group">
+          <label class="label">Department:</label>
+          <input class="input-box" name="department" type="text" id="department">
+        </div>
+
+        <div class="form-group">
+            <label class="label">Trial Description:</label>
+            <input class="input-box" name="trial_description" type="text" id="trial_description">
+        </div>
+
+        <div class="form-group">
+            <label class="label">Location:</label>
+            <input class="input-box" name="location" type="text" id="location">
+        </div>
+
+        <div class="form-group">
+            <label class="label">Sex:</label>
+            <select name="sex" id="sex">
+                <option disabled selected value="">Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+
+        <title>Participant Requirments</title>
+            <!-- option: no requirements at all -->
+        <p class="center">What kind of labrats do you need?</p>
+    
+        <div class="form-group">
+            <label class="label">Sex</label>
+            <select name="sex">
+                <option disabled selected value="">Select</option>
+                <option value="extreme">male</option>
+                <option value="any_degree">female</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="label">Age Minimum</label>
+            <input class="input-box" name="age_min" type="text" id="age_min">
+            <label class="label">Age Maximum</label>
+            <input class="input-box" name="age_max" type="text" id="age_max">
+        </div>
+
+        <div class="form-group">
+            <label class="label">Drinking Habits</label>
+            <select name="drinking_habits">
+                <option disabled selected value="">Select</option>
+                <option value="low">low</option>
+                <option value="moderate">moderate</option>
+                <option value="high">high</option>
+                <option value="extreme">literally everday</option>
+                <option value="any_degree">any degree</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="label">Smoking Habits</label>
+            <select name="smoking_habits">
+                <option value="low">low</option>
+                <option value="moderate">moderate</option>
+                <option value="high">high</option>
+                <option value="extreme">literally everday</option>
+                <option value="any_degree">any degree</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="label">Do you have any diseases?</label>
+            <input class="input-box" name="diseases" type="text" id="diseases">
+        </div>
+
+      </div>
+      <div class="button-container">
+        <button class="button">Save Info</button>
+      </div>
+
+    </form>
+
+
+
+  {% endblock %}
