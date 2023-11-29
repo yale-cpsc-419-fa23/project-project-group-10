@@ -1,0 +1,124 @@
+.general-welcome-page {
+    position: relative;
+    width: 1542px;
+    height: 987px;
+    background-image: url(./img/general-welcome-page.png);
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+  
+  .general-welcome-page .overlap-group {
+    position: absolute;
+    width: 1542px;
+    height: 79px;
+    top: 0;
+    left: 0;
+    background-image: url(./img/rectangle-18.svg);
+    background-size: 100% 100%;
+  }
+  
+  .general-welcome-page .text-wrapper {
+    position: absolute;
+    width: 229px;
+    top: 16px;
+    left: 657px;
+    font-family: "Jomolhari-Regular", Helvetica;
+    font-weight: 400;
+    color: #acd0ca;
+    font-size: 36px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .general-welcome-page .overlap {
+    position: absolute;
+    width: 332px;
+    height: 84px;
+    top: 784px;
+    left: 605px;
+    background-color: #d9d9d9;
+    border-radius: 20px;
+  }
+  
+  .general-welcome-page .login-or-sign-up {
+    position: absolute;
+    width: 211px;
+    height: 30px;
+    top: 32px;
+    left: 61px;
+  }
+  
+  .general-welcome-page .div {
+    position: absolute;
+    width: 1049px;
+    top: 436px;
+    left: 247px;
+    font-family: "Kaisei Decol-Regular", Helvetica;
+    font-weight: 400;
+    color: #acd0ca;
+    font-size: 100px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+
+  .button-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+}
+/* .box { */
+    /* width: 332px; */
+    /* height: 84px; */
+/* } */
+/*  */
+/* .box .rectangle { */
+    /* position: fixed; */
+    /* width: 332px; */
+    /* height: 84px; */
+    /* top: 0; */
+    /* left: 0; */
+    /* background-color: #d9d9d9; */
+    /* border-radius: 20px; */
+/* } */
+.box {
+    width: 332px;
+    height: 84px;
+  }
+  
+  .box .rectangle {
+    position: fixed;
+    width: 332px;
+    height: 84px;
+    top: 0;
+    left: 0;
+    background-color: #d9d9d9;
+    border-radius: 20px;
+  }
+
+.label {
+  flex: 1;
+  padding: 5px;
+}
+
+.input-box {
+  flex: 2;
+  padding: 5px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}

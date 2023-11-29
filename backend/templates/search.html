@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>search</title>
+    <style>
+        ul li {
+            text-align: left; /* Align text to the left within list items */
+        }
+
+        /* Add CSS styles to format the navigation bar */
+        ul.navbar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            overflow: hidden;
+            text-align: center; 
+        }
+
+        ul.navbar li {
+            display: inline;
+        }
+
+        ul.navbar li a {
+            display: inline;
+            color: white; /* Text color for the links */
+            text-align: center;
+            padding: 14px 16px; 
+            text-decoration: none;
+        }
+
+        ul.navbar li a:hover {
+            background-color: darkred; /* Background color on hover */
+        }
+    </style>
+</head>
+<body>
+    <ul class="navbar">
+        <li><a href="/homepage">Home</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/search">Search</a></li>
+    </ul> 
+    <h2>Search for Open Trials</h2>
+
+    <form id="searchForm" action="something" method="get">
+        <input type="text" name="query" placeholder="Enter your search query">
+        <button type="submit">Search</button>
+    </form>
+
+
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            });
+    </script>
+    
+</body>
+</html>
