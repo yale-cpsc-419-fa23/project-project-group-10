@@ -31,61 +31,35 @@ def index():
     return render_template('templates/index.html')
 
 
-# @app.route("/log-in", methods=["GET", "POST"])
-# def login():
-#     conn = sqlite3.connect('labrats.db')
-#     cursor = conn.cursor()
-
-#     session.clear()
-#     if request.method == "POST":
-#         email = request.form.get("email")
-#         password = request.form.get("password")
-
-#         # Query database for username
-#         query = "SELECT * FROM users WHERE email = ?"
-#         values = (email, )
-#         cursor.execute(query, values)
-#         row = cursor.fetchall()
-#         conn.commit()
-
-#         # Ensure username exists and password is correct
-#         if len(row) != 1 or not check_password_hash(row[0]["password"], password):
-#             return render_template('templates/error.html', errormessage='No such user exists')
-        
-#         query = "SELECT id FROM users WHERE email = ?"
-#         user_id = cursor.execute(query, (email, ))
-
-#         session["user_id"] = user_id               # doesn't work
-
-#         return render_template("templates/participant.html")
-#     else:
-#         return render_template("templates/login.html")
-
-@app.route("/log-in", methods=["POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     conn = sqlite3.connect('labrats.db')
     cursor = conn.cursor()
 
-    email = request.json.get("email")  # Retrieve email from JSON data
-    password = request.json.get("password")  # Retrieve password from JSON data
+    session.clear()
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
 
-    # Query database for user details
-    query = "SELECT * FROM users WHERE email = ?"
-    cursor.execute(query, (email,))
-    row = cursor.fetchone()  # Using fetchone() to get a single row
+        # Query database for username
+        query = "SELECT * FROM users WHERE email = ?"
+        values = (email, )
+        cursor.execute(query, values)
+        row = cursor.fetchall()
+        conn.commit()
 
-    if row and check_password_hash(row[2], password):  # Assuming email is in row[1] and password in row[2]
-        session["user_id"] = row[0]  # Assuming user_id is in row[0]
+        # Ensure username exists and password is correct
+        if len(row) != 1 or not check_password_hash(row[0]["password"], password):
+            return render_template('templates/error.html', errormessage='No such user exists')
+        
+        query = "SELECT id FROM users WHERE email = ?"
+        user_id = cursor.execute(query, (email, ))
 
-        if row[3]:  # Replace with the correct index based on your schema for the participant check
-            conn.close()
-            return jsonify({"isParticipant": True})  # Send JSON response indicating user is a participant
-        else:
-            conn.close()
-            return jsonify({"isParticipant": False})  # Send JSON response indicating user is not a participant
+        session["user_id"] = user_id               # doesn't work
 
-    conn.close()
-    return jsonify({"message": "Invalid credentials"})  # Send JSON response for invalid credentials
+        return render_template("templates/participant.html")
+    else:
+        return render_template("templates/login.html")
 
 
 @app.route("/logout")

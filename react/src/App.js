@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from './components/Navbar';
+import Navbar from './components/NavbarGeneral';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/pages/Home';
@@ -9,7 +9,7 @@ import Participant from './components/pages/RegisterPar';
 import Researcher from './components/pages/RegisterRes';
 import Login from './components/pages/Login';
 import HomepageRes from './components/pages/HomepageRes';
-// import Posting from './components/pages/PostingForm';
+import Posting from './components/pages/PostingForm';
 // import Navbar2 from './components/Navbar2';
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
           <Route path='/register-researcher' exact element={<Researcher />} />
           <Route path='/log-in' exact element={<Login />} />
           <Route path='/homePageRes' exact element={<HomepageRes />} />
-          {/* <Route path='/post-form' exact element={<Posting />} /> */}
+          <Route path='/post-form' exact element={<Posting />} />
         </Routes>
       </Router>
     </>

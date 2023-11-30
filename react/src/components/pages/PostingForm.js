@@ -103,15 +103,18 @@ const AllAgesCheckbox = () => {
             checked={selectedSex.includes('Female')}
             onChange={() => handleCheckboxChange('Female')}
           />
-          Female
+             Female     
         </label>
+
+        <div style={{ mmarginRight: '10px' }}></div>
+
         <label>
           <input
             type="checkbox"
             checked={selectedSex.includes('Male')}
             onChange={() => handleCheckboxChange('Male')}
           />
-          Male
+             Male
         </label>
       </div>
     );
@@ -124,6 +127,7 @@ const Posting = () => {
       };
     
     return (
+        <div class="buffer">
         <div className="register-container">
             <h1>Create a Study Posting</h1> 
             <p>Study Detials and Information</p>
@@ -131,7 +135,7 @@ const Posting = () => {
                 <div class="form-container">
                     <div class="form-group">
                         <label class="label">Informal Study Title:</label>
-                        <p>Example: Allergic Disease Onset Prevention Study</p> 
+                        {/* <p>Example: Allergic Disease Onset Prevention Study</p>  */}
                         <input required class="input-box" name="informal_title" type="text" id="informal_title"></input>
                     </div>
                     <div class="form-group">
@@ -154,29 +158,33 @@ const Posting = () => {
                         <input required class="input-box" name="official_title" type="text" id="official_title"></input>
                     </div>
                 </div>
-                <p>Participant Eligibility</p>
-                <i class="fa fa-check-square-o" style={checkIconStyle}></i>
-                Participant can join if...
-                <p>basic info</p>
+                <h1>Participant Eligibility</h1>
+                {/* <i class="fa fa-check-square-o" style={checkIconStyle}></i> */}
+                <p>Participant can join if...</p>
                 <div class="form-container">
+                    <div class="small_buff">
                     <div class="form-group">
                         <label class="label">Age Group:</label>
                         <AgeRangeInput />
                         <AllAgesCheckbox />
                     </div>
+                    </div>
+
+                    <div class="small-buff">
                     <div className="form-group">
                         <label className="label">Sex:</label>
                         <SexCheckboxList />
                     </div>
+                    </div>
                 </div>
-                <p>additional conditions</p>
+                <p>additional conditions list ... (todo)</p>
                 <input type="submit" value="Post" id="sendToServerButton"></input>
                 {/* TODO: if TIME, create a review page to view what the participant would see */}
             </form>
-
+            </div>
         </div>
     )
-
+// drinnking, smoking, conditions, department, race
 }
 
 export default Posting;

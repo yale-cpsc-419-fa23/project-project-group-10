@@ -11,7 +11,7 @@ function HomepageRes() {
         <div>
                    <div className='hero-container'>
            {/* TODO: change this video or none at all, just lil graphics */}
-       <video src='/videos/video-3.mp4' autoPlay loop muted /> 
+       {/* <video src='/videos/video-3.mp4' autoPlay loop muted />  */}
        <h1>WELCOME HOME</h1>
        {/* TODO: something better here */}
        <p>Your research is looking good</p>
