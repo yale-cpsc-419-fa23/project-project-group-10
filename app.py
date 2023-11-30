@@ -110,6 +110,11 @@ def register():
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
         hash = generate_password_hash(password)
+        if request.form.get('account_type') == 'participant':
+            participant = 1        # participant
+        else:
+            participant = 0        # researcher
+        
 
         # Ensure password confirmation matches
         confirmation = request.form.get("confirmation")
@@ -117,8 +122,8 @@ def register():
             return render_template('templates/register.html', errormessage='Passwords do not match')
 
         # Update users database with new user
-        query = "INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)"
-        values = (firstname, lastname, email, hash)
+        query = "INSERT INTO users (firstname, lastname, email, password, role) VALUES (?, ?, ?, ?, ?)"
+        values = (firstname, lastname, email, hash, participant)
         cursor.execute(query, values)
         conn.commit()
         query = "SELECT id FROM users WHERE email = ?"
@@ -133,14 +138,9 @@ def register():
         # session["user_id"] = user_id
 
         # Redirect to participant information page
-        selected_option = request.form.get('account_type')
-        if selected_option == 'participant':
-            # return render_template("templates/participant_info.html", user_id=new_user)
-
-            # redirect_url = url_for('participant_info', user_id=new_user)
-            # return redirect(redirect_url)
+        if participant:
             return redirect("/participant_info")
-        elif selected_option == 'researcher':
+        else:
             return redirect("/researcherinfo")
     
     else:
