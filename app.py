@@ -245,9 +245,51 @@ def trial_info(trial_id):
         specific_trial = cursor.fetchone()
         conn.close()
         specific_trial = create_dict(specific_trial)
-        print(specific_trial)
+        return render_template("templates/trial_info.html", specific_trial=specific_trial)
+    
+@app.route("/favorited<int:trial_id>", methods=["GET"])
+def favorited(trial_id):
+    print("saved")
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+    user_id = session["user_id"]
 
-    return render_template("templates/trial_info.html", specific_trial=specific_trial)
+    if request.method == "GET":
+        query = 'SELECT * FROM saved WHERE user_id = ? AND trial_id = ?'
+        values = (user_id, trial_id)
+        cursor.execute(query, values)
+        check = cursor.fetchone()
+        # If user does, check will be true
+        if check:
+            # Return apology if user has already favorited it
+            print("Sorry, already saved")
+            conn.close()
+        else:
+            # Since the entry has not been favorited, add it to the favorites table
+            query = 'INSERT INTO saved (user_id, trial_id) VALUES (?, ?)'
+            values = (user_id, trial_id)
+            cursor.execute(query, values)
+            conn.commit()
+            conn.close()
+        # Redirect to /favorites function to render template
+        return redirect("/favorites")
+
+
+@app.route("/favorites", methods=["GET"])
+def favorites():
+    """Display user's favorited entries"""
+    conn = sqlite3.connect('labrats.db')
+    cursor = conn.cursor()
+    user_id = session["user_id"]
+
+    if request.method == "GET":
+        # Get all the entries that the user favorited and return template
+        query = 'SELECT * FROM trials JOIN saved ON trials.id = saved.trial_id WHERE saved.user_id = ?'
+        values = (user_id, )
+        cursor.execute(query, values)
+        saved_trials = cursor.fetchall()
+        print(saved_trials)
+        return render_template("templates/favorites.html", saved_trials=saved_trials)
 
 
 def create_dict(trial):
