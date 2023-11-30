@@ -97,17 +97,14 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/register' element={<Register />} />
           <Route path='/log-in' element={<Login />} />
+          <Route path='/register-participant' element={<Participant />} />
+          <Route path='/register-researcher' element={<Researcher />} />
 
-          <Route path='/participant-register' element={<Participant />} />
           <Route path='/participant-homepage' element={<HomepagePar />} />
           <Route path='/participant-search' element={<ParSearch />} />
           <Route path='/participant-profile' element={<ParProfile />} />
-          
-          
-          
 
           <Route path='/researcher-homepage' element={<HomepageRes />} />
-          <Route path='/researcher-register' element={<Researcher />} />
           <Route path='/researcher-post-form' element={<Posting />} />
         </Routes>
       </Router>

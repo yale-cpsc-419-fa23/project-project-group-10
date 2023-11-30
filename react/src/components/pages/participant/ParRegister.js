@@ -3,7 +3,7 @@ import '../RegisterInfo.css';
 
 const Participant = () => {
   return (
-    <div className="register-container">
+    <div className="register-container-buffer">
       <h1>Please Register an Account</h1>
       <form action="/register-participant" method="POST">
       <div class="form-container">
@@ -31,6 +31,7 @@ const Participant = () => {
           <input required class="input-box" name="confirmation" type="text" id="confirmation"></input>
         </div>
 
+      <br></br>
       <h1>Enter your information</h1>
       <p>These questions are completely optional. Your answers will help us match you with trials.</p>
         <div class="form-group">

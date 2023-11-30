@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './RegisterGen.css';
 import { Link } from 'react-router-dom';
 
 
 function Register() {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   return (
     <div className="register-container">
     <h1 className="register-title">Register</h1>
