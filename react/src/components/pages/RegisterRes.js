@@ -32,9 +32,8 @@ const Researcher = () => {
         </div>
 
       <h1>Enter your information</h1>
-      <p>These questions are completely optional. Your answers will help us match you with trials.</p>
         <div class="form-group">
-          <label class="label">Are you associated with a lab?</label>
+          <label class="label">Are you associated with a lab? If so, please provide a link to your lab website: </label>
           <input class="input-box" name="lab" type="text" id="dob"></input>
         </div>
       </div>

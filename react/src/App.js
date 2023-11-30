@@ -7,9 +7,10 @@ import About from './components/pages/AboutUs';
 import Register from './components/pages/RegisterGen';
 import Participant from './components/pages/RegisterPar';
 import Researcher from './components/pages/RegisterRes';
-import Navbar2 from './components/Navbar2';
-
-//import Login from './components/pages/Login';
+import Login from './components/pages/Login';
+import HomepageRes from './components/pages/HomepageRes';
+// import Posting from './components/pages/PostingForm';
+// import Navbar2 from './components/Navbar2';
 
 function App() {
   // const location = useLocation();
@@ -32,7 +33,9 @@ function App() {
           <Route path='/register' exact element={<Register />} />
           <Route path='/register-participant' exact element={<Participant />} />
           <Route path='/register-researcher' exact element={<Researcher />} />
-          {/* <Route path='/log-in' exact element={<Login />} /> */}
+          <Route path='/log-in' exact element={<Login />} />
+          <Route path='/homePageRes' exact element={<HomepageRes />} />
+          {/* <Route path='/post-form' exact element={<Posting />} /> */}
         </Routes>
       </Router>
     </>
