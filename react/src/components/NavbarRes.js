@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './loginButton';
+import { Button } from './Buttons';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
@@ -29,7 +29,7 @@ function NavbarRes() {
       <nav className='navbar'>
         <div className='navbar-container'>
           <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-            LABRATS: Participant
+            LABRATS: Researcher
             {/* <i class='fab fa-typo3' /> */}
           </Link>
           <div className='menu-icon' onClick={handleClick}>
@@ -37,7 +37,7 @@ function NavbarRes() {
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
-              <Link to='/participant' className='nav-links' onClick={closeMobileMenu}>
+              <Link to='/homepageRes' className='nav-links' onClick={closeMobileMenu}>
                 Home
               </Link>
             </li>
@@ -50,15 +50,6 @@ function NavbarRes() {
                 Profile
               </Link>
             </li>
-            <li className='nav-item'>
-              <Link
-                to='/search'
-                className='nav-links'
-                onClick={closeMobileMenu}
-              >
-                Search
-              </Link>
-            </li>
           </ul>
                   </div>
       </nav>
@@ -66,4 +57,4 @@ function NavbarRes() {
   );
 }
 
-export default Navbar2;
+export default NavbarRes;

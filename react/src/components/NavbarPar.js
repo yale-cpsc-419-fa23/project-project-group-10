@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './loginButton';
+import { Button } from './Buttons';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
@@ -37,13 +37,13 @@ function NavbarPar() {
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
-              <Link to='/participant' className='nav-links' onClick={closeMobileMenu}>
+              <Link to='/participant-homepage' className='nav-links' onClick={closeMobileMenu}>
                 Home
               </Link>
             </li>
             <li className='nav-item'>
               <Link
-                to='/profile'
+                to='/participant-profile'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
@@ -52,7 +52,7 @@ function NavbarPar() {
             </li>
             <li className='nav-item'>
               <Link
-                to='/search'
+                to='/participant-search'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
@@ -66,4 +66,4 @@ function NavbarPar() {
   );
 }
 
-export default Navbar2;
+export default NavbarPar;
