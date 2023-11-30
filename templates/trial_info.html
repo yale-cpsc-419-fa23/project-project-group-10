@@ -26,17 +26,27 @@
             <th class="headers" scope="col">department</th>
             <th class="headers" scope="col">description</th>
             <th class="headers" scope="col">location</th>
+            <th class="headers" scope="col">age_min</th>
+            <th class="headers" scope="col">age_max</th>
+            <th class="headers" scope="col">sex</th>
+            <th class="headers" scope="col">drink</th>
+            <th class="headers" scope="col">smoke</th>
+            <th class="headers" scope="col">diseases</th>
         </tr>
     </thead>
     <tbody>
         <!-- Jinjja table goes through the entries table and prints out the username, song name, artist name, entry, and time of an entry if the user made it public. The username and entry are links so they can be clicked on  -->
-        {% for row in all_trials %}
+        {% for row in specific_trial %}
                 <tr>
-                    <td>
-                        <a href="{{ url_for('trial_info', trial_id = row[0])}}"> {{ row[2] }}</a>
-                    </td>
-                    <td class="text-start">{{ row[3] }}</td>
-                    <td class="text-start">{{ row[4] }}</td>
+                    <td>{{ row["department"] }}</td>
+                    <td>{{ row["description"] }}</td>
+                    <td>{{ row["location"] }}</td>
+                    <td>{{ row["min_age"] }}</td>
+                    <td>{{ row["max_age"] }}</td>
+                    <td>{{ row["sex"] }}</td>
+                    <td>{{ row["drink"] }}</td>
+                    <td>{{ row["smoke"] }}</td>
+                    <td>{{ row["diseases"] }}</td>
                 </tr>
         {% endfor %}
     </tbody>
