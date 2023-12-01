@@ -60,6 +60,7 @@ function NavbarPar() {
               </Link>
             </li>
           </ul>
+          {button && <Button buttonStyle='btn--outline'>Logout?</Button>}
                   </div>
       </nav>
     </>

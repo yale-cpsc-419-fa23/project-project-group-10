@@ -122,9 +122,9 @@ const AllAgesCheckbox = () => {
   
 
 const Posting = () => {
-    const checkIconStyle = {
-        fontSize: '36px',
-      };
+    // const checkIconStyle = {
+        // fontSize: '36px',
+      // };
     
     return (
         <div class="buffer">

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../App.css';
 import '../../HeroSection.css';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 function ParProfile() {
 
@@ -11,7 +11,8 @@ function ParProfile() {
                 <h1>hey you</h1>
 
                 <p>participant dummy photo here</p>
-                <p>favorites</p>
+                {/* TODO: create a link buttonn to listed favorites - do a jinja thing?  */}
+                <p>favorites</p> 
             </div>
         </div>
     )
