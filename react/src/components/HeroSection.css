@@ -1,3 +1,17 @@
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px; /* Adjust the margin based on your design */
+}
+
+.grid-container > div {
+  flex: 0 0 50%; /* Adjust the width of each grid item */
+  max-width: 50%;
+  box-sizing: border-box;
+}
+
+
 video {
   object-fit: cover;
   width: 100%;

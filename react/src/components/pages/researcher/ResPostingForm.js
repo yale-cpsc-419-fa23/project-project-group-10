@@ -1,6 +1,9 @@
 // import React from 'react';
 import React, { useState } from 'react';
 import '../RegisterInfo.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const DateInput = ({ name, id }) => {
     const [date, setDate] = useState('');
@@ -177,7 +180,27 @@ const Posting = () => {
                     </div>
                     </div>
                 </div>
-                <p>additional conditions list ... (todo)</p>
+                <p>additional conditions list + keywords (todo)</p>
+                <div class="form-group">
+                <label class="label">Is smoking relevant to your study</label>
+                <select name="smoke">
+                    <option disabled selected value="">Select</option>
+                    <option value="male">Yes</option>
+                    <option value="female">No</option>
+                </select>
+                </div>
+                <div class="form-group">
+                <label class="label">Is drinking relevant to your study</label>
+                <select name="smoke">
+                    <option disabled selected value="">Select</option>
+                    <option value="male">Yes</option>
+                    <option value="female">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+            <label class="label">Key Words</label>
+            <input class="input-box" name="keywords" type="text" id="keywords"></input>
+            </div>
                 <input type="submit" value="Post" id="sendToServerButton"></input>
                 {/* TODO: if TIME, create a review page to view what the participant would see */}
             </form>

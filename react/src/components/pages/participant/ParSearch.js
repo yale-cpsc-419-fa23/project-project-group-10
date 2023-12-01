@@ -8,7 +8,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import React, { useState } from 'react';
 import { Modal, Button, Card, Row, Col } from 'react-bootstrap'
 
-// Component for each grid item (widget)
 const Widget = ({ data, onClick }) => {
     return (
       <Col sm={4}>
@@ -44,17 +43,15 @@ const Widget = ({ data, onClick }) => {
     );
   };
   
-
-// DISPLAY WIDGET COMPONENT
-const WidgetGrid = ({ serverData }) => {
+  // Main component
+  const WidgetGrid = ({ serverData }) => {
     const [modalShow, setModalShow] = useState(false);
     const [selectedData, setSelectedData] = useState(null);
+  
     const handleWidgetClick = (data) => {
       setSelectedData(data);
       setModalShow(true);
     };
-
-    
   
     return (
       <div>
@@ -74,101 +71,96 @@ const WidgetGrid = ({ serverData }) => {
       </div>
     );
   };
-
-
-function ParSearch() {
+  
+  function ParSearch() {
     const [selectedAge, setSelectedAge] = useState('Age');
     const [selectedSex, setSelectedSex] = useState('Sex');
-
+  
     // TODO: GET SERVER DATA BACK
     const serverData = [
-        { id: 1, title: 'Item 1', description: 'Description 1', details: 'Details 1' },
-        { id: 2, title: 'Item 2', description: 'Description 2', details: 'Details 2' },
-        // Add more items as needed
-      ];
-
+      { id: 1, title: 'Item 1', description: 'Description 1', details: 'Details 1' },
+      { id: 2, title: 'Item 2', description: 'Description 2', details: 'Details 2' },
+      // Add more items as needed
+    ];
+  
     const handleAgeSelect = (eventKey) => {
-        setSelectedAge(eventKey);
+      setSelectedAge(eventKey);
     };
-
+  
     const handleSexSelect = (eventKey) => {
-        setSelectedSex(eventKey);
+      setSelectedSex(eventKey);
     };
     const handleSubmit = (e) => {
-        e.preventDefault();
-
-
-        // Get the form data
-        const formData = new FormData(e.target);
-        
-        // Append selectedAge and selectedSex to the form data
-        formData.append('selectedAge', selectedAge);
-        formData.append('selectedSex', selectedSex);
-
-        //TODO: SEND it to server
-        fetch('/participant-search', {
-            method: 'POST',
-            body: formData,
-          })
-          // TODO: get it back FROM server
-            .then((response) => response.json()) // adjust based on your server response
-            .then((data) => {
-              // Handle the response from the server
-              console.log(data);
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
-        };
-    
+      e.preventDefault();
+  
+      // Get the form data
+      const formData = new FormData(e.target);
+  
+      // Append selectedAge and selectedSex to the form data
+      formData.append('selectedAge', selectedAge);
+      formData.append('selectedSex', selectedSex);
+  
+      // TODO: SEND it to server
+      fetch('/participant-search', {
+        method: 'POST',
+        body: formData,
+      })
+        // TODO: get it back FROM server
+        .then((response) => response.json()) // adjust based on your server response
+        .then((data) => {
+          // Handle the response from the server
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    };
+  
     return (
-        <div>
-            <div className='hero-container'>
-                <h1 className="register-title">Search for Studies</h1>
-                <form action="/participant-search" method="POST">
-                    <div class="form-container">
-                        {/* <div class="form-group"> */}
-                        <center>
-                        <div class="small_buff">
-                        <div style={{ display: 'inline-block', marginRight: '10px' }}>
-                        <Dropdown onSelect={handleAgeSelect}>
-                            <Dropdown.Toggle variant="success" id="age-dropdown">
-                            {selectedAge}
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                            <Dropdown.Item eventKey="Under 18">Under 18</Dropdown.Item>
-                            <Dropdown.Item eventKey="18+">18+</Dropdown.Item>
-                            <Dropdown.Item eventKey="All Ages">All Ages</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                        </div>
-
-                    <div style={{ display: 'inline-block' }}>
-                            <Dropdown onSelect={handleSexSelect}>
-                                <Dropdown.Toggle variant="success" id="sex-dropdown">
-                                {selectedSex}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                <Dropdown.Item eventKey="Female">Female</Dropdown.Item>
-                                <Dropdown.Item eventKey="Male">Male</Dropdown.Item>
-                                <Dropdown.Item eventKey="All">All</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                    
-                            </div>
-                            </div>
-                            <input class="input-box" name="search" type="text" id="search"></input>
-                            <input type="submit" value="search" id="sendToServerButton"></input>
-                            </center>
-                        </div>
-                    {/* </div> */}
-                </form>
-                <WidgetGrid serverData={serverData} />;
+      <div>
+        <div className='hero-container'>
+          <h1 className="register-title">Search for Studies</h1>
+          <form action="/participant-search" method="POST">
+            <div className="form-container">
+              <center>
+                <div className="small_buff">
+                  <div style={{ display: 'inline-block', marginRight: '10px' }}>
+                    <Dropdown onSelect={handleAgeSelect}>
+                      <Dropdown.Toggle variant="success" id="age-dropdown">
+                        {selectedAge}
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Dropdown.Item eventKey="Under 18">Under 18</Dropdown.Item>
+                        <Dropdown.Item eventKey="18+">18+</Dropdown.Item>
+                        <Dropdown.Item eventKey="All Ages">All Ages</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+  
+                  <div style={{ display: 'inline-block' }}>
+                    <Dropdown onSelect={handleSexSelect}>
+                      <Dropdown.Toggle variant="success" id="sex-dropdown">
+                        {selectedSex}
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Dropdown.Item eventKey="Female">Female</Dropdown.Item>
+                        <Dropdown.Item eventKey="Male">Male</Dropdown.Item>
+                        <Dropdown.Item eventKey="All">All</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                </div>
+                <input className="input-box" name="search" type="text" id="search"></input>
+                <input type="submit" value="search" id="sendToServerButton"></input>
+              </center>
             </div>
-            
+          </form>
         </div>
-
+        <div className="grid-container">
+        <WidgetGrid serverData={serverData} />
+      </div>
+      </div>
     );
-}
-
-export default ParSearch
+  }
+  
+  export default ParSearch;
