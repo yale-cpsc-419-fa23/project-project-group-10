@@ -75,7 +75,7 @@ def logout():
 
 @app.route("/profile")
 def user_profile():
-    return render_template('templates/profile.html')
+    return render_template('templates/participant.html')
 
 
 @app.route("/aboutus")
