@@ -8,6 +8,7 @@ import React from 'react';
 // import { LoginResButton } from '../loginButton';
 
 const Login = () => {
+  // create a state --> changes when input is changed, flask wtf
   return (
       <div className="login-container">
         <div className="register-container">
