@@ -1,20 +1,11 @@
-from flask import Flask, request, render_template, session, redirect
+from flask import Flask, request, render_template, session, redirect, url_for, jsonify
 from flask_session import Session
+from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
-#from database.database import login_user
 
-from flask import Flask, request, make_response, render_template, jsonify
-# import requests
-# from flask_cas import CAS
-
-# Configure application
-app = Flask(__name__, template_folder='.')
-
-# CAS stuff
-# CAS(app)
-# app.config['CAS_SERVER'] = 'https://secure6.its.yale.edu/cas/login'
-# app.config['CAS_AFTER_LOGIN'] = '/login'
+app = Flask(__name__)
+CORS(app, supports_credentials=True)
 
 # Connect to the SQLite database
 conn = sqlite3.connect('labrats.db')
@@ -25,71 +16,66 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+@app.route("/")
+def hello_world():
+    return "Hello, World!"
 
-# @app.route('/', methods=['GET'])
-# def index():
-#     return render_template('templates/index.html')
+@app.route("/signup", methods=["POST"])
+def signup():
+    email = request.json["email"]
+    password = request.json["password"]
+ 
+    return jsonify({
+        "id": 1,
+        "email": email
+    })
 
 
-@app.route("/log-in", methods=["POST"])
-def login():
-    print("Yes")
+def get_db_connection():
     conn = sqlite3.connect('labrats.db')
-    cursor = conn.cursor()
-
-    email = request.json.get("email")  # Retrieve email from JSON data
-    password = request.json.get("password")  # Retrieve password from JSON data
-
-    # Query database for user details
-    query = "SELECT user_id, email, password, role FROM users WHERE email = ?"
-    cursor.execute(query, (email,))
-    row = cursor.fetchone()  # Using fetchone() to get a single row
-
-    if row and check_password_hash(row[2], password):  # Assuming email is in row[1] and password in row[2]
-        session["user_id"] = row[0]  # Assuming user_id is in row[0]
-
-        if row[3] == 0:  # Replace with the correct index based on your schema for the participant check
-            conn.close()
-            return jsonify({"isParticipant": True})  # Send JSON response indicating user is a participant
-        else:
-            conn.close()
-            return jsonify({"isParticipant": False})  # Send JSON response indicating user is not a participant
-
-    conn.close()
-    return jsonify({"message": "Invalid credentials"})  # Send JSON response for invalid credentials
+    conn.row_factory = sqlite3.Row
+    return conn
 
 
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     conn = sqlite3.connect('labrats.db')
-#     cursor = conn.cursor()
+@app.route("/login", methods=["POST"])
+def login_user():
+    try: 
+        email = request.json["email"]
+        password = request.json["password"]
 
-#     session.clear()
-#     if request.method == "POST":
-#         email = request.form.get("email")
-#         password = request.form.get("password")
+        if not email or not password:
+                return jsonify({'error': 'Invalid request'}), 400
 
-#         # Query database for username
-#         query = "SELECT * FROM users WHERE email = ?"
-#         values = (email, )
-#         cursor.execute(query, values)
-#         row = cursor.fetchall()
-#         conn.commit()
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
-#         # Ensure username exists and password is correct
-#         if len(row) != 1 or not check_password_hash(row[0]["password"], password):
-#             return render_template('templates/error.html', errormessage='No such user exists')
+        # Query the database for the user with the provided email
+        query = "SELECT * FROM users WHERE email = ?"
+        cursor.execute(query, (email,))
+        user = cursor.fetchone()
+
+        print(user)
+    
+        if user is None:
+            return jsonify({"error": "Unauthorized Access"}), 401
         
-#         query = "SELECT id FROM users WHERE email = ?"
-#         user_id = cursor.execute(query, (email, ))
+        if user and check_password_hash(user['password'], password):
+                # If the user exists and the password matches, return user info
+                return jsonify({
+                    'user_info': {
+                        'id': user['id'],
+                        'email': user['email'],
+                        'role': user['role']  # Example field indicating user type
+                    }
+                })
+        else:
+            return jsonify({'error': 'Invalid credentials'}), 401
 
-#         session["user_id"] = user_id               # doesn't work
-
-#         return render_template("templates/participant.html")
-#     else:
-#         return render_template("templates/login.html")
-
-
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+      
 @app.route("/logout")
 def logout():
     session.clear()

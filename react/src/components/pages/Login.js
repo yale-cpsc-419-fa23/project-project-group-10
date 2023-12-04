@@ -1,100 +1,87 @@
-// import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../../App.css';
-// import './Login.css';
 import './RegisterInfo.css';
-import { Button } from '../loginButton';
-import { Link } from 'react-router-dom';
-import React, {useEffect} from 'react';
-import { useState } from 'react'; // Import useState hook for managing state
 
-const Login = () => {
+function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const logInUser = () => {
+    if (email.length === 0) {
+      alert("Email has been left blank!");
+    } else if (password.length === 0) {
+      alert("Password has been left blank!");
+    } else {
+      axios.post('http://127.0.0.1:5000/login', {
+        email: email,
+        password: password
+      })
+      .then(function (response) {
+        console.log(response);
+        const userInfo = response.data.user_info; // Assuming the response has 'user_info'
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    fetch('/log-in', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response from the Flask backend
-        console.log('Response from server:', data);
-        // Perform any necessary actions based on the response from the server
-        // For example, handle redirection based on user role received in the response
-        // Replace '/participant-homepage' and '/non-participant-homepage' with actual URLs
-        if (data && data.isParticipant) {
-          window.location.href = '/participant-homepage';
+        // Check the user role obtained from the response
+        if (userInfo.role === 1) {
+          navigate("/researcher-homepage");
+        } else if (userInfo.role === 0) {
+          navigate("/participant-homepage");
         } else {
-          window.location.href = '/researcher-homepage';
+          // Handle other roles or unexpected scenarios
+          alert("Unknown role, unable to redirect.");
         }
       })
-      .catch(error => {
-        console.error('Error:', error);
-        // Handle any errors that occur during the request
+      .catch(function (error) {
+        console.log(error, 'error');
+        if (error.response && error.response.status === 401) {
+          alert("Invalid credentials");
+        }
       });
+    }
   };
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
 
   return (
     <div className="login-container">
       <div className="register-container-login">
         <h1>Welcome Back :)</h1>
         <br></br>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className="form-container">
             <div className="form-group">
-              <label className="label">Email:</label>
+            <label className="label" for="email">Email:</label>
               <input
                 required
                 className="input-box"
                 name="email"
-                type="text"
+                type="email"
                 id="email"
                 value={email}
-                onChange={handleEmailChange}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
           <div className="form-container">
             <div className="form-group">
-              <label className="label">Password:</label>
+            <label className="label" for="password">Password:</label>
               <input
                 required
                 className="input-box"
                 name="password"
-                type="password" // Change input type to 'password'
+                type="password"
                 id="password"
                 value={password}
-                onChange={handlePasswordChange}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
-          <input type="submit" value="Login" id="sendToServerButton" />
+          <button type="button" className="custom-primary" onClick={logInUser} >Login</button>
+          <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/register" className="link-danger">Register</a></p>
         </form>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default LoginPage;
