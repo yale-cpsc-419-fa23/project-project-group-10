@@ -30,11 +30,53 @@ def signup():
         "email": email
     })
 
-
 def get_db_connection():
     conn = sqlite3.connect('labrats.db')
     conn.row_factory = sqlite3.Row
     return conn
+
+@app.route("/register-participant", methods=["POST"])
+def register_par():
+    try:
+        firstname = request.json["first_name"]
+        lastname = request.json["last_name"]
+        email = request.json["email"]
+        password = request.json["password"]
+        confirmation = request.json["confirmation"]
+        role = 0
+
+        dob = request.json["dob"]
+        sex = request.json["sex"]
+        drink = request.json["drink"]
+        smoke = request.json["smoke"]
+        diseases = request.json["disease"]
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        #checking if the passwords match
+        if password != confirmation:
+            return jsonify({"error": "Passwords do not match!"}), 409
+
+        #check to see if username in this role exists
+        query = "SELECT id FROM users WHERE email = ? AND role = ?"
+        cursor.execute(query, (email, role))
+        user = cursor.fetchone()
+
+        if user:
+            return jsonify({"error": "This email exists as a Participant"}), 409
+        
+        # Update users database with new user
+        query = "INSERT INTO users (firstname, lastname, email, password, role) VALUES (?, ?, ?, ?, ?)"
+        values = (firstname, lastname, email, generate_password_hash(password), role)
+        cursor.execute(query, values)
+        conn.commit()
+
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
 
 
 @app.route("/login", methods=["POST"])

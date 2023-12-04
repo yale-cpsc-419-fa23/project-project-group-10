@@ -49,7 +49,7 @@ const Participant = () => {
         </div>
         <div class="form-group">
             <label class="label">Do you drink?</label>
-            <select name="sex">
+            <select name="drink" id="drink">
                 <option disabled selected value="">Select</option>
                 <option value="male">Yes</option>
                 <option value="female">No</option>
@@ -57,7 +57,7 @@ const Participant = () => {
         </div>
         <div class="form-group">
             <label class="label">Do you smoke?</label>
-            <select name="smoke">
+            <select name="smoke" id="smoke">
                 <option disabled selected value="">Select</option>
                 <option value="male">Yes</option>
                 <option value="female">No</option>
