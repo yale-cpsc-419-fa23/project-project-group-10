@@ -3,7 +3,7 @@ import '../RegisterInfo.css';
 
 const Researcher = () => {
   return (
-    <div classNNmae="buffer">
+    <div className="buffer">
     <div className="register-container">
       <h1>Please Register an Account</h1>
       <form action="/participant-register" method="POST">

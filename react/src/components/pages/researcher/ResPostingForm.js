@@ -1,9 +1,11 @@
 // import React from 'react';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../RegisterInfo.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import Dropdown from 'react-bootstrap/Dropdown';
+// import Dropdown from 'react-bootstrap/Dropdown';
 
 const DateInput = ({ name, id }) => {
     const [date, setDate] = useState('');
@@ -129,6 +131,37 @@ const Posting = () => {
         // fontSize: '36px',
       // };
     
+    const [title, setTitle] = useState('');
+    const [location, setLocation] = useState('');
+    const [startdate, setStartdate] = useState('');
+    const [enddate, setEnddate] = useState('');
+    const [description, setDescription] = useState('');
+    const [officialTitle, setOfficialTitle] = useState('');
+    const [keyword, setKeywords] = useState('');
+    const [age, setAge] = useState('');
+    const [sex, setSex] = useState('');
+    const [smoking, setSmoking] = useState('');
+    const [drinking, setDrinking] = useState('');
+    const [additional, setAdditional] = useState('');
+    const navigate = useNaviage();
+
+    const PostStudy = () => {
+      axios.post('http://127.0.0.1:5000/researcher-posting', {
+      title: title,
+      location: location,
+      startdate: startdate,
+      enddate: enddate,
+      description: description,
+      officialTitle: officialTitle,
+      keyword: keyword
+    })
+    .then(function (response) {
+      console.log(response);
+      const userInfo = response.data.user_info; // Assuming the response has 'user_info'
+        }
+    
+      
+
     return (
         <div class="buffer">
         <div className="register-container">
@@ -137,9 +170,9 @@ const Posting = () => {
             <form action="/post-form" method="POST">
                 <div class="form-container">
                     <div class="form-group">
-                        <label class="label">Informal Study Title:</label>
+                        <label class="label">Study Title:</label>
                         {/* <p>Example: Allergic Disease Onset Prevention Study</p>  */}
-                        <input required class="input-box" name="informal_title" type="text" id="informal_title"></input>
+                        <input required class="input-box" name="title" type="text" id="title"></input>
                     </div>
                     <div class="form-group">
                         <label class="label">Location(s):</label>
@@ -180,7 +213,7 @@ const Posting = () => {
                     </div>
                     </div>
                 </div>
-                <p>additional conditions list + keywords (todo)</p>
+                <p>additional conditions list</p>
                 <div class="form-group">
                 <label class="label">Is smoking relevant to your study</label>
                 <select name="smoke">
@@ -204,6 +237,10 @@ const Posting = () => {
                 <input type="submit" value="Post" id="sendToServerButton"></input>
                 {/* TODO: if TIME, create a review page to view what the participant would see */}
             </form>
+            </div>
+            <div class="form-group">
+            <label class="label">Other Requirements</label>
+            <input class="input-box" name="other" type="text" id="other"></input>
             </div>
         </div>
     )

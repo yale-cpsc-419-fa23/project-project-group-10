@@ -3,12 +3,7 @@ import '../RegisterInfo.css';
 
 const Participant = () => {
   return (
-<<<<<<< HEAD
-    <div class="buffer">
-    <div className="register-container">
-=======
     <div className="register-container-buffer">
->>>>>>> 19a476046c7f752feb168fc7b25a485cca932e0f
       <h1>Please Register an Account</h1>
       <form action="/register-participant" method="POST">
       <div class="form-container">
@@ -75,7 +70,6 @@ const Participant = () => {
       </div>
       <input type="submit" value="Register" id="sendToServerButton"></input>
     </form>
-    </div>
     </div>
   );
 };

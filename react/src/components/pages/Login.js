@@ -3,15 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../App.css';
 import './RegisterInfo.css';
-<<<<<<< HEAD
-// import { Button } from '../loginButton';
-// import { Link } from 'react-router-dom';
-import React from 'react';
-// import { LoginResButton } from '../loginButton';
-
-const Login = () => {
-  // create a state --> changes when input is changed, flask wtf
-=======
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -51,7 +42,6 @@ function LoginPage() {
     }
   };
 
->>>>>>> 19a476046c7f752feb168fc7b25a485cca932e0f
   return (
     <div className="login-container">
       <div className="register-container-login">

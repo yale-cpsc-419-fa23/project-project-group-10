@@ -48,13 +48,6 @@ function App() {
           <Route path='/participant-homepage' element={<HomepagePar />} />
           <Route path='/participant-search' element={<ParSearch />} />
           <Route path='/participant-profile' element={<ParProfile />} />
-<<<<<<< HEAD
-          
-          <Route path='/researcher-postingDetails' element={<Test />} />
-          <Route path='/researcher-profile' element={<ResProfile />} />
-=======
-
->>>>>>> 19a476046c7f752feb168fc7b25a485cca932e0f
           <Route path='/researcher-homepage' element={<HomepageRes />} />
           <Route path='/researcher-post-form' element={<Posting />} />
         </Routes>
