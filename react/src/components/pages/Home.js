@@ -42,7 +42,7 @@ function Home() {
         buttonStyle='btn--outline'
         buttonSize='btn--large'
       >
-        <Link to='/log-in'></Link>
+        <Link to='/login'></Link>
         Login
       </Button>
       <Button2

@@ -32,6 +32,7 @@ const Researcher = () => {
           <input required class="input-box" name="confirmation" type="text" id="confirmation"></input>
         </div>
 
+      <br></br>
       <h1>Enter your information</h1>
         <div class="form-group">
           <label class="label">Are you associated with a lab? If so, please provide a link to your lab website: </label>

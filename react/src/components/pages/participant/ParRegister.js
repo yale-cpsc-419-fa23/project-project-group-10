@@ -3,8 +3,12 @@ import '../RegisterInfo.css';
 
 const Participant = () => {
   return (
+<<<<<<< HEAD
     <div class="buffer">
     <div className="register-container">
+=======
+    <div className="register-container-buffer">
+>>>>>>> 19a476046c7f752feb168fc7b25a485cca932e0f
       <h1>Please Register an Account</h1>
       <form action="/register-participant" method="POST">
       <div class="form-container">
@@ -32,6 +36,7 @@ const Participant = () => {
           <input required class="input-box" name="confirmation" type="text" id="confirmation"></input>
         </div>
 
+      <br></br>
       <h1>Enter your information</h1>
       <p>These questions are completely optional. Your answers will help us match you with trials.</p>
         <div class="form-group">
@@ -49,7 +54,7 @@ const Participant = () => {
         </div>
         <div class="form-group">
             <label class="label">Do you drink?</label>
-            <select name="sex">
+            <select name="drink" id="drink">
                 <option disabled selected value="">Select</option>
                 <option value="male">Yes</option>
                 <option value="female">No</option>
@@ -57,7 +62,7 @@ const Participant = () => {
         </div>
         <div class="form-group">
             <label class="label">Do you smoke?</label>
-            <select name="smoke">
+            <select name="smoke" id="smoke">
                 <option disabled selected value="">Select</option>
                 <option value="male">Yes</option>
                 <option value="female">No</option>

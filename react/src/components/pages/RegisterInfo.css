@@ -11,6 +11,19 @@
     margin: 0 auto;
     padding: 20px;
   }
+
+  .register-container-login{
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 100px; 
+  }
+
+  .register-container-buffer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 40px;
+  }
   
   h1 {
     font-size: 24px;
@@ -39,7 +52,7 @@
     border-radius: 4px;
   }
   
-  input[type="submit"] {
+  .custom-primary {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -49,7 +62,7 @@
     transition: background-color 0.3s ease;
   }
   
-  input[type="submit"]:hover {
+  .custom-primary:hover {
     background-color: #0056b3;
   }
   
