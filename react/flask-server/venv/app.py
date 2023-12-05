@@ -2,7 +2,6 @@ from flask import Flask, request, render_template, session, redirect, url_for, j
 from flask_session import Session
 from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
-from backend.database.database import *
 import sqlite3
 
 app = Flask(__name__)
@@ -135,10 +134,9 @@ def aboutus():
     return render_template('aboutus.html')
 
 
-@app.route("/participant-search") # TODO: change url name
+@app.route("/search") # TODO: change url name
 def browser():
-    trials = feed_view()
-    return render_template('search.html', trials=trials)
+    return render_template('search.html')
 
 @app.route("/homepage")
 def homepage():
