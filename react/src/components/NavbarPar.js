@@ -28,7 +28,7 @@ function NavbarPar() {
     <>
       <nav className='navbar'>
         <div className='navbar-container'>
-          <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+          <Link to='/participant-homepage' className='navbar-logo' onClick={closeMobileMenu}>
             LABRATS: Participant
             {/* <i class='fab fa-typo3' /> */}
           </Link>

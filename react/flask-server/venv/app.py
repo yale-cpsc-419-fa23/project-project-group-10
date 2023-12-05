@@ -135,9 +135,9 @@ def fetch_data():
     
     print("This is all trials info:", server_data)
     return jsonify(server_data)
-
-@app.route('/participant-search', methods=['POST'])
-def fetch_data():
+# 
+# @app.route('/participant-search', methods=['POST'])
+# def fetch_data():
 
 @app.route("/profile")
 def user_profile():
