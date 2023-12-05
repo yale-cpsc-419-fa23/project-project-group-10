@@ -2,6 +2,7 @@ import React from 'react';
 import '../../../App.css';
 import '../../HeroSection.css';
 import { Link } from 'react-router-dom';
+import '../RegisterGen.css';
 
 import { searchButton } from '../../Buttons';
 // import HomeSection from HomepageRes
@@ -15,16 +16,20 @@ function HomepagePar() {
        {/* <video src='/videos/video-3.mp4' autoPlay loop muted />  */}
        <h1>WELCOME HOME</h1>
        {/* TODO: something better here */}
-       <p>something quirky here</p>
+       {/* <p>something quirky here</p> */}
        <div className='hero-btns'>
-         <searchButton
+         {/* <searchButton
            className='btns'
            buttonStyle='btn--outline'
            buttonSize='btn--large'
          >
            <Link to='/researcher-post-form'></Link>
            Sign Up for a Study! 
-         </searchButton>
+         </searchButton> */}
+         <Link
+                to='/participant-search'>
+      <button className="register-button participant">Sign up!</button>
+      </Link>
 
          {/* <Button2 */}
            {/* // className='btns' */}

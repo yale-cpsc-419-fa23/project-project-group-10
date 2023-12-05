@@ -115,15 +115,15 @@ const Posting = () => {
     const [start_date, setStartdate] = useState('');
     const [end_date, setEnddate] = useState('');
     const [description, setDescription] = useState('');
-    const [officialTitle, setOfficialTitle] = useState('');
+    const [duration, setDuration] = useState('');
     const [keyword, setKeywords] = useState('');
-    // const [age, setAge] = useState('');
+    const [compensation, setCompensation] = useState('');
     const [ageMin, setAgeMin] = useState('');
     const [ageMax, setAgeMax] = useState('');
     const [sex, setSex] = useState('');
     const [smoking, setSmoking] = useState('');
     const [drinking, setDrinking] = useState('');
-    const [additional, setAdditional] = useState('');
+    // const [additional, setAdditional] = useState('');
     const navigate = useNavigate();
 
     const PostStudy = () => {
@@ -133,7 +133,7 @@ const Posting = () => {
       start_date: start_date,
       end_date: end_date,
       description: description,
-      officialTitle: officialTitle,
+      duration: duration,
       keyword: keyword,
       ageMin: ageMin, 
       ageMax: ageMax,
@@ -216,13 +216,22 @@ const Posting = () => {
                         onChange={(e) => setDescription(e.target.value)}></input>
                     </div>
                     <div class="form-group">
-                        <label class="label" for="official_title">Official Paper Title:</label>
+                        <label class="label" for="duration">Study Trial Duration (min):</label>
                         <input required class="input-box" 
-                        name="official_title" 
+                        name="duration" 
                         type="text" 
-                        id="official_title"
-                        value={officialTitle}
-                        onChange={(e) => setOfficialTitle(e.target.value)}></input>
+                        id="duration"
+                        value={duration}
+                        onChange={(e) => setDuration(e.target.value)}></input>
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="compensation">Study Compensation:</label>
+                        <input required class="input-box" 
+                        name="compensation" 
+                        type="text" 
+                        id="compensation"
+                        value={compensation}
+                        onChange={(e) => setCompensation(e.target.value)}></input>
                     </div>
                 </div>
                 <h1>Participant Eligibility</h1>
