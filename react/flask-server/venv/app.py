@@ -135,7 +135,7 @@ def aboutus():
     return render_template('aboutus.html')
 
 
-@app.route("/participant-search")
+@app.route("/participant-search") # TODO: change url name
 def browser():
     trials = feed_view()
     return render_template('search.html', trials=trials)
