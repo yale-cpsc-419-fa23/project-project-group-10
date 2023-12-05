@@ -115,31 +115,36 @@ const Posting = () => {
     const [start_date, setStartdate] = useState('');
     const [end_date, setEnddate] = useState('');
     const [description, setDescription] = useState('');
-    const [officialTitle, setOfficialTitle] = useState('');
-    const [keyword, setKeywords] = useState('');
+    // const [duration, setDuration] = useState('');
+    const [compensation, setCompensation] = useState(''); //TODO
+    const [department, setDepartment] = useState('');
+    
+    // const [keyword, setKeywords] = useState('');
     // const [age, setAge] = useState('');
     const [ageMin, setAgeMin] = useState('');
     const [ageMax, setAgeMax] = useState('');
-    const [sex, setSex] = useState('');
+    const [selectedSex, setSelectedSex] = useState('');
     const [smoking, setSmoking] = useState('');
     const [drinking, setDrinking] = useState('');
-    const [additional, setAdditional] = useState('');
+    const [duration, setDuration] = useState('');
     const navigate = useNavigate();
 
     const PostStudy = () => {
-      axios.post('http://127.0.0.1:5000/researcher-posting', {
+      axios.post('http://127.0.0.1:3000/researcher-post-form', {
       title: title,
       location: location,
       start_date: start_date,
       end_date: end_date,
       description: description,
-      officialTitle: officialTitle,
-      keyword: keyword,
+      // officialTitle: officialTitle,
+      compensation: compensation,
+      department: department,
       ageMin: ageMin, 
       ageMax: ageMax,
-      sex: sex,
+      sex: selectedSex,
       smoking: smoking, 
       drinking: drinking, 
+      duration: duration,
       // additional: additional, 
 
     })
@@ -182,6 +187,16 @@ const Posting = () => {
                         ></input>
                     </div>
                     <div class="form-group">
+                      <label class="label" for="location">Department:</label>
+                      <input required class="department" 
+                      name="department" 
+                      type="text" 
+                      id="department"
+                      value={department}
+                      onChange={(e) => setDepartment(e.target.value)}></input>
+                    </div>
+                  <div class="form-group"></div>
+                    <div class="form-group">
                         <label class="label" for="location">Location(s):</label>
                         <input required class="input-box" 
                         name="locations" 
@@ -216,13 +231,22 @@ const Posting = () => {
                         onChange={(e) => setDescription(e.target.value)}></input>
                     </div>
                     <div class="form-group">
-                        <label class="label" for="official_title">Official Paper Title:</label>
+                      <label class="label" for="compensation">Compensation:</label>
+                      <input required class="compensation" 
+                      name="compensation" 
+                      type="text" 
+                      id="compensation"
+                      value={department}
+                      onChange={(e) => setCompensation(e.target.value)}></input>
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="duration">Study Duration (minutes):</label>
                         <input required class="input-box" 
-                        name="official_title" 
+                        name="duration" 
                         type="text" 
-                        id="official_title"
-                        value={officialTitle}
-                        onChange={(e) => setOfficialTitle(e.target.value)}></input>
+                        id="duration"
+                        value={duration}
+                        onChange={(e) => setDuration(e.target.value)}></input>
                     </div>
                 </div>
                 <h1>Participant Eligibility</h1>
