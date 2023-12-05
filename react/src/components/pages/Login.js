@@ -24,9 +24,9 @@ function LoginPage() {
         const userInfo = response.data.user_info; // Assuming the response has 'user_info'
 
         // Check the user role obtained from the response
-        if (userInfo.role === 1) {
+        if (userInfo.role === 0) {
           navigate("/researcher-homepage");
-        } else if (userInfo.role === 0) {
+        } else if (userInfo.role === 1) {
           navigate("/participant-homepage");
         } else {
           // Handle other roles or unexpected scenarios

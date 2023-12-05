@@ -18,18 +18,18 @@ function HomepagePar() {
        {/* TODO: something better here */}
        {/* <p>something quirky here</p> */}
        <div className='hero-btns'>
-         {/* <searchButton */}
-          {/* //  className='btns' */}
-          {/* //  buttonStyle='btn--outline' */}
-          {/* //  buttonSize='btn--large' */}
-        {/* //  > */}
-           {/* <Link to='/researcher-post-form'></Link> */}
-           {/* Sign Up for a Study!  */}
-         {/* </searchButton> */}
+         {/* <searchButton
+           className='btns'
+           buttonStyle='btn--outline'
+           buttonSize='btn--large'
+         >
+           <Link to='/researcher-post-form'></Link>
+           Sign Up for a Study! 
+         </searchButton> */}
          <Link
-            to='/participant-search'>
-        <button className="register-button participant">Sign Up For a Study!</button>
-        </Link>
+                to='/participant-search'>
+      <button className="register-button participant">Sign up!</button>
+      </Link>
 
          {/* <Button2 */}
            {/* // className='btns' */}

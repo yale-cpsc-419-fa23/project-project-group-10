@@ -42,7 +42,6 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          {/* FIX THIS TO BE PAR AND REG */}
           <Route path='/register-participant' element={<Participant />} />
           <Route path='/register-research' element={<Researcher />} />
 
