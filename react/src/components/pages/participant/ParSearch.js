@@ -77,6 +77,7 @@ const Widget = ({ data, onClick }) => {
     const [selectedSex, setSelectedSex] = useState('Sex');
   
     // TODO: GET SERVER DATA BACK
+    // send data here
     const serverData = [
       { id: 1, title: 'Item 1', description: 'Description 1', details: 'Details 1' },
       { id: 2, title: 'Item 2', description: 'Description 2', details: 'Details 2' },
