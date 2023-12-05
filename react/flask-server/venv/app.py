@@ -2,7 +2,6 @@ from flask import Flask, request, render_template, session, redirect, url_for, j
 from flask_session import Session
 from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
-from database.database import *
 import sqlite3
 
 app = Flask(__name__)
@@ -135,10 +134,9 @@ def aboutus():
     return render_template('aboutus.html')
 
 
-@app.route("/participant-search")
+@app.route("/search") # TODO: change url name
 def browser():
-    trials = feed_view()
-    return render_template('search.html', trials=trials)
+    return render_template('search.html')
 
 @app.route("/homepage")
 def homepage():
@@ -205,66 +203,6 @@ def researcherinfo():
         rows = cursor.fetchall()
         conn.commit()
         return render_template("templates/researcher_info.html", labs=rows)
-
-
-@app.route("/researcher-post-form", methods=["GET", "POST"])
-def post_form():
-    try:
-        title = request.json["title"]
-        location = request.json["location"],
-        start_date = request.json["start_date"],
-        end_date = request.json["end_date"],
-        description = request.json["description"],
-        duration = request.json["duration"],
-        compensation = request.json["compensation"],
-        department = request.json["department"],
-        age_min = request.json["ageMin"], 
-        age_max= request.json["ageMax"],
-        sex = request.json["selectedSex"],
-        smoke = request.json["smoking"], 
-        drink = request.json["drinking"], 
-
-        conn = get_db_connectionn()
-        cursor = conn.cursor()
-
-        query = "INSERT INTO trials (researcher_id, department, description, location, age_min, age_max, sex, drink, smoke) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
-        values = (user_id, department, description, location, age_min, age_max, sex, drink, smoke)
-        cursor.execute(query, values)
-        user = cursor.fetchone()
-        print(user)
-
-            
-        if user is None:
-            return jsonify({"error": "Unauthorized Access"}), 401
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    finally:
-        conn.close()
-    
-
-# 
-    # conn = sqlite3.connect('labrats.db')
-    # cursor = conn.cursor()
-    # user_id = session["user_id"]
-    # if request.method == "POST":
-        # department = request.form.get("department")
-        # description = request.form.get("trial_description")
-        # location = request.form.get("location")
-        # sex = request.form.get("sex")
-        # age_min = request.form.get("age_min")
-        # age_max = request.form.get("age_max")
-        # drink = request.form.get("drinking_habits")
-        # smoke = request.form.get("smoking_habits")
-        # diseases = request.form.get("diseases")
-        # query = "INSERT INTO trials (researcher_id, department, description, location, age_min, age_max, sex, drink, smoke, diseases) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-        # values = (user_id, department, description, location, age_min, age_max, sex, drink, smoke, diseases)
-        # cursor.execute(query, values)
-        # conn.commit()
-        # user_info = get_info(user_id)
-        # lab_info = get_lab(user_id)
-        # return render_template("templates/researcher.html", user_info=user_info, lab_info=lab_info)
-
 
 conn.commit()
 conn.close()
