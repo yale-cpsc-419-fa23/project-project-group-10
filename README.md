@@ -26,6 +26,8 @@ Responsibilities and contribution:
     <li>Designed relational database schema and implemented the database tables
     <li>Created app.py Flask application as the backend
     <li>Created temporary mock frontend HTML files to link and test back-end Flask functionality
+    <li>Functions to register new user accounts by updating the database
+    <li>Functions to query database to display trial listings, including filtered results according to user specification of age range, sex, alocohol and smoking use, etc
 </ul>
 
 # Frontend 
