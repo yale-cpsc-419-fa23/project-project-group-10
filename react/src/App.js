@@ -23,9 +23,9 @@ function App() {
 
   // Add conditions based on your specific routes
   let navbarComponent;
-  if (currentPath.startsWith('/par')) {
+  if (currentPath.startsWith('/participant')) {
     navbarComponent = <NavbarPar />;
-  } else if (currentPath.startsWith('/res')) {
+  } else if (currentPath.startsWith('/researcher')) {
     navbarComponent = <NavbarRes />;
   } else {
     navbarComponent = <NavbarGeneral />;
