@@ -23,9 +23,9 @@ function App() {
 
   // Add conditions based on your specific routes
   let navbarComponent;
-  if (currentPath.startsWith('/participant')) {
+  if (currentPath.startsWith('/par')) {
     navbarComponent = <NavbarPar />;
-  } else if (currentPath.startsWith('/ressearcher')) {
+  } else if (currentPath.startsWith('/res')) {
     navbarComponent = <NavbarRes />;
   } else {
     navbarComponent = <NavbarGeneral />;
@@ -42,7 +42,6 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          {/* FIX THIS TO BE PAR AND REG */}
           <Route path='/register-participant' element={<Participant />} />
           <Route path='/register-researcher' element={<Researcher />} />
 

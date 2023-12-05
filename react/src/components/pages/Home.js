@@ -9,7 +9,6 @@ import { Button } from '../loginButton';
 import { Button2 } from '../Buttons';
 import '../HeroSection.css';
 import { Link } from 'react-router-dom';
-import './RegisterGen.css';
 // import React, { useState, useEffect } from 'react';
 
 function Home() {
