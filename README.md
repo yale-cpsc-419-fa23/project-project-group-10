@@ -21,10 +21,18 @@ Participants are able to:
 # Backend 
 <strong>Members: Ariana Delgado and Jennifer Truong<br>
 Implemented with Python, Flask, and SQLite</strong><br>
-For backend, we created the tables for the program in order to be in scope with the information that we would expect to get from the program. After creating the database, we created the app.py file that would start up our flask program and the app routes. Once we had the frontend html files from the frontend group, we were able to link the frontend and backend aspects together in order to get the program fully running. In order to run our program, you also need to download flask and flask session. 
-
+Responsibilities and contribution:
+<ul>
+    <li>Designed relational database schema and implemented the database tables
+    <li>Created app.py Flask application as the backend
+    <li>Created temporary mock frontend HTML files to link and test back-end Flask functionality
+</ul>
 
 # Frontend 
 <strong>Members: Jessica Le and Aly Moosa<br>
 Implemented with React, JavaScript</strong><br>
-For frontend, we first created a figma file to come up with color palettes, possible website layouts, and brainstorm user experience. Through this, we were able to help the backend to think about what tables and what information we will need. We experimented and researched different frontend approaches, but decided to save complex coding and page construction for our Alpha Version and still to HTML/Pure Javascript for the MVP. We constructed the frontend pages and sent over to the backend to merge our work together. 
+<ul>
+    <li>Prior to implementation, created a Figma workflow with color palettes, possible website layouts, and user experience. This assisted backend in designing the database
+    <li>Created temporary mock frontend HTML files
+    <li>Adapted HTML files to ReactJS
+</ul>
