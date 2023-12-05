@@ -110,6 +110,8 @@ def register():
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
         hash = generate_password_hash(password)
+
+        
         if request.form.get('account_type') == 'participant':
             participant = 1        # participant
         else:

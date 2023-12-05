@@ -33,15 +33,21 @@ CREATE TABLE trials (
     sex VARCHAR(255),
     drink BOOLEAN,
     smoke BOOLEAN,
-    diseases VARCHAR(255), race VARCHAR(255), title VARCHAR(255),
+    diseases VARCHAR(255), 
+    race VARCHAR(255), 
+    title VARCHAR(255), 
+    compensation INTEGER,
+    duration INTEGER,
     FOREIGN KEY (researcher_id) REFERENCES users(id)
 );
+
 CREATE TABLE saved (
     user_id INTEGER,
     trial_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (trial_id) REFERENCES trials(id)
 );
+
 CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     firstname VARCHAR(255) NOT NULL,
