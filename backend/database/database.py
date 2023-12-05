@@ -23,5 +23,12 @@ def login_user(email, password):
             # else:
             #     return row #in app you will only get result if everything is correct
 
-    
+def get_trials(email, password):
+     with connect(_DATABASE_URL, uri=True) as connection:
+        with closing(connection.cursor()) as cursor:
 
+            query = "SELECT id, title, department FROM trials;"
+            cursor.execute(query)
+            row = cursor.fetchall()
+            print(row)
+            return row

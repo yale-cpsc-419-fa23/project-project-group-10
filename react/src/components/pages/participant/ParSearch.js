@@ -83,6 +83,7 @@ const Widget = ({ data, onClick }) => {
     const [selectedSex, setSelectedSex] = useState('Sex');
     // details_string = "Location(s): SSS, Timeline: 09/09/2023 - 10/10/24, Compensation: $10/hr, Duration: 90mins"
     // TODO: GET SERVER DATA BACK
+    // send data here
     const serverData = [
       { id: 1, title: 'Sleep Study', description: 'a study on how drinking affects your sleep', details: "Location(s): SSS, Timeline: 09/09/2023 - 10/10/24, Compensation: $10/hr, Duration: 90mins, Age Group: 0-18, Sex: Open to All, Related to Drinking",  },
       { id: 2, title: 'Computer Science Trial', description: 'Interact with our newly updated Shutter robot.', details: "Location(s): Remote, Timeline: 01/13/2022 - 11/11/24, Compensation: $5/hr, Duration: 10mins, Age Group: Open to All, Sex: Open to All",  },
