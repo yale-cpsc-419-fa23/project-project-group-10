@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, session, redirect, url_for, j
 from flask_session import Session
 from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
-from database.database import *
+from backend.database.database import *
 import sqlite3
 
 app = Flask(__name__)
