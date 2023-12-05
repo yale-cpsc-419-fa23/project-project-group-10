@@ -236,7 +236,7 @@ const Posting = () => {
                       name="compensation" 
                       type="text" 
                       id="compensation"
-                      value={department}
+                      value={compensation}
                       onChange={(e) => setCompensation(e.target.value)}></input>
                     </div>
                     <div class="form-group">

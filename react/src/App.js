@@ -25,7 +25,7 @@ function App() {
   let navbarComponent;
   if (currentPath.startsWith('/participant')) {
     navbarComponent = <NavbarPar />;
-  } else if (currentPath.startsWith('/ressearcher')) {
+  } else if (currentPath.startsWith('/researcher')) {
     navbarComponent = <NavbarRes />;
   } else {
     navbarComponent = <NavbarGeneral />;
@@ -44,7 +44,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           {/* FIX THIS TO BE PAR AND REG */}
           <Route path='/register-participant' element={<Participant />} />
-          <Route path='/register-researcher' element={<Researcher />} />
+          <Route path='/register-research' element={<Researcher />} />
 
           <Route path='/participant-homepage' element={<HomepagePar />} />
           <Route path='/participant-search' element={<ParSearch />} />
