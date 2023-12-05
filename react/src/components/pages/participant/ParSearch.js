@@ -5,7 +5,7 @@ import '../RegisterInfo.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Dropdown from 'react-bootstrap/Dropdown';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Card, Row, Col } from 'react-bootstrap'
 
 const Widget = ({ data, onClick }) => {
@@ -79,18 +79,29 @@ const Widget = ({ data, onClick }) => {
   };
   
   function ParSearch() {
+    const [serverData, setServerData] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from the Flask server when the component mounts
+    fetch('/fetch-data')  // Update the URL as needed
+      .then((response) => response.json())
+      .then((data) => setServerData(data))
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
     const [selectedAge, setSelectedAge] = useState('Age');
     const [selectedSex, setSelectedSex] = useState('Sex');
     // details_string = "Location(s): SSS, Timeline: 09/09/2023 - 10/10/24, Compensation: $10/hr, Duration: 90mins"
     // TODO: GET SERVER DATA BACK
     // send data here
-    const serverData = [
-      { id: 1, title: 'Sleep Study', description: 'a study on how drinking affects your sleep', details: "Location(s): SSS, Timeline: 09/09/2023 - 10/10/24, Compensation: $10/hr, Duration: 90mins, Age Group: 0-18, Sex: Open to All, Related to Drinking",  },
-      { id: 2, title: 'Computer Science Trial', description: 'Interact with our newly updated Shutter robot.', details: "Location(s): Remote, Timeline: 01/13/2022 - 11/11/24, Compensation: $5/hr, Duration: 10mins, Age Group: Open to All, Sex: Open to All",  },
+    // const serverData = [
+    //   { id: 1, title: 'Sleep Study', description: 'a study on how drinking affects your sleep', details: "Location(s): SSS, Timeline: 09/09/2023 - 10/10/24, Compensation: $10/hr, Duration: 90mins, Age Group: 0-18, Sex: Open to All, Related to Drinking",  },
+    //   { id: 2, title: 'Computer Science Trial', description: 'Interact with our newly updated Shutter robot.', details: "Location(s): Remote, Timeline: 01/13/2022 - 11/11/24, Compensation: $5/hr, Duration: 10mins, Age Group: Open to All, Sex: Open to All",  },
       
-      // { id: 2, title: 'Item 2', description: 'Description 2', details: 'Details 2' },
-      // Add more items as needed
-    ];
+    //   // { id: 2, title: 'Item 2', description: 'Description 2', details: 'Details 2' },
+    //   // Add more items as needed
+    // ];
     
   
     const handleAgeSelect = (eventKey) => {

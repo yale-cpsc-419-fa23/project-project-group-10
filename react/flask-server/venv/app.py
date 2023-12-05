@@ -96,7 +96,6 @@ def login_user():
         cursor.execute(query, (email,))
         user = cursor.fetchone()
 
-        print(user)
     
         if user is None:
             return jsonify({"error": "Unauthorized Access"}), 401
@@ -123,6 +122,22 @@ def logout():
     session.clear()
     return redirect("/")
 
+@app.route('/fetch-data', methods=['GET'])
+def fetch_data():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM trials"
+    cursor.execute(query)
+    columns = [column[0] for column in cursor.description]
+
+    # Convert each row to a dictionary
+    server_data = [dict(zip(columns, row)) for row in cursor.fetchall()]
+    
+    print("This is all trials info:", server_data)
+    return jsonify(server_data)
+
+@app.route('/participant-search', methods=['POST'])
+def fetch_data():
 
 @app.route("/profile")
 def user_profile():
@@ -167,7 +182,7 @@ def register():
 
         # Session id / cookies with user's id
         user_id = cursor.execute("SELECT id FROM users WHERE email = ?", (email, ))
-        # session["user_id"] = user_id
+        session["user_id"] = user_id 
 
         # Redirect to participant information page
         selected_option = request.form.get('account_type')
@@ -221,11 +236,10 @@ def post_form():
         smoke = request.json["smoking"], 
         drink = request.json["drinking"], 
 
-        conn = get_db_connectionn()
+        conn = get_db_connection()
         cursor = conn.cursor()
-
-        query = "INSERT INTO trials (researcher_id, department, description, location, age_min, age_max, sex, drink, smoke) VALUES (?, ?, ?, ?
-        values = (user_id, department, description, location, age_min, age_max, sex, drink, smoke)
+        query = "INSERT INTO trials (department, description, location, age_min, age_max, sex, drink, smoke) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        values = (department, description, location, age_min, age_max, sex, drink, smoke)
         cursor.execute(query, values)
         user = cursor.fetchone()
         print(user)
