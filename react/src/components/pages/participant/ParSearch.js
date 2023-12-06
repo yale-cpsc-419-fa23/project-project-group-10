@@ -124,7 +124,13 @@ const Widget = ({ data, onClick }) => {
       // TODO: SEND it to server
       fetch('/participant-search', {
         method: 'POST',
-        body: formData,
+        body: JSON.stringify({
+          selectedAge: selectedAge,
+          selectedSex: selectedSex,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
         // TODO: get it back FROM server
         .then((response) => response.json()) // adjust based on your server response
