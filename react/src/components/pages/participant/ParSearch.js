@@ -30,6 +30,14 @@ const Widget = ({ data, onClick }) => {
   // Modal component
   const MyVerticallyCenteredModal = ({ data, show, onHide }) => {
     const navigate = useNavigate();
+    const handleFavorite = () => {
+      // pass in selected file
+      axios.post('http://127.0.0.1:5000/favorite', {data})
+      .then(function (response) {
+        console.log(response); 
+        navigate("/favorite");
+      })
+    };
     const handleSignup = () => {
       // pass in selected file
       axios.post('http://127.0.0.1:5000/participant-signup', {})
@@ -37,8 +45,8 @@ const Widget = ({ data, onClick }) => {
         console.log(response); 
         navigate("/participant-signup");
       
-    })
-  };
+      })
+    };
 
     return (
       <Modal show={show} onHide={onHide} size="lg" centered>
@@ -57,14 +65,11 @@ const Widget = ({ data, onClick }) => {
         {data.duration && (<p><strong>Duration:</strong> {data.duration} minutes</p>)}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={onHide}>
-            Close
-          </Button>
-          <Button variant="secondary" onClick={onHide} style={{ backgroundColor: '#4169E1' }}> 
+          <Button variant="secondary" onClick={handleFavorite}> 
           {/*  */}
             Favorite
           </Button>
-          <Button variant="secondary" onClick={handleSignup}>
+          <Button variant="secondary" onClick={handleSignup} style={{ backgroundColor: '#4169E1' }}>
             Signup
           </Button>
         </Modal.Footer>

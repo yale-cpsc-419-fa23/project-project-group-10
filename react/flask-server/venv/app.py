@@ -1,11 +1,11 @@
-from flask import Flask, request, render_template, session, redirect, url_for, jsonify
+from flask import Flask, request, render_template, session, redirect, url_for, jsonify, make_response
 from flask_session import Session
 from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+cors = CORS(app, supports_credentials=True, resources={r"/favorite": {"origins": "http://localhost:3000"}})
 
 # Connect to the SQLite database
 conn = sqlite3.connect('labrats.db')
@@ -136,6 +136,21 @@ def fetch_data():
     server_data = [dict(zip(columns, row)) for row in cursor.fetchall()]
     
     return jsonify(server_data)
+
+@app.route('/favorite')
+def favorite(trial):
+    if request.method == 'OPTIONS':
+        response = make_response()
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        return response
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = "INSERT INTO saved (user_id, trial_id) VALUES (?, ?)"
+    cursor.execute(query, (session["user_id"], trial.id))
+    return jsonify({"message": "Success"})
 
 @app.route('/participant-search', methods=['POST'])
 def participant_search():
