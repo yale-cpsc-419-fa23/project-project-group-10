@@ -95,12 +95,14 @@ def login_user():
         query = "SELECT * FROM users WHERE email = ?"
         cursor.execute(query, (email,))
         user = cursor.fetchone()
+        user_id = user["id"]
 
     
         if user is None:
             return jsonify({"error": "Unauthorized Access"}), 401
         
         if user and check_password_hash(user['password'], password):
+                session["user_id"] = user_id
                 # If the user exists and the password matches, return user info
                 return jsonify({
                     'user_info': {
@@ -176,6 +178,9 @@ def participant_search():
     # print("Search results:", server_data)
 
     # return jsonify(server_data)
+# 
+# @app.route('/participant-search', methods=['POST'])
+# def fetch_data():
 
 @app.route("/profile")
 def user_profile():

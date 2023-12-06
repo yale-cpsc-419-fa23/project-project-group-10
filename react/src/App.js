@@ -15,8 +15,10 @@ import HomepagePar from './components/pages/participant/ParHomepage';
 import Posting from './components/pages/researcher/ResPostingForm';
 import ParSearch from './components/pages/participant/ParSearch';
 import ParProfile from './components/pages/participant/ParProfile';
-import ResProfile from './components/pages/researcher/ResProfile';
-import Test from './components/pages/researcher/ResPostingDetails';
+// import ResProfile from './components/pages/researcher/ResProfile';
+// import Test from './components/pages/researcher/ResPostingDetails';
+
+
 
 function App() {
   const currentPath = window.location.pathname;
@@ -43,9 +45,10 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register-participant' element={<Participant />} />
-          <Route path='/register-researcher' element={<Researcher />} />
+          <Route path='/register-research' element={<Researcher />} />
 
           <Route path='/participant-homepage' element={<HomepagePar />} />
+          <Route path='/participant-signup' element={<HomepagePar />} />
           <Route path='/participant-search' element={<ParSearch />} />
           <Route path='/participant-profile' element={<ParProfile />} />
           <Route path='/researcher-homepage' element={<HomepageRes />} />

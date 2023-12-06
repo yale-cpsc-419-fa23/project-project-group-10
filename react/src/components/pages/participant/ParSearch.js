@@ -1,11 +1,14 @@
 // import React from 'react';
 import '../../../App.css';
+import axios from 'axios';
 import '../../HeroSection.css';
+import { useNavigate } from 'react-router-dom';
 import '../RegisterInfo.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Dropdown from 'react-bootstrap/Dropdown';
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Modal, Button, Card, Row, Col } from 'react-bootstrap'
 
 const Widget = ({ data, onClick }) => {
@@ -26,6 +29,17 @@ const Widget = ({ data, onClick }) => {
   
   // Modal component
   const MyVerticallyCenteredModal = ({ data, show, onHide }) => {
+    const navigate = useNavigate();
+    const handleSignup = () => {
+      // pass in selected file
+      axios.post('http://127.0.0.1:5000/participant-signup', {})
+      .then(function (response) {
+        console.log(response); 
+        navigate("/participant-signup");
+      
+    })
+  };
+
     return (
       <Modal show={show} onHide={onHide} size="lg" centered>
         <Modal.Header closeButton>
@@ -38,10 +52,11 @@ const Widget = ({ data, onClick }) => {
           <Button variant="secondary" onClick={onHide}>
             Close
           </Button>
-          <Button variant="secondary" onClick={onHide}>
+          <Button variant="secondary" onClick={onHide}> 
+          {/*  */}
             Favorite
           </Button>
-          <Button variant="secondary" onClick={onHide}>
+          <Button variant="secondary" onClick={handleSignup}>
             Signup
           </Button>
         </Modal.Footer>

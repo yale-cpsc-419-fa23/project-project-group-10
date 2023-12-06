@@ -34,38 +34,38 @@ const DateInput = ({ name, id }) => {
     );
   }
 
-  const AgeRangeInput = () => {
-    const [ageMin, setStartAge] = useState('');
-    const [ageMax, setEndAge] = useState('');
-  
-    const handleStartAgeChange = (event) => {
-      // Ensure only numbers are entered, and limit the input to 3 digits
-      setStartAge(event.target.value.replace(/\D/g, '').slice(0, 3));
-    };
-  
-    const handleEndAgeChange = (event) => {
-      // Ensure only numbers are entered, and limit the input to 3 digits
-      setEndAge(event.target.value.replace(/\D/g, '').slice(0, 3));
-    };
-  
-    return (
-      <div>
-        <input
-          type="text"
-          value={ageMin}
-          onChange={handleStartAgeChange}
-          style={{ width: '50px', marginRight: '10px' }}
-        />
-        <span>to</span>
-        <input
-          type="text"
-          value={ageMax}
-          onChange={handleEndAgeChange}
-          style={{ width: '50px', marginLeft: '10px' }}
-        />
-      </div>
-    );
-  };
+  // AgeRangeInput component
+// const AgeRangeInput = ({ ageRange, onAgeChange }) => {
+  // const handleStartAgeChange = (event) => {
+    // Ensure only numbers are entered, and limit the input to 3 digits
+    // const newAgeMin = event.target.value.replace(/\D/g, '').slice(0, 3);
+    // onAgeChange({ ...ageRange, ageMin: newAgeMin });
+  // };
+  // 
+  // const handleEndAgeChange = (event) => {
+    // Ensure only numbers are entered, and limit the input to 3 digits
+    // const newAgeMax = event.target.value.replace(/\D/g, '').slice(0, 3);
+    // onAgeChange({ ...ageRange, ageMax: newAgeMax });
+  // };
+// 
+  // return (
+    // <div>
+      {/* <input */}
+        // type="text"
+        // value={ageRange.ageMin}
+        // onChange={handleStartAgeChange}
+        // style={{ width: '50px', marginRight: '10px' }}
+      // />
+      {/* <span>to</span> */}
+      {/* <input */}
+        // type="text"
+        // value={ageRange.ageMax}
+        // onChange={handleEndAgeChange}
+        // style={{ width: '50px', marginLeft: '10px' }}
+      // />
+    {/* </div> */}
+  // );
+// };
 
 
   const SexCheckboxList = () => {
@@ -116,13 +116,27 @@ const Posting = () => {
     const [end_date, setEnddate] = useState('');
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
-    const [keyword, setKeywords] = useState('');
+    // const [keyword, setKeywords] = useState('');
     const [compensation, setCompensation] = useState('');
-    const [ageMin, setAgeMin] = useState('');
-    const [ageMax, setAgeMax] = useState('');
+    // const [ageMin, setAgeMin] = useState('');
+    // const [ageMax, setAgeMax] = useState('');
+    // const [ageRange, setAgeRange] = useState({ ageMin: '', ageMax: '' });
+    // 
+    // const handleAgeChange = (newAgeRange) => {
+      // setAgeRange(newAgeRange);
+    // };
+    // const formattedAgeRange = `${ageRange.ageMin}-${ageRange.ageMax}`;
+
+
     const [sex, setSex] = useState('');
     const [smoking, setSmoking] = useState('');
     const [drinking, setDrinking] = useState('');
+    const handleDrinkingChange = (e) => {
+      setDrinking(e.target.value);
+    };
+    const handleSmokingChange = (e) => {
+      setSmoking(e.target.value);
+    };
     // const [additional, setAdditional] = useState('');
     const navigate = useNavigate();
 
@@ -134,9 +148,10 @@ const Posting = () => {
       end_date: end_date,
       description: description,
       duration: duration,
-      keyword: keyword,
-      ageMin: ageMin, 
-      ageMax: ageMax,
+      // keyword: keyword,
+      // ageMin: ageMin, 
+      // ageMax: ageMax,
+      // age: formattedAgeRange,
       sex: sex,
       smoking: smoking, 
       drinking: drinking, 
@@ -145,14 +160,15 @@ const Posting = () => {
     })
     .then(function (response) {
       console.log(response);
-      const userInfo = response.data.user_info; // Assuming the response has 'user_info'
+      navigate("/researcher-homepage");
+      // const userInfo = response.data.user_info; // Assuming the response has 'user_info'
 
       // Check the user role obtained from the response
-      if (userInfo.role === 1) {
-        navigate("/researcher-homepage");
-      }  // TODO: maybe a confirmation page lowk
+      // if (userInfo.role === 1) {
+        // navigate("/researcher-homepage");
+      // }  // TODO: maybe a confirmation page lowk
         // Handle other roles or unexpected scenarios
-      alert("oh no! Something went wrong");
+      // alert("oh no! Something went wrong");
     })
     .catch(function (error) {
       console.log(error, 'error');
@@ -238,39 +254,45 @@ const Posting = () => {
                 {/* <i class="fa fa-check-square-o" style={checkIconStyle}></i> */}
                 <p>Participant can join if...</p>
                 <div class="form-container">
-                    
-                    <div class="form-group">
-                        <label class="label" for="age" >Age Group:</label>
-                        <AgeRangeInput/>
-                    </div>
-                    
+{/*                      */}
+                    {/* <div class="form-group"> */}
+                        {/* <label class="label" for="age" >Age Group:</label> */}
+                        {/* <AgeRangeInput/> */}
+                    {/* </div> */}
+{/*                      */}
 
                     <div class="small-buff">
                     <div className="form-group">
                         <label className="label">Sex:</label>
-                        <SexCheckboxList />
+                        <SexCheckboxList value={sex}/>
                     </div>
                     </div>
                 </div>
+                {/* <div class="form-group"> */}
+                {/* <label class="label" for="smoking">Is smoking relevant to your study</label> */}
+                {/* <select name="smoking" id="smoking" value="smoking"> */}
+                    {/* <option disabled selected value="">Select</option> */}
+                    {/* <option value={smoking} */}
+                    {/* // onChange={(e) => setSmoking.target.value}>Yes</option> */}
+                    {/* <option value={smoking} */}
+                    {/* // onChange={(e) => setSmoking.target.value}>No</option> */}
+                {/* </select> */}
+                {/* </div> */}
                 <div class="form-group">
-                <label class="label" for="smoking">Is smoking relevant to your study</label>
-                <select name="smoking" id="smoking" value="smoking">
-                    <option disabled selected value="">Select</option>
-                    <option value={smoking}
-                    onChange={(e) => setSmoking.target.value}>Yes</option>
-                    <option value={smoking}
-                    onChange={(e) => setSmoking.target.value}>No</option>
-                </select>
-                </div>
+            <label className="label" htmlFor="smoking" for="smokinng">Is smokinng relevant to your study</label>
+            <select name="smoking" id="smokng" value={smoking} onChange={handleDrinkingChange}>
+              <option value="" disabled>Select</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+            </div>
                 <div class="form-group">
-                <label class="label">Is drinking relevant to your study</label>
-                <select>
-                    <option disabled selected value="">Select</option>
-                    <option value={drinking}
-                    onChange={(e) => setDrinking.target.value}>Yes</option>
-                    <option value={drinking}
-                    onChange={(e) => setDrinking.target.value}>No</option>
-                </select>
+            <label className="label" htmlFor="drinking" for="drinking">Is drinking relevant to your study</label>
+            <select name="drinking" id="drinking" value={drinking} onChange={handleDrinkingChange}>
+              <option value="" disabled>Select</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
             </div>
             <div class="small_buff"></div>
             <button type="button" className="custom-primary" onClick={PostStudy} >Create Posting</button>

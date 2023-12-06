@@ -28,7 +28,7 @@ function NavbarRes() {
     <>
       <nav className='navbar'>
         <div className='navbar-container'>
-          <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+          <Link to='reseacher-homepage' className='navbar-logo' onClick={closeMobileMenu}>
             LABRATS: Researcher
             {/* <i class='fab fa-typo3' /> */}
           </Link>
