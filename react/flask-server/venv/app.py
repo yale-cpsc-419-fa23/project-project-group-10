@@ -159,46 +159,8 @@ def participant_search():
     #     # Handle exceptions appropriately
     #     print(f"Error: {str(e)}")
     #     return jsonify({"error": "Internal Server Error"}), 500
-    # print("WE GOT HERE")
-    # selected_age = request.form.get('selectedAge')
-    # selected_sex = request.form.get('selectedSex')
-    # data = request.get_json()
-    # selected_age = data.get('selectedAge')
-    # selected_sex = data.get('selectedSex')
-    # print("This is sex:", selected_sex)
-    # search_text = request.form.get('searchText')
+    
 
-    # conn = get_db_connection()
-    # cursor = conn.cursor()
-
-    # # Construct the SQL query with conditions
-    # query = "SELECT * FROM trials WHERE"
-    # conditions = []
-
-    # if selected_age != 'All Ages':
-    #     conditions.append(f"age_group = '{selected_age}'")
-
-    # if selected_sex != 'All':
-    #     conditions.append(f"sex = '{selected_sex}'")
-
-    # if search_text:
-    #     conditions.append(
-    #         f"(title LIKE '%{search_text}%' OR description LIKE '%{search_text}%')"
-    #     )
-
-    # if conditions:
-    #     query += " " + " AND ".join(conditions)
-
-    # cursor.execute(query)
-
-    # # Convert rows to dictionaries (as before)
-    # columns = [column[0] for column in cursor.description]
-    # server_data = [dict(zip(columns, row)) for row in cursor.fetchall()]
-
-    # print("Search results:", server_data)
-
-    # return jsonify(server_data)
-# 
 # @app.route('/participant-search', methods=['POST'])
 # def fetch_data():
 

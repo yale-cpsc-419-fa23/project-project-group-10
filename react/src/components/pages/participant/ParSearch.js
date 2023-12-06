@@ -17,7 +17,7 @@ const Widget = ({ data, onClick }) => {
         <Card style={{ margin: '10px' }}>
           <Card.Body>
             <Card.Title>{data.title}</Card.Title>
-            <Card.Text>{data.description}</Card.Text>
+            <Card.Text>{data.department}</Card.Text>
             <Button variant="primary" onClick={() => onClick(data)}>
               View Details
             </Button>
@@ -46,13 +46,21 @@ const Widget = ({ data, onClick }) => {
           <Modal.Title>{data.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>{data.details}</p>
+        <p><strong>Department:</strong> {data.department}</p>
+        <p><strong>Description:</strong> {data.description}</p>
+        <p><strong>Location:</strong> {data.location}</p>
+        <p><strong>Is drinking relevant?:</strong> {data.drink}</p>
+        <p><strong>Is smoking relevant?:</strong> {data.smoke}</p>
+        <p><strong>Medical History of important?:</strong> {data.diseases}</p>
+        <p><strong>Race (if relevant):</strong> {data.race}</p>
+        <p><strong>Compensation:</strong> {data.compensation}</p>
+        <p><strong>Duration:</strong> {data.duration}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={onHide}>
             Close
           </Button>
-          <Button variant="secondary" onClick={onHide}> 
+          <Button variant="secondary" onClick={onHide} style={{ backgroundColor: '#4169E1' }}> 
           {/*  */}
             Favorite
           </Button>
