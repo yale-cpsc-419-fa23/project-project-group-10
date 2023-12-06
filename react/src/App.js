@@ -17,11 +17,21 @@ import ParSearch from './components/pages/participant/ParSearch';
 import ParProfile from './components/pages/participant/ParProfile';
 // import ResProfile from './components/pages/researcher/ResProfile';
 // import Test from './components/pages/researcher/ResPostingDetails';
-
+import Calendar from './components/pages/researcher/gcal';
+import { useSession } from '@supabase/auth-helpers-react';
+import { useEffect } from 'react';
 
 
 function App() {
   const currentPath = window.location.pathname;
+  const session = useSession();
+  
+
+  // useEffect(() => {
+    // if (session && session.user) {
+      // window.location.href = 'researcher-calendar';
+    // }
+  // }, [session]);
 
   // Add conditions based on your specific routes
   let navbarComponent;
@@ -47,6 +57,7 @@ function App() {
           <Route path='/register-participant' element={<Participant />} />
           <Route path='/register-research' element={<Researcher />} />
 
+          <Route path='/researcher-calendar' element={<Calendar />} />
           <Route path='/participant-homepage' element={<HomepagePar />} />
           <Route path='/participant-signup' element={<HomepagePar />} />
           <Route path='/participant-search' element={<ParSearch />} />
