@@ -139,13 +139,33 @@ def fetch_data():
 
 @app.route('/participant-search', methods=['POST'])
 def participant_search():
-    print("WE GOT HERE")
+    # try:
+        # Get the selectedAge and selectedSex from the request data
+    data = request.json
+    selectedAge = data.get('selectedAge')
+    # selectedSex = data.get('selectedSex')
+    # print(selectedAge)
+    # print(selectedSex)
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    selectedSex = 'F'
+    query = "SELECT * FROM trials WHERE sex = ?"
+    cursor.execute(query, (selectedSex,))
+    columns = [column[0] for column in cursor.description]
+    filtered_studies = [dict(zip(columns, row)) for row in cursor.fetchall()]
+    print(filtered_studies)
+    return jsonify(filtered_studies)
+    # except Exception as e:
+    #     # Handle exceptions appropriately
+    #     print(f"Error: {str(e)}")
+    #     return jsonify({"error": "Internal Server Error"}), 500
+    # print("WE GOT HERE")
     # selected_age = request.form.get('selectedAge')
     # selected_sex = request.form.get('selectedSex')
-    data = request.get_json()
-    selected_age = data.get('selectedAge')
-    selected_sex = data.get('selectedSex')
-    print("This is sex:", selected_sex)
+    # data = request.get_json()
+    # selected_age = data.get('selectedAge')
+    # selected_sex = data.get('selectedSex')
+    # print("This is sex:", selected_sex)
     # search_text = request.form.get('searchText')
 
     # conn = get_db_connection()

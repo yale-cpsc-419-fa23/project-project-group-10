@@ -63,9 +63,9 @@ const Widget = ({ data, onClick }) => {
       </Modal>
     );
   };
-  
-  // Main component
-  const WidgetGrid = ({ serverData }) => {
+
+// Main component
+const WidgetGrid = ({ serverData, selectedAge, selectedSex }) => {
     const [modalShow, setModalShow] = useState(false);
     const [selectedData, setSelectedData] = useState(null);
   
@@ -74,10 +74,23 @@ const Widget = ({ data, onClick }) => {
       setModalShow(true);
     };
   
+    // Filter data based on selectedAge and selectedSex
+    const filteredData = serverData.filter((item) => {
+        const isAgeMatch =
+          selectedAge === "All Ages" || (item.ageGroup?.toLowerCase() || '').includes(selectedAge.toLowerCase());
+        const isSexMatch =
+          selectedSex === "All" || (item.sex?.toLowerCase() || '') === selectedSex.toLowerCase();
+      
+        return isAgeMatch && isSexMatch;
+      });
+      
+    // Check if filters are applied before rendering widgets
+    const widgetsToRender = filteredData.length > 0 ? filteredData : serverData;
+  
     return (
       <div>
         <Row>
-          {serverData.map((item) => (
+          {widgetsToRender.map((item) => (
             <Widget key={item.id} data={item} onClick={handleWidgetClick} />
           ))}
         </Row>
@@ -92,32 +105,21 @@ const Widget = ({ data, onClick }) => {
       </div>
     );
   };
-  
+
   function ParSearch() {
     const [serverData, setServerData] = useState([]);
-
-  useEffect(() => {
-    // Fetch data from the Flask server when the component mounts
-    fetch('/fetch-data')  // Update the URL as needed
-      .then((response) => response.json())
-      .then((data) => setServerData(data))
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
-    const [selectedAge, setSelectedAge] = useState('Age');
-    const [selectedSex, setSelectedSex] = useState('Sex');
-    // details_string = "Location(s): SSS, Timeline: 09/09/2023 - 10/10/24, Compensation: $10/hr, Duration: 90mins"
-    // TODO: GET SERVER DATA BACK
-    // send data here
-    // const serverData = [
-    //   { id: 1, title: 'Sleep Study', description: 'a study on how drinking affects your sleep', details: "Location(s): SSS, Timeline: 09/09/2023 - 10/10/24, Compensation: $10/hr, Duration: 90mins, Age Group: 0-18, Sex: Open to All, Related to Drinking",  },
-    //   { id: 2, title: 'Computer Science Trial', description: 'Interact with our newly updated Shutter robot.', details: "Location(s): Remote, Timeline: 01/13/2022 - 11/11/24, Compensation: $5/hr, Duration: 10mins, Age Group: Open to All, Sex: Open to All",  },
-      
-    //   // { id: 2, title: 'Item 2', description: 'Description 2', details: 'Details 2' },
-    //   // Add more items as needed
-    // ];
-    
+    const [selectedAge, setSelectedAge] = useState('All Ages');
+    const [selectedSex, setSelectedSex] = useState('All');
+  
+    useEffect(() => {
+      // Fetch data from the Flask server when the component mounts
+      fetch('/fetch-data')  // Update the URL as needed
+        .then((response) => response.json())
+        .then((data) => setServerData(data))
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
   
     const handleAgeSelect = (eventKey) => {
       setSelectedAge(eventKey);
@@ -126,83 +128,87 @@ const Widget = ({ data, onClick }) => {
     const handleSexSelect = (eventKey) => {
       setSelectedSex(eventKey);
     };
+  
     const handleSubmit = (e) => {
-      e.preventDefault();
-  
-      // Get the form data
-      const formData = new FormData(e.target);
-  
-      // Append selectedAge and selectedSex to the form data
-      formData.append('selectedAge', selectedAge);
-      formData.append('selectedSex', selectedSex);
-  
-      // TODO: SEND it to server
-      fetch('/participant-search', {
-        method: 'POST',
-        body: JSON.stringify({
-          selectedAge: selectedAge,
-          selectedSex: selectedSex,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        // TODO: get it back FROM server
-        .then((response) => response.json()) // adjust based on your server response
-        .then((data) => {
-          // Handle the response from the server
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
+        e.preventDefault();
+    
+        // Get the form data
+        const formData = new FormData(e.target);
+    
+        // Append selectedAge and selectedSex to the form data
+        formData.append('selectedAge', selectedAge);
+        formData.append('selectedSex', selectedSex);
+    
+        // Convert the form data to a JSON object
+        const formDataObject = {};
+        formData.forEach((value, key) => {
+          formDataObject[key] = value;
         });
-    };
+    
+        // Make the fetch request with the correct headers
+        fetch('/participant-search', {
+          method: 'POST',
+          body: JSON.stringify(formDataObject),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Search results:', data);
+            setServerData(data); // Update the serverData state with search results
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      };
+      
   
     return (
-      <div>
-        <div className='hero-container'>
-          <h1 className="register-title">Search for Studies</h1>
-          <form action="/participant-search" method="POST">
-            <div className="form-container">
-              <center>
-                <div className="small_buff">
-                  <div style={{ display: 'inline-block', marginRight: '10px' }}>
-                    <Dropdown onSelect={handleAgeSelect}>
-                      <Dropdown.Toggle variant="success" id="age-dropdown">
-                        {selectedAge}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item eventKey="Under 18">Under 18</Dropdown.Item>
-                        <Dropdown.Item eventKey="18+">18+</Dropdown.Item>
-                        <Dropdown.Item eventKey="All Ages">All Ages</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+        <div>
+          <div className='hero-container'>
+            <h1 className="register-title">Search for Studies</h1>
+            <form action="/participant-search" method="POST" onSubmit={handleSubmit}>
+              <div className="form-container">
+                <center>
+                  <div className="small_buff">
+                    <div style={{ display: 'inline-block', marginRight: '10px' }}>
+                      <Dropdown onSelect={handleAgeSelect}>
+                        <Dropdown.Toggle variant="success" id="age-dropdown">
+                          {selectedAge}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item eventKey="Under 18">Under 18</Dropdown.Item>
+                          <Dropdown.Item eventKey="18+">18+</Dropdown.Item>
+                          <Dropdown.Item eventKey="All Ages">All Ages</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </div>
+    
+                    <div style={{ display: 'inline-block' }}>
+                      <Dropdown onSelect={handleSexSelect}>
+                        <Dropdown.Toggle variant="success" id="sex-dropdown">
+                          {selectedSex}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item eventKey="Female">Female</Dropdown.Item>
+                          <Dropdown.Item eventKey="Male">Male</Dropdown.Item>
+                          <Dropdown.Item eventKey="All">All</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </div>
                   </div>
-  
-                  <div style={{ display: 'inline-block' }}>
-                    <Dropdown onSelect={handleSexSelect}>
-                      <Dropdown.Toggle variant="success" id="sex-dropdown">
-                        {selectedSex}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item eventKey="Female">Female</Dropdown.Item>
-                        <Dropdown.Item eventKey="Male">Male</Dropdown.Item>
-                        <Dropdown.Item eventKey="All">All</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </div>
-                </div>
-                <input className="input-box" name="search" type="text" id="search"></input>
-                <input type="submit" value="search" id="sendToServerButton"></input>
-              </center>
-            </div>
-          </form>
+                  <input className="input-box" name="search" type="text" id="search"></input>
+                  <input type="submit" value="search" id="sendToServerButton"></input>
+                </center>
+              </div>
+            </form>
+          </div>
+          <div className="grid-container">
+            <WidgetGrid serverData={serverData} selectedAge={selectedAge} selectedSex={selectedSex} />
+          </div>
         </div>
-        <div className="grid-container">
-        <WidgetGrid serverData={serverData} />
-      </div>
-      </div>
-    );
-  }
+      );
+    }
   
   export default ParSearch;
