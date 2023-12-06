@@ -49,12 +49,12 @@ const Widget = ({ data, onClick }) => {
         <p><strong>Department:</strong> {data.department}</p>
         <p><strong>Description:</strong> {data.description}</p>
         <p><strong>Location:</strong> {data.location}</p>
-        <p><strong>Is drinking relevant?:</strong> {data.drink}</p>
-        <p><strong>Is smoking relevant?:</strong> {data.smoke}</p>
-        <p><strong>Medical History of important?:</strong> {data.diseases}</p>
-        <p><strong>Race (if relevant):</strong> {data.race}</p>
-        <p><strong>Compensation:</strong> {data.compensation}</p>
-        <p><strong>Duration:</strong> {data.duration}</p>
+        {data.drink && (<p><strong>Is drinking relevant?:</strong> {data.drink}</p>)}
+        {data.smoke && (<p><strong>Is smoking relevant?:</strong> {data.smoke}</p>)}
+        {data.diseases && (<p><strong>Medical History of important?:</strong> {data.diseases}</p>)}
+        {data.race && (<p><strong>Race (if relevant):</strong> {data.race}</p>)}
+        {data.compensation && (<p><strong>Compensation: $</strong>{data.compensation}</p>)}
+        {data.duration && (<p><strong>Duration:</strong> {data.duration} minutes</p>)}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={onHide}>
