@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../RegisterInfo.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import DateTimePicker from 'react-datetime-picker';
 // import Dropdown from 'react-bootstrap/Dropdown';
 
 
@@ -28,6 +29,7 @@ function Posting() {
     const [race1, setRace] = useState('');
     const [sex, setSelectedSex] = useState([]);
     const [race, setSelectedRace] = useState([]);
+    const [dateTimeInputs, setDateTimeInputs] = useState([]);
 
     useEffect(() => {
       // Retrieve token from local storage
@@ -83,32 +85,37 @@ function Posting() {
       return (
         <div>
           <label for="black">
-                <input type="checkbox" id="black" name="black" value="black"/>
+                <input type="checkbox" id="black" name="black" value="black" 
+                onChange={() => handleCheckboxChange('Black or African American')}/>
                 Black or African American
             </label>
             <br></br>
 
             <label for="asian">
-                <input type="checkbox" id="asian" name="asian" value="asian"/>
+                <input type="checkbox" id="asian" name="asian" value="asian"
+                onChange={() => handleCheckboxChange('Asian')}/>
                 Asian
             </label>
             <br></br>
 
 
             <label for="white">
-                <input type="checkbox" id="white" name="white" value="white"/>
+                <input type="checkbox" id="white" name="white" value="white"
+                onChange={() => handleCheckboxChange('White')}/>
                 White
             </label>
             <br></br>
 
             <label for="native">
-                <input type="checkbox" id="native" name="native" value="native"/>
+                <input type="checkbox" id="native" name="native" value="native"
+                onChange={() => handleCheckboxChange('American Indian or Alaskan Native')}/>
                 American Indian or Alaskan Native
             </label>
             <br></br>
 
             <label for="islander">
-                <input type="checkbox" id="islander" name="islander" value="islander"/>
+                <input type="checkbox" id="islander" name="islander" value="islander"
+                onChange={() => handleCheckboxChange('Native Hawaiian or Other Pacific Islander')}/>
                 Native Hawaiian or Other Pacific Islander 
             </label>
             
@@ -118,24 +125,99 @@ function Posting() {
     };
     const navigate = useNavigate();
 
+    const DateTimeInput = () => {
+      const [dateTimeInputs, setDateTimeInputs] = useState([{ date: '', time: '', ampm: 'AM' }]);
+    
+      const handleAddInput = () => {
+        setDateTimeInputs([...dateTimeInputs, { date: '', time: '', ampm: 'AM' }]);
+      };
+    
+      const handleInputChange = (index, field, value) => {
+        const newInputs = [...dateTimeInputs];
+    
+        if (field === 'date') {
+          // Remove non-numeric characters
+          const numericValue = value.replace(/\D/g, '');
+    
+          // Format the date as MM/DD/YYYY as the user types
+          if (numericValue.length <= 2) {
+            newInputs[index][field] = numericValue;
+          } else if (numericValue.length <= 4) {
+            newInputs[index][field] = numericValue.slice(0, 2) + '/' + numericValue.slice(2);
+          } else {
+            newInputs[index][field] = numericValue.slice(0, 2) + '/' + numericValue.slice(2, 4) + '/' + numericValue.slice(4, 8);
+          }
+        } else if (field === 'time') {
+          // Remove non-numeric characters
+          const numericValue = value.replace(/\D/g, '');
+    
+          // Format the time as --:-- as the user types
+          if (numericValue.length <= 2) {
+            newInputs[index][field] = numericValue;
+          } else {
+            newInputs[index][field] = numericValue.slice(0, 2) + ':' + numericValue.slice(2);
+          }
+        } else {
+          // For other fields (ampm), directly update the value
+          newInputs[index][field] = value;
+        }
+    
+        setDateTimeInputs(newInputs);
+      };
+    
+      return (
+        <div>
+          {dateTimeInputs.map((input, index) => (
+            <div key={index}>
+              <lable>Date: </lable>
+              <input
+                type="text"
+                placeholder="MM/DD/YYYY"
+                value={input.date}
+                maxLength="10"
+                onChange={(e) => handleInputChange(index, 'date', e.target.value)}
+              />
+              <span> </span>
+              <label>Time: </label>
+              <input
+                type="text"
+                placeholder="--:--"
+                value={input.time}
+                maxLength="5"
+                onChange={(e) => handleInputChange(index, 'time', e.target.value)}
+              />
+              <select
+                value={input.ampm}
+                onChange={(e) => handleInputChange(index, 'ampm', e.target.value)}
+              >
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+              {index === dateTimeInputs.length - 1 && (
+                <button onClick={handleAddInput}>+</button>
+              )}
+            </div>
+          ))}
+        </div>
+      );
+    };
+
     const PostStudy = () => {      
       axios.post('http://127.0.0.1:5000/researchertrial', {
       title: title,
       location: location,
-      // start_date: start_date,
-      // end_date: end_date,
       description: description,
       duration: duration,
-      department: department,
       sex: sex,
-      smoke: smoke, 
-      drink: drink, 
+      smoke: smoke,
+      drink: drink,
       race: race,
       age_min: age_min,
       age_max: age_max,
       department: department,
       compensation: compensation,
-      disease: disease 
+      disease: disease,
+      dateTimeInputs: dateTimeInputs
 
 
     },
@@ -275,11 +357,17 @@ function Posting() {
             <label class="label">Race (all that apply):</label> 
             <RaceCheckboxList value={race1}/>      
             </div>
+            <div class="form-group"> 
+            <h3 style={{paddingBottom: '10px'}}>Schedule Availablity:</h3> 
+            <DateTimeInput />
+            </div>
+
             <div class="small_buff"></div>
             <button type="button" className="custom-primary" onClick={PostStudy} >Create Posting</button>
                 {/* TODO: if TIME, create a review page to view what the participant would see */}
                 </form>
             </div>
+            
         </div>
     );
   }

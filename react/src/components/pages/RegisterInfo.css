@@ -8,7 +8,7 @@
 }
 
 .register-container {
-  height: 70vh; 
+  height: 95vh; 
     max-width: 600px;
     margin: 0 auto;
     padding: 10px;
@@ -80,4 +80,30 @@
 }
 
 
-  
+  /* DateTimeInput.css */
+
+.dateTimeInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.dateTimeInputRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dateTimePicker {
+  width: 300px; /* Adjust the width as needed */
+}
+
+.addButton {
+  padding: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

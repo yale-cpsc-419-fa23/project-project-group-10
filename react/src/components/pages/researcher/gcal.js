@@ -5,7 +5,10 @@ import { SessionContextProvider, useSessionContext, useSession, useSupabaseClien
 import DateTimePicker from 'react-datetime-picker';
 import {useState} from 'react';
 import '../../HeroSection.css';
+import { useNavigate } from 'react-router-dom';
 // import './calendar.css';
+
+
 
 
 function Calendar(){
@@ -16,6 +19,7 @@ function Calendar(){
     const [end, setEnd ] = useState(new Date());
     const [eventName, setEventName ] = useState("");
     const [eventDescription, setEventDescription ] = useState("");
+    const navigate = useNavigate();
 
     
     if(isLoading) {
@@ -27,6 +31,7 @@ function Calendar(){
             provider: 'google',
             options: {
                 scopes: ['https://www.googleapis.com/auth/calendar'],
+                // redirectURI: 'https://ybxzuppnjrkiaethqqpd.supabase.co/researcher-calendar'
                 redirectURI: 'https://localhost:3000/researcher-calendar'
             }
         });
@@ -34,6 +39,11 @@ function Calendar(){
             alert("Error logging into Google provider with Supabase", error)
             console.log(error);
         }
+        else {
+            // Navigate to the desired route after successful sign-in
+            navigate('/researcher-calendar');
+          }
+        navigate('/researcher-calendar');
     }
 
     async function signOut(){

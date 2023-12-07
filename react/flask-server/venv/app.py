@@ -300,15 +300,18 @@ def trial_form():
     drink = request.json["drink"]
     disease = request.json["disease"]
     race = request.json["race"]
+    date = request.json["dateTimeInputs"]
 
+
+    date_string = ','.join(date)
     sex_string = ', '.join(sex)
     race_string = ', '.join(race)
 
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = "INSERT INTO trials (researcher_id, department, description, location, age_min, age_max, sex, drink, smoke, diseases, race, title, compensation, duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    values = (current_user_id, department, description, location, age_min, age_max, sex_string, drink, smoke, disease, race_string, title, compensation, duration)
+    query = "INSERT INTO trials (researcher_id, department, description, location, age_min, age_max, sex, drink, smoke, diseases, race, title, compensation, duration, times) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    values = (current_user_id, department, description, location, age_min, age_max, sex_string, drink, smoke, disease, race_string, title, compensation, duration, date_string)
     print(values)
     cursor.execute(query, values)
     conn.commit()  
