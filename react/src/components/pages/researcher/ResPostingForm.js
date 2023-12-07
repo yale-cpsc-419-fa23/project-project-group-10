@@ -1,5 +1,5 @@
 // import React from 'react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../RegisterInfo.css';
@@ -8,7 +8,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 // import Dropdown from 'react-bootstrap/Dropdown';
 
 
-function Posting() {    
+function Posting() {  
+    const [token, setToken] = useState('');
+  
     const [title, setTitle] = useState('');
     const [location, setLocation] = useState('');
     const [start_date, setStartdate] = useState('');
@@ -26,6 +28,14 @@ function Posting() {
     const [race1, setRace] = useState('');
     const [sex, setSelectedSex] = useState([]);
     const [race, setSelectedRace] = useState([]);
+
+    useEffect(() => {
+      // Retrieve token from local storage
+      const storedToken = localStorage.getItem('token');
+      if (storedToken) {
+        setToken(storedToken);
+      }
+    }, []);
 
     const SexCheckboxList = () => {
       const handleCheckboxChange = (sex1) => {
@@ -108,7 +118,7 @@ function Posting() {
     };
     const navigate = useNavigate();
 
-    const PostStudy = () => {
+    const PostStudy = () => {      
       axios.post('http://127.0.0.1:5000/researchertrial', {
       title: title,
       location: location,
@@ -128,6 +138,11 @@ function Posting() {
       disease: disease 
 
 
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`, // Include the token in the request header
+      },
     })
     .then(function (response) {
       console.log(response);
