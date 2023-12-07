@@ -83,4 +83,11 @@ video {
   .btn {
     width: 100%;
   }
+
+  .title {
+    font-size: 100px;
+    height: 100vh;
+
+  }
+
 }

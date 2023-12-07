@@ -179,8 +179,9 @@ const WidgetGrid = ({ serverData, selectedAge, selectedSex }) => {
   
       return (
         <div>
-          <div className='hero-container' style={{ background: '#4169E1' }}>
-            <h1 className="register-title">Search for Studies</h1>
+          <div style={{ background: '#4169E1', color: 'white' }}>
+            <h1 className="title" style={{ fontSize: '2em', margin: '0', paddingTop: '30px' , textAlign: 'center'}}
+            >Search for Studies</h1>
             <form action="/participant-search" method="POST" onSubmit={handleSubmit}>
               <div className="form-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div className="small_buff">
@@ -216,10 +217,11 @@ const WidgetGrid = ({ serverData, selectedAge, selectedSex }) => {
                 </div>
               </div>
             </form>
+            <WidgetGrid serverData={serverData} selectedAge={selectedAge} selectedSex={selectedSex} />
           </div>
     
           {/* Display the WidgetGrid directly after the search form */}
-          <WidgetGrid serverData={serverData} selectedAge={selectedAge} selectedSex={selectedSex} />
+          {/* <WidgetGrid serverData={serverData} selectedAge={selectedAge} selectedSex={selectedSex} /> */}
         </div>
       );
     }
