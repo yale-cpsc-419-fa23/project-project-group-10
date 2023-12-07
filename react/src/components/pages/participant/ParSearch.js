@@ -29,25 +29,10 @@ const Widget = ({ data, onClick }) => {
   
   // Modal component
   const MyVerticallyCenteredModal = ({ data, show, onHide }) => {
-    const [token, setToken] = useState('');
-
-    useEffect(() => {
-      // Retrieve token from local storage
-      const storedToken = localStorage.getItem('token');
-      if (storedToken) {
-        setToken(storedToken);
-      }
-    }, []);
-
     const navigate = useNavigate();
     const handleFavorite = () => {
       // pass in selected file
-      axios.post('http://127.0.0.1:5000/favorite', {data},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // Include the token in the request header
-        },
-      })
+      axios.post('http://127.0.0.1:5000/favorite', {data})
       .then(function (response) {
         console.log(response); 
         navigate("/favorite");
@@ -143,10 +128,7 @@ const WidgetGrid = ({ serverData, selectedAge, selectedSex }) => {
       // Fetch data from the Flask server when the component mounts
       fetch('/fetch-data')  // Update the URL as needed
         .then((response) => response.json())
-        .then((data) => {
-          console.log('Fetched data:', data);
-          setServerData(data);
-        })
+        .then((data) => setServerData(data))
         .catch((error) => {
           console.error('Error fetching data:', error);
         });

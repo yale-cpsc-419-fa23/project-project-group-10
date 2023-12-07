@@ -133,7 +133,9 @@ def logout():
     return redirect("/")
 
 @app.route('/fetch-data', methods=['GET'])
+@jwt_required(optional=True)
 def fetch_data():
+    print('hello')
     conn = get_db_connection()
     cursor = conn.cursor()
     query = "SELECT * FROM trials"
@@ -167,11 +169,11 @@ def favorite():
 
 
 @app.route('/participant-search', methods=['POST'])
-#@jwt_required() 
 def participant_search():
     # try:
         # Get the selectedAge and selectedSex from the request data
     #current_user_id = get_jwt_identity()
+    print("goodbye")
 
     data = request.json
     selectedAge = data.get('selectedAge')
