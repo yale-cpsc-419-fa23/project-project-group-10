@@ -49,7 +49,7 @@ const Widget = ({ data, onClick }) => {
         })
       .then(function (response) {
         console.log(response); 
-        navigate("/favorite");
+        navigate("/participant-profile");
       })
     };
     const handleSignup = () => {
