@@ -165,18 +165,35 @@ def favorite():
     values = (current_user_id, trial_id)
     cursor.execute(query, values)
     conn.commit()
-    
     return jsonify({'message': 'Widget added to favorites successfully'})
+
+@app.route('/unfavorite', methods=['POST'])
+@jwt_required() 
+def unfavorite():
+    print('WE MADE IT TO UNFAVORITE') 
 
 @app.route('/all_favorites', methods=['POST'])
 @jwt_required() 
 def all_favorites(): 
+    current_user_id = get_jwt_identity()
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM trials JOIN saved ON trials.id = saved.trial_id WHERE saved.user_id = ?"
+    values = (current_user_id,)
+    cursor.execute(query, values)
+    columns = [column[0] for column in cursor.description]
+    server_data = [dict(zip(columns, row)) for row in cursor.fetchall()]
+    return jsonify(server_data)
+
+@app.route('/all_created', methods=['POST'])
+@jwt_required() 
+def all_created(): 
     print("we got here")
     current_user_id = get_jwt_identity()
     print("THIS IS CURR USER:", current_user_id)
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM trials JOIN saved ON trials.id = saved.trial_id WHERE saved.user_id = ?"
+    query = "SELECT * FROM trials WHERE researcher_id = ?"
     values = (current_user_id,)
     cursor.execute(query, values)
     columns = [column[0] for column in cursor.description]

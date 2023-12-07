@@ -9,6 +9,7 @@ import About from './components/pages/AboutUs';
 import Register from './components/pages/RegisterGen';
 import Participant from './components/pages/participant/ParRegister';
 import Researcher from './components/pages/researcher/ResRegister';
+import ResProfile from './components/pages/researcher/ResProfile';
 import Login from './components/pages/Login';
 import HomepageRes from './components/pages/researcher/ResHomepage';
 import HomepagePar from './components/pages/participant/ParHomepage';
@@ -62,6 +63,7 @@ function App() {
           <Route path='/participant-signup' element={<HomepagePar />} />
           <Route path='/participant-search' element={<ParSearch />} />
           <Route path='/participant-profile' element={<ParProfile />} />
+          <Route path='/researcher-profile' element={<ResProfile />} />
           <Route path='/researcher-homepage' element={<HomepageRes />} />
           <Route path='/researchertrial' element={<Posting />} />
         </Routes>

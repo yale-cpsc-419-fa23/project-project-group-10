@@ -66,6 +66,7 @@ const Widget = ({ data, onClick }) => {
         {data.race && (<p><strong>Race (if relevant):</strong> {data.race}</p>)}
         {data.compensation && (<p><strong>Compensation: $</strong>{data.compensation}</p>)}
         {data.duration && (<p><strong>Duration:</strong> {data.duration} minutes</p>)}
+        {data.times && (<p><strong>Time:</strong> {data.times} </p>)}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleUnfavorite}>
