@@ -1,6 +1,7 @@
 import React from 'react';
 import './Button.css';
 import { Link } from 'react-router-dom';
+// import './RegisterGen.css';
 
 const STYLES = ['btn--primary', 'btn--outline', 'btn--test'];
 
@@ -20,7 +21,33 @@ export const Button2 = ({
   const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
 
   return (
-    <Link to='/register' className='btn-mobile'>
+    <Link to='/register' className='register-button'>
+      <button
+        className={`btn ${checkButtonStyle} ${checkButtonSize}`}
+        onClick={onClick}
+        type={type}
+      >
+        {children}
+      </button>
+    </Link>
+  );
+};
+
+export const Button = ({
+  children,
+  type,
+  onClick,
+  buttonStyle,
+  buttonSize
+}) => {
+  const checkButtonStyle = STYLES.includes(buttonStyle)
+    ? buttonStyle
+    : STYLES[0];
+
+  const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
+
+  return (
+    <Link to='/login' className='register-button'>
       <button
         className={`btn ${checkButtonStyle} ${checkButtonSize}`}
         onClick={onClick}
@@ -47,7 +74,7 @@ export const Button3 = ({
   const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
 
   return (
-    <Link to='/researchertrial' className='btn-mobile'>
+    <Link to='/researchertrial' className='btn--medium:hover'>
       <button
         className={`btn ${checkButtonStyle} ${checkButtonSize}`}
         onClick={onClick}
@@ -61,7 +88,7 @@ export const Button3 = ({
 
 // ------------------------------------------------------------------
 // LOGIN BUTTON CHANGE
-export const Button = ({
+export const LogoutButton = ({
   children,
   type,
   onClick,
@@ -75,7 +102,7 @@ export const Button = ({
   const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
 
   return (
-    <Link to='/login' className='btn-mobile'>
+    <Link to='/login' className='btn--medium:hover'>
       <button
         className={`btn ${checkButtonStyle} ${checkButtonSize}`}
         onClick={onClick}

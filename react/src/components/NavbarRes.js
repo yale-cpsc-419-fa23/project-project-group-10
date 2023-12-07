@@ -50,8 +50,18 @@ function NavbarRes() {
                 Profile
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link
+                to='/login'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Log Out
+              </Link>
+            </li>
+            
           </ul>
-          {button && <Button buttonStyle='btn--outline'>LogOut?</Button>}
+          {/* {button && <Button buttonStyle='btn--outline'>LogOut?</Button>} */}
                   </div>
       </nav>
     </>

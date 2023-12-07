@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './Buttons';
+import { LogoutButton } from './Buttons';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
@@ -59,8 +59,17 @@ function NavbarPar() {
                 Search
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link
+                to='/login'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Log Out
+              </Link>
+            </li>
           </ul>
-          {button && <Button buttonStyle='btn--outline'>Logout?</Button>}
+          {/* {button && <LogoutButton buttonStyle='btn--outline'>Logout?</LogoutButton>} */}
                   </div>
       </nav>
     </>

@@ -9,13 +9,17 @@ import { Button3 } from '../../Buttons';
 function HomepageRes() {
     return  (
         <div>
-                   <div className='hero-container'>
+            <div className='home-container'>
            {/* TODO: change this video or none at all, just lil graphics */}
        {/* <video src='/videos/video-3.mp4' autoPlay loop muted />  */}
+       {/* <img src="../images/researchers4.jpg" alt="Example" /> */}
        <h1>WELCOME HOME</h1>
        {/* TODO: something better here */}
        <p>Your research is looking good</p>
-       <div className='hero-btns'>
+       <Link to='/researchertrial'>
+      <button className="register-button participant">Sign Up</button>
+      </Link>
+       {/* <div className='hero-btns'>
          <Button3
            className='btns'
            buttonStyle='btn--outline'
@@ -23,19 +27,19 @@ function HomepageRes() {
          >
            <Link to='/researchertrial'></Link>
            List a New Study! 
-         </Button3>
-         {/* <Button2 */}
-           {/* // className='btns' */}
-           {/* // buttonStyle='btn--primary' */}
-           {/* // buttonSize='btn--large' */}
-           {/* // onClick={console.log('hey')} */}
-       {/* //   > */}
-            {/* <Link to='/post-form'></Link> */}
-           {/* List a new study!  */}
-         {/* </Button2> */}
+         </Button3> */}
+         {/* <Button2
+           className='btns'
+           buttonStyle='btn--primary'
+           buttonSize='btn--large'
+           onClick={console.log('hey')}
+            > 
+            <Link to='/researchertrial'></Link>
+           List a new study!
+         </Button2> */}
        </div>
      </div>
-    </div>
+    // </dixv>
     );
 
 }
