@@ -11,7 +11,7 @@ import { searchButton } from '../../Buttons';
 function HomepagePar() {
     return  (
         <div>
-                   <div className='hero-container'>
+                   <div className='hero-container' style={{ background: '#4169E1' }}>
            {/* TODO: change this video or none at all, just lil graphics */}
        {/* <video src='/videos/video-3.mp4' autoPlay loop muted />  */}
        <h1>WELCOME HOME</h1>

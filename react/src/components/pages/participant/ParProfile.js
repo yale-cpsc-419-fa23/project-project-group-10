@@ -119,7 +119,7 @@ function ParProfile() {
 
     return (
         <div>
-            <div className="hero-container">
+            <div className="hero-container" style={{ background: '#4169E1' }}>
                 <h1>hey you, your favorites</h1>
 
                 {/* <p>participant dummy photo here</p> */}

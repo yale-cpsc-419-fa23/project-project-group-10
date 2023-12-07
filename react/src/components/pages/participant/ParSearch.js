@@ -177,15 +177,15 @@ const WidgetGrid = ({ serverData, selectedAge, selectedSex }) => {
       };
       
   
-    return (
+      return (
         <div>
-          <div className='hero-container'>
+          <div className='hero-container' style={{ background: '#4169E1' }}>
             <h1 className="register-title">Search for Studies</h1>
             <form action="/participant-search" method="POST" onSubmit={handleSubmit}>
-              <div className="form-container">
-                <center>
-                  <div className="small_buff">
-                    <div style={{ display: 'inline-block', marginRight: '10px' }}>
+              <div className="form-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="small_buff">
+                  <div style={{ display: 'flex', marginRight: '10px' }}>
+                    <div style={{ marginRight: '10px' }}>
                       <Dropdown onSelect={handleAgeSelect}>
                         <Dropdown.Toggle variant="success" id="age-dropdown">
                           {selectedAge}
@@ -198,7 +198,7 @@ const WidgetGrid = ({ serverData, selectedAge, selectedSex }) => {
                       </Dropdown>
                     </div>
     
-                    <div style={{ display: 'inline-block' }}>
+                    <div>
                       <Dropdown onSelect={handleSexSelect}>
                         <Dropdown.Toggle variant="success" id="sex-dropdown">
                           {selectedSex}
@@ -213,15 +213,16 @@ const WidgetGrid = ({ serverData, selectedAge, selectedSex }) => {
                   </div>
                   <input className="input-box" name="search" type="text" id="search"></input>
                   <input type="submit" value="search" id="sendToServerButton"></input>
-                </center>
+                </div>
               </div>
             </form>
           </div>
-          <div className="grid-container">
-            <WidgetGrid serverData={serverData} selectedAge={selectedAge} selectedSex={selectedSex} />
-          </div>
+    
+          {/* Display the WidgetGrid directly after the search form */}
+          <WidgetGrid serverData={serverData} selectedAge={selectedAge} selectedSex={selectedSex} />
         </div>
       );
     }
+    
   
   export default ParSearch;
