@@ -22,8 +22,6 @@ function LoginPage() {
       .then(function (response) {
         console.log(response);
         const userInfo = response.data.user_info; // Assuming the response has 'user_info'
-        localStorage.setItem('token', response.data.access_token);
-
 
         // Check the user role obtained from the response
         const refreshQueryParam = `?refresh=${Date.now()}`;
