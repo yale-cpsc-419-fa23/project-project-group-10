@@ -5,7 +5,7 @@ import React from 'react';
 //import Footer from '../../Footer';
 // import React from 'react';
 import '../../App.css';
-import { Button } from '../loginButton';
+import { Button } from '../Buttons';
 import { Button2 } from '../Buttons';
 import '../HeroSection.css';
 import { Link } from 'react-router-dom';
@@ -18,14 +18,17 @@ function Home() {
     <h1>WELCOME TO LABRATS</h1>
     <p>Science is waiting for you!</p>
     <div className='hero-btns'>
-      <Button
+    <Button
         className='btns'
-        buttonStyle='btn--outline'
+        buttonStyle='btn--primary'
         buttonSize='btn--large'
+        onClick={console.log('hey')}
       >
         <Link to='/login'></Link>
         Login
       </Button>
+      
+      
       <Button2
         className='btns'
         buttonStyle='btn--primary'

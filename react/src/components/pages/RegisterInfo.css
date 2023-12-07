@@ -68,7 +68,7 @@ p {
 .custom-primary:hover {
   background-color: #0056b3;
 }
-  .form-group input {
+.form-group input {
     margin-right: 20px; /* Adjust margin as needed */
 }
 
