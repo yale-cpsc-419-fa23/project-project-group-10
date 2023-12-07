@@ -1,9 +1,10 @@
 from flask import Flask, request, render_template, session, redirect, url_for, jsonify, make_response
 from flask_session import Session
-from flask_jwt_extended import JWTManager, create_access_token
+from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
+import json
 
 app = Flask(__name__)
 cors = CORS(app, supports_credentials=True)
@@ -12,10 +13,15 @@ cors = CORS(app, supports_credentials=True)
 conn = sqlite3.connect('labrats.db')
 cursor = conn.cursor()
 
-# Configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
+# # Configure session to use filesystem (instead of signed cookies)
+# app.config["SESSION_PERMANENT"] = False
+# app.config["SESSION_TYPE"] = "filesystem"
+# Session(app)
+
+# Configure your application with JWT
+app.config['JWT_SECRET_KEY'] = 'your-secret-key'  # Change this to a secure secret in production
+jwt = JWTManager(app)
+
 
 @app.route("/")
 def hello_world():
@@ -98,14 +104,15 @@ def login_user():
         user = cursor.fetchone()
         user_id = user["id"]
 
-        session["user_id"] = user_id
-
         if user is None:
             return jsonify({"error": "Unauthorized Access"}), 401
         
         if user and check_password_hash(user['password'], password):
                 # If the user exists and the password matches, return user info
+                access_token = create_access_token(identity=user['id'])
+                print(access_token)
                 return jsonify({
+                    'access_token': access_token,
                     'user_info': {
                         'id': user_id,
                         'email': user['email'],
@@ -261,7 +268,10 @@ def researcherinfo():
         return render_template("templates/researcher_info.html", labs=rows)
     
 @app.route("/researchertrial", methods=["POST"])
+@jwt_required() 
 def trial_form():
+
+    current_user_id = get_jwt_identity()
     title = request.json["title"]
     location = request.json["location"]
     description = request.json["description"]
@@ -275,20 +285,22 @@ def trial_form():
     drink = request.json["drink"]
     disease = request.json["disease"]
     race = request.json["race"]
-    user_id = session["user_id"]
+
+    sex_string = ', '.join(sex)
+    race_string = ', '.join(race)
+
 
     conn = get_db_connection()
     cursor = conn.cursor()
     query = "INSERT INTO trials (researcher_id, department, description, location, age_min, age_max, sex, drink, smoke, diseases, race, title, compensation, duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    values = (user_id, department, description, location, age_min, age_max, sex, drink, smoke, disease, race, title, compensation, duration)
+    values = (current_user_id, department, description, location, age_min, age_max, sex_string, drink, smoke, disease, race_string, title, compensation, duration)
     print(values)
     cursor.execute(query, values)
-    user = cursor.fetchone()
-    print(user)
+    conn.commit()  
 
 
     return jsonify({
-        "id": user_id,
+        "id": current_user_id,
     })
 
 
