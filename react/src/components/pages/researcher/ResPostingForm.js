@@ -81,11 +81,17 @@ function Posting() {
           setSelectedRace([...race, race1]);
         }
       };
+
+      const isChecked = (value) => {
+        return race.includes(value);
+      };
+    
     
       return (
         <div>
           <label for="black">
                 <input type="checkbox" id="black" name="black" value="black" 
+                checked={isChecked('Black or African American')}
                 onChange={() => handleCheckboxChange('Black or African American')}/>
                 Black or African American
             </label>
@@ -93,6 +99,7 @@ function Posting() {
 
             <label for="asian">
                 <input type="checkbox" id="asian" name="asian" value="asian"
+                checked={isChecked('Asian')}
                 onChange={() => handleCheckboxChange('Asian')}/>
                 Asian
             </label>
@@ -101,6 +108,7 @@ function Posting() {
 
             <label for="white">
                 <input type="checkbox" id="white" name="white" value="white"
+                checked={isChecked('White')}
                 onChange={() => handleCheckboxChange('White')}/>
                 White
             </label>
@@ -108,6 +116,7 @@ function Posting() {
 
             <label for="native">
                 <input type="checkbox" id="native" name="native" value="native"
+                checked={isChecked('American Indian or Alaskan Native')}
                 onChange={() => handleCheckboxChange('American Indian or Alaskan Native')}/>
                 American Indian or Alaskan Native
             </label>
@@ -115,6 +124,7 @@ function Posting() {
 
             <label for="islander">
                 <input type="checkbox" id="islander" name="islander" value="islander"
+                checked={isChecked('Native Hawaiian or Other Pacific Islander')}
                 onChange={() => handleCheckboxChange('Native Hawaiian or Other Pacific Islander')}/>
                 Native Hawaiian or Other Pacific Islander 
             </label>
