@@ -8,6 +8,7 @@ import json
 
 app = Flask(__name__)
 cors = CORS(app, supports_credentials=True)
+CORS(app)
 
 # Connect to the SQLite database
 conn = sqlite3.connect('labrats.db')
@@ -89,6 +90,7 @@ def register_par():
 @app.route("/login", methods=["POST"])
 def login_user():
     try: 
+        session.clear()
         email = request.json["email"]
         password = request.json["password"]
 
@@ -124,8 +126,8 @@ def login_user():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    finally:
-        conn.close()
+    # finally:
+    #     conn.close()
       
 @app.route("/logout")
 def logout():
@@ -145,39 +147,67 @@ def fetch_data():
     
     return jsonify(server_data)
 
-@app.route('/favorite')
-def favorite(trial):
-    if request.method == 'OPTIONS':
-        response = make_response()
-        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        return response
+@app.route('/favorite', methods=['POST'])
+@jwt_required() 
+def favorite(): 
+    current_user_id = get_jwt_identity()
+    print(current_user_id)
 
+    data = request.json
+    trial_id = data['data']['id']
+    # print("THIS IS THE TRIAL_ID TO INSERT", trial_id)
+    # print("this is from the fave button", data)
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = "INSERT INTO saved (user_id, trial_id) VALUES (?, ?)"
-    cursor.execute(query, (session["user_id"], trial.id))
-    return jsonify({"message": "Success"})
+    # query = "INSERT "
+    return jsonify({'message': 'Widget added to favorites successfully'})
+
+    # if request.method == 'OPTIONS':
+    #     response = make_response()
+    #     response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+    #     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    #     response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+    #     return response
+
+    # conn = get_db_connection()
+    # cursor = conn.cursor()
+    # query = "INSERT INTO saved (user_id, trial_id) VALUES (?, ?)"
+    # cursor.execute(query, (session["user_id"], trial.id))
+    # return jsonify({"message": "Success"})
 
 @app.route('/participant-search', methods=['POST'])
+@jwt_required() 
 def participant_search():
     # try:
         # Get the selectedAge and selectedSex from the request data
+    current_user_id = get_jwt_identity()
+
     data = request.json
     selectedAge = data.get('selectedAge')
-    # selectedSex = data.get('selectedSex')
-    # print(selectedAge)
-    # print(selectedSex)
+    selectedSex = data.get('selectedSex')
+    print(selectedAge)
+    print(selectedSex)
     conn = get_db_connection()
     cursor = conn.cursor()
-    selectedSex = 'F'
-    query = "SELECT * FROM trials WHERE sex = ?"
-    cursor.execute(query, (selectedSex,))
-    columns = [column[0] for column in cursor.description]
-    filtered_studies = [dict(zip(columns, row)) for row in cursor.fetchall()]
-    print(filtered_studies)
-    return jsonify(filtered_studies)
+    if selectedAge == "18+":
+        query = "SELECT * FROM trials WHERE age_min >= 18 AND sex LIKE ?"
+        cursor.execute(query, (selectedSex,))
+        columns = [column[0] for column in cursor.description]
+        filtered_studies = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        return jsonify(filtered_studies)
+    if selectedAge == "Under 18":
+        query = "SELECT * FROM trials WHERE age_min < 18 AND sex LIKE ?"
+        cursor.execute(query, (selectedSex,))
+        columns = [column[0] for column in cursor.description]
+        filtered_studies = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        return jsonify(filtered_studies)
+    if selectedAge == "All Ages" and selectedSex == "All":
+        query = "SELECT * FROM trials"
+        cursor.execute(query)
+        columns = [column[0] for column in cursor.description]
+        server_data = [dict(zip(columns, row)) for row in cursor.fetchall()]   
+        return jsonify(server_data)
+
     # except Exception as e:
     #     # Handle exceptions appropriately
     #     print(f"Error: {str(e)}")
@@ -234,7 +264,7 @@ def register():
 
         # Redirect to participant information page
         selected_option = request.form.get('account_type')
-        print(selected_option)
+        # print(selected_option)
         if selected_option == 'participant':
             return redirect("/participantinfo")
         elif selected_option == 'researcher':
