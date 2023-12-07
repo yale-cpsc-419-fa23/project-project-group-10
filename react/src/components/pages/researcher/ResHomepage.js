@@ -21,7 +21,7 @@ function HomepageRes() {
            buttonStyle='btn--outline'
            buttonSize='btn--large'
          >
-           <Link to='/post-form'></Link>
+           <Link to='/researchertrial'></Link>
            List a New Study! 
          </Button3>
          {/* <Button2 */}

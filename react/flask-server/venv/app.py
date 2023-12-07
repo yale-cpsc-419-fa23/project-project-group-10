@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, session, redirect, url_for, jsonify, make_response
 from flask_session import Session
+from flask_jwt_extended import JWTManager, create_access_token
 from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
@@ -97,7 +98,8 @@ def login_user():
         user = cursor.fetchone()
         user_id = user["id"]
 
-    
+        session["user_id"] = user_id
+
         if user is None:
             return jsonify({"error": "Unauthorized Access"}), 401
         
@@ -273,7 +275,7 @@ def trial_form():
     drink = request.json["drink"]
     disease = request.json["disease"]
     race = request.json["race"]
-    user_id = 1
+    user_id = session["user_id"]
 
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -286,58 +288,9 @@ def trial_form():
 
 
     return jsonify({
-        "id": 1,
-        "email": title
+        "id": user_id,
     })
 
-
-@app.route("/researcher-post-form2", methods=["POST"])
-def post_form():
-    try:
-        title = request.json["title"]
-        location = request.json["location"],
-        description = request.json["description"],
-        duration = request.json["duration"],
-        compensation = request.json["compensation"],
-        department = request.json["department"],
-        age_min = request.json["ageMin"], 
-        age_max= request.json["ageMax"],
-        sex = request.json["selectedSex"],
-        smoke = request.json["smoking"], 
-        drink = request.json["drinking"], 
-        disease = request.json["disease"],
-        race = request.json["selectedRace"]
-
-        # user_id = session["user_id"]
-
-        return jsonify({
-            "id": 1
-        })
-
-
-
-
-        # conn = get_db_connection()
-        # cursor = conn.cursor()
-        # query = "INSERT INTO trials (reseacher_id, department, description, location, age_min, age_max, sex, drink, smoke, diease, race, title, compensation, duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-        # values = (user_id, department, description, location, age_min, age_max, sex, drink, smoke, disease, race, title, compensation, duration)
-        # cursor.execute(query, values)
-        # user = cursor.fetchone()
-        # print(user)
-
-            
-        # if user is None:
-        #     return jsonify({"error": "Unauthorized Access"}), 401
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    finally:
-        conn.close()
-
-# conn.commit()
-
-
-# conn.close()
 
 if __name__ == '__main__':
     app.run(debug=True)  # Runs the application in debug mode

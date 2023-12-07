@@ -167,7 +167,7 @@ function Posting() {
                         name="department" 
                         type="text" 
                         id="department"
-                        value={title}
+                        value={department}
                         onChange={(e) => setDepartment(e.target.value)}
                         ></input>
                     </div>
@@ -246,14 +246,14 @@ function Posting() {
                         for="age_min" 
                         id="age_min"
                         placeholder="Minimum Age"
-                        value={start_date}
+                        value={age_min}
                         onChange={(e) => setAgeMin(e.target.value)}/>
 
                         <input name="Age Maximum" 
                         for="age_max" 
                         id="age_max" 
                         placeholder="Maximum Age"
-                        value={end_date}
+                        value={age_max}
                         onChange={(e) => setAgeMax(e.target.value)}/>
                     </div>
             <div class="form-group"> 
