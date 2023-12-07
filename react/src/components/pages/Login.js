@@ -24,11 +24,16 @@ function LoginPage() {
         const userInfo = response.data.user_info; // Assuming the response has 'user_info'
 
         // Check the user role obtained from the response
+        const refreshQueryParam = `?refresh=${Date.now()}`;
         if (userInfo.role === 0) {
-          navigate("/researcher-homepage");
-        } else if (userInfo.role === 1) {
-          navigate("/participant-homepage");
-        } else {
+          navigate(`/researcher-homepage${refreshQueryParam}`);
+          window.location.reload(true);
+        } 
+        else if (userInfo.role === 1) {
+          navigate(`/participant-homepage${refreshQueryParam}`);
+          window.location.reload(true);
+        } 
+        else {
           // Handle other roles or unexpected scenarios
           alert("Unknown role, unable to redirect.");
         }
