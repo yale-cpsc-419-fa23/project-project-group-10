@@ -109,7 +109,7 @@ function Posting() {
     const navigate = useNavigate();
 
     const PostStudy = () => {
-      axios.post('http://127.0.0.1:5000/researcher-posting', {
+      axios.post('http://127.0.0.1:5000/researchertrial', {
       title: title,
       location: location,
       // start_date: start_date,

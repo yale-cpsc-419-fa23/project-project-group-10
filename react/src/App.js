@@ -63,7 +63,7 @@ function App() {
           <Route path='/participant-search' element={<ParSearch />} />
           <Route path='/participant-profile' element={<ParProfile />} />
           <Route path='/researcher-homepage' element={<HomepageRes />} />
-          <Route path='/researcher-post-form' element={<Posting />} />
+          <Route path='/researchertrial' element={<Posting />} />
         </Routes>
       </Router>
     </>

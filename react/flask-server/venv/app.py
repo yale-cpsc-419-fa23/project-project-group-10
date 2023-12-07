@@ -258,13 +258,43 @@ def researcherinfo():
         conn.commit()
         return render_template("templates/researcher_info.html", labs=rows)
     
-@app.route("/researcher-post-form", methods=["POST"])
+@app.route("/researchertrial", methods=["POST"])
+def trial_form():
+    title = request.json["title"],
+    location = request.json["location"],
+    description = request.json["description"],
+    duration = request.json["duration"],
+    compensation = request.json["compensation"],
+    department = request.json["department"],
+    age_min = request.json["ageMin"], 
+    age_max = request.json["ageMax"],
+    sex = request.json["selectedSex"],
+    smoke = request.json["smoking"], 
+    drink = request.json["drinking"], 
+    disease = request.json["disease"],
+    race = request.json["selectedRace"],
+    user_id = 1
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = "INSERT INTO trials (researcher_id, department, description, location, age_min, age_max, sex, drink, smoke, diease, race, title, compensation, duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    values = (user_id, department, description, location, age_min, age_max, sex, drink, smoke, disease, race, title, compensation, duration)
+    cursor.execute(query, values)
+    user = cursor.fetchone()
+    print(user)
+
+
+    return jsonify({
+        "id": 1,
+        "email": title
+    })
+
+
+@app.route("/researcher-post-form2", methods=["POST"])
 def post_form():
     try:
         title = request.json["title"]
         location = request.json["location"],
-        # start_date = request.json["start_date"],
-        # end_date = request.json["end_date"],
         description = request.json["description"],
         duration = request.json["duration"],
         compensation = request.json["compensation"],
@@ -277,29 +307,36 @@ def post_form():
         disease = request.json["disease"],
         race = request.json["selectedRace"]
 
-        user_id = session["user_id"]
+        # user_id = session["user_id"]
+
+        return jsonify({
+            "id": 1
+        })
 
 
 
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        query = "INSERT INTO trials (reseacher_id, department, description, location, age_min, age_max, sex, drink, smoke, diease, race, title, compensation, duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-        values = (user_id, department, description, location, age_min, age_max, sex, drink, smoke, disease, race, title, compensation, duration)
-        cursor.execute(query, values)
-        user = cursor.fetchone()
-        print(user)
+
+        # conn = get_db_connection()
+        # cursor = conn.cursor()
+        # query = "INSERT INTO trials (reseacher_id, department, description, location, age_min, age_max, sex, drink, smoke, diease, race, title, compensation, duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        # values = (user_id, department, description, location, age_min, age_max, sex, drink, smoke, disease, race, title, compensation, duration)
+        # cursor.execute(query, values)
+        # user = cursor.fetchone()
+        # print(user)
 
             
-        if user is None:
-            return jsonify({"error": "Unauthorized Access"}), 401
+        # if user is None:
+        #     return jsonify({"error": "Unauthorized Access"}), 401
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
 
-conn.commit()
-conn.close()
+# conn.commit()
+
+
+# conn.close()
 
 if __name__ == '__main__':
     app.run(debug=True)  # Runs the application in debug mode
