@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
 
 app = Flask(__name__)
-cors = CORS(app, supports_credentials=True, resources={r"/favorite": {"origins": "http://localhost:3000"}})
+cors = CORS(app, supports_credentials=True)
 
 # Connect to the SQLite database
 conn = sqlite3.connect('labrats.db')
@@ -102,11 +102,10 @@ def login_user():
             return jsonify({"error": "Unauthorized Access"}), 401
         
         if user and check_password_hash(user['password'], password):
-                session["user_id"] = user_id
                 # If the user exists and the password matches, return user info
                 return jsonify({
                     'user_info': {
-                        'id': user['id'],
+                        'id': user_id,
                         'email': user['email'],
                         'role': user['role']  # Example field indicating user type
                     }
@@ -259,13 +258,13 @@ def researcherinfo():
         conn.commit()
         return render_template("templates/researcher_info.html", labs=rows)
     
-@app.route("/researcher-post-form", methods=["GET", "POST"])
+@app.route("/researcher-post-form", methods=["POST"])
 def post_form():
     try:
         title = request.json["title"]
         location = request.json["location"],
-        start_date = request.json["start_date"],
-        end_date = request.json["end_date"],
+        # start_date = request.json["start_date"],
+        # end_date = request.json["end_date"],
         description = request.json["description"],
         duration = request.json["duration"],
         compensation = request.json["compensation"],
@@ -275,11 +274,17 @@ def post_form():
         sex = request.json["selectedSex"],
         smoke = request.json["smoking"], 
         drink = request.json["drinking"], 
+        disease = request.json["disease"],
+        race = request.json["selectedRace"]
+
+        user_id = session["user_id"]
+
+
 
         conn = get_db_connection()
         cursor = conn.cursor()
-        query = "INSERT INTO trials (department, description, location, age_min, age_max, sex, drink, smoke) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-        values = (department, description, location, age_min, age_max, sex, drink, smoke)
+        query = "INSERT INTO trials (reseacher_id, department, description, location, age_min, age_max, sex, drink, smoke, diease, race, title, compensation, duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        values = (user_id, department, description, location, age_min, age_max, sex, drink, smoke, disease, race, title, compensation, duration)
         cursor.execute(query, values)
         user = cursor.fetchone()
         print(user)
@@ -292,6 +297,7 @@ def post_form():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
+
 conn.commit()
 conn.close()
 

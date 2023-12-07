@@ -7,9 +7,10 @@
 }
 
 .register-container {
+  height: 70vh; 
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
   }
 
   .register-container-login{
@@ -36,6 +37,9 @@
   
   .form-container {
     margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 20px;
   }
   
   .label {
@@ -65,4 +69,14 @@
   .custom-primary:hover {
     background-color: #0056b3;
   }
+
+  .form-group input {
+    margin-right: 20px; /* Adjust margin as needed */
+}
+
+.form-group {
+  padding-top: 20px; /* Adjust margin as needed */
+}
+
+
   

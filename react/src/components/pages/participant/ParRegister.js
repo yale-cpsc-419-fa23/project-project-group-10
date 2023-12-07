@@ -64,7 +64,7 @@ const Participant = () => {
             </select>
         </div>
         <div class="form-group">
-            <label class="label">Do you have any diseases?</label>
+            <label class="label">Do you have any diseases or a medical history of diseases?</label>
             <input class="input-box" name="diseases" type="text" id="diseases"></input>
         </div>
       </div>
