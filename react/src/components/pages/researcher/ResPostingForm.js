@@ -17,22 +17,22 @@ function Posting() {
     const [duration, setDuration] = useState('');
     const [department, setDepartment] = useState('');
     const [compensation, setCompensation] = useState('');
-    const [ageMin, setAgeMin] = useState('');
-    const [ageMax, setAgeMax] = useState('');
-    const [smoking, setSmoking] = useState('');
-    const [sex, setSex] = useState('');
-    const [drinking, setDrinking] = useState('');
-    const [diease, setDiease] = useState('');
-    const [race, setRace] = useState('');
-    const [selectedSex, setSelectedSex] = useState([]);
-    const [selectedRace, setSelectedRace] = useState([]);
+    const [age_min, setAgeMin] = useState('');
+    const [age_max, setAgeMax] = useState('');
+    const [smoke, setSmoking] = useState('');
+    const [sex1, setSex] = useState('');
+    const [drink, setDrinking] = useState('');
+    const [disease, setDisease] = useState('');
+    const [race1, setRace] = useState('');
+    const [sex, setSelectedSex] = useState([]);
+    const [race, setSelectedRace] = useState([]);
 
     const SexCheckboxList = () => {
-      const handleCheckboxChange = (sex) => {
-        if (selectedSex.includes(sex)) {
-          setSelectedSex(selectedSex.filter(item => item !== sex));
+      const handleCheckboxChange = (sex1) => {
+        if (sex.includes(sex1)) {
+          setSelectedSex(sex.filter(item => item !== sex1));
         } else {
-          setSelectedSex([...selectedSex, sex]);
+          setSelectedSex([...sex, sex1]);
         }
       };
     
@@ -41,7 +41,7 @@ function Posting() {
           <label>
             <input
               type="checkbox"
-              checked={selectedSex.includes('Female')}
+              checked={sex.includes('Female')}
               onChange={() => handleCheckboxChange('Female')}
             />
                Female     
@@ -52,7 +52,7 @@ function Posting() {
           <label>
             <input
               type="checkbox"
-              checked={selectedSex.includes('Male')}
+              checked={sex.includes('Male')}
               onChange={() => handleCheckboxChange('Male')}
             />
                Male
@@ -62,11 +62,11 @@ function Posting() {
     };
 
     const RaceCheckboxList = () => {
-      const handleCheckboxChange = (race) => {
-        if (selectedRace.includes(race)) {
-          setSelectedRace(selectedRace.filter(item => item !== race));
+      const handleCheckboxChange = (race1) => {
+        if (race.includes(race1)) {
+          setSelectedRace(race.filter(item => item !== race1));
         } else {
-          setSelectedRace([...selectedRace, race]);
+          setSelectedRace([...race, race1]);
         }
       };
     
@@ -117,15 +117,15 @@ function Posting() {
       description: description,
       duration: duration,
       department: department,
-      sex: selectedSex,
-      smoking: smoking, 
-      drinking: drinking, 
-      race: selectedRace,
-      ageMin: ageMin,
-      ageMax: ageMax,
+      sex: sex,
+      smoke: smoke, 
+      drink: drink, 
+      race: race,
+      age_min: age_min,
+      age_max: age_max,
       department: department,
       compensation: compensation,
-      disease: diease
+      disease: disease 
 
 
     })
@@ -213,27 +213,27 @@ function Posting() {
                 {/* <i class="fa fa-check-square-o" style={checkIconStyle}></i> */}
                 <div className="form-group">
                     <label className="label">Sex (all that apply):</label>
-                    <SexCheckboxList value={sex}/>
+                    <SexCheckboxList value={sex1}/>
                 </div>
                 <div class="form-group">
-                <label className="label" htmlFor="smoking" for="smoking">Is smoking history relevant to your study?</label>
-                <select name="smoking" id="smoking" value={smoking} onChange={(e) => setSmoking(e.target.value)}>
+                <label className="label" htmlFor="smoke" for="smoke">Is smoking history relevant to your study?</label>
+                <select name="smoke" id="smoke" value={smoke} onChange={(e) => setSmoking(e.target.value)}>
                   <option value="" disabled>Select</option>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                 </select>
                 </div>
                 <div class="form-group">
-                <label className="label" htmlFor="drinking" for="drinking">Is drinking history relevant to your study?</label>
-                <select name="drinking" id="drinking" value={drinking} onChange={(e) => setDrinking(e.target.value)}>
+                <label className="label" htmlFor="drink" for="drink">Is drinking history relevant to your study?</label>
+                <select name="drink" id="drink" value={drink} onChange={(e) => setDrinking(e.target.value)}>
                   <option value="" disabled>Select</option>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                 </select>
                 </div>
                 <div class="form-group">
-                <label className="label" htmlFor="disease" for="diease">Is a medical history relevant to your study?</label>
-                <select name="dieases" id="diease" value={diease} onChange={(e) => setDiease(e.target.value)}>
+                <label className="label" htmlFor="disease" for="disease">Is a medical history relevant to your study?</label>
+                <select name="disease" id="disease" value={disease} onChange={(e) => setDisease(e.target.value)}>
                   <option value="" disabled>Select</option>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
@@ -258,7 +258,7 @@ function Posting() {
                     </div>
             <div class="form-group"> 
             <label class="label">Race (all that apply):</label> 
-            <RaceCheckboxList value={race}/>      
+            <RaceCheckboxList value={race1}/>      
             </div>
             <div class="small_buff"></div>
             <button type="button" className="custom-primary" onClick={PostStudy} >Create Posting</button>

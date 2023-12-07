@@ -260,25 +260,26 @@ def researcherinfo():
     
 @app.route("/researchertrial", methods=["POST"])
 def trial_form():
-    title = request.json["title"],
-    location = request.json["location"],
-    description = request.json["description"],
-    duration = request.json["duration"],
-    compensation = request.json["compensation"],
-    department = request.json["department"],
-    age_min = request.json["ageMin"], 
-    age_max = request.json["ageMax"],
-    sex = request.json["selectedSex"],
-    smoke = request.json["smoking"], 
-    drink = request.json["drinking"], 
-    disease = request.json["disease"],
-    race = request.json["selectedRace"],
+    title = request.json["title"]
+    location = request.json["location"]
+    description = request.json["description"]
+    duration = request.json["duration"]
+    compensation = request.json["compensation"]
+    department = request.json["department"]
+    age_min = request.json["age_min"]
+    age_max = request.json["age_max"]
+    sex = request.json["sex"]
+    smoke = request.json["smoke"]
+    drink = request.json["drink"]
+    disease = request.json["disease"]
+    race = request.json["race"]
     user_id = 1
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = "INSERT INTO trials (researcher_id, department, description, location, age_min, age_max, sex, drink, smoke, diease, race, title, compensation, duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    query = "INSERT INTO trials (researcher_id, department, description, location, age_min, age_max, sex, drink, smoke, diseases, race, title, compensation, duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     values = (user_id, department, description, location, age_min, age_max, sex, drink, smoke, disease, race, title, compensation, duration)
+    print(values)
     cursor.execute(query, values)
     user = cursor.fetchone()
     print(user)
