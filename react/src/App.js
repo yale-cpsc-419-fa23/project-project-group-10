@@ -56,7 +56,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register-participant' element={<Participant />} />
-          <Route path='/register-research' element={<Researcher />} />
+          <Route path='/register-researcher' element={<Researcher />} />
 
           <Route path='/researcher-calendar' element={<Calendar />} />
           <Route path='/participant-homepage' element={<HomepagePar />} />

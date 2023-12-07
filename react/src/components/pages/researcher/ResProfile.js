@@ -64,10 +64,7 @@ const Widget = ({ data, onClick }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleUnfavorite}>
-            Unfavorite
-          </Button>
-          <Button variant="secondary" onClick={handleSignup} style={{ backgroundColor: '#4169E1' }}>
-            Signup
+            Remove
           </Button>
         </Modal.Footer>
       </Modal>
@@ -132,13 +129,13 @@ const Widget = ({ data, onClick }) => {
     return (
       <div>
         {/* Your JSX content goes here */}
-        <div className="hero-container" style={{ background: '#4169E1' }}>
+        {/* <div className="hero-container" style={{ background: '#4169E1' }}> */}
           <h1>My Listed Trials</h1>
-          <div className="grid-container">
+          {/* <div className="grid-container"> */}
           {/* Render your components using the fetched data */}
           <WidgetGrid serverData={serverData} />
-        </div>
-        </div>
+        {/* </div> */}
+        {/* </div> */}
       </div>
     );
   }

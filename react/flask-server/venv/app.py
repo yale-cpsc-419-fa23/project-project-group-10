@@ -27,20 +27,12 @@ jwt = JWTManager(app)
 def hello_world():
     return "Hello, World!"
 
-@app.route("/signup", methods=["POST"])
-def signup():
-    email = request.json["email"]
-    password = request.json["password"]
- 
-    return jsonify({
-        "id": 1,
-        "email": email
-    })
 
 def get_db_connection():
     conn = sqlite3.connect('labrats.db')
     conn.row_factory = sqlite3.Row
     return conn
+
 
 @app.route("/register-participant", methods=["POST"])
 def register_par():
@@ -85,6 +77,11 @@ def register_par():
     finally:
         conn.close()
 
+@app.route("/participant-signup", methods=["POST"])
+def signup():
+    return jsonify({
+        "id": 1,
+    })
 
 @app.route("/login", methods=["POST"])
 def login_user():

@@ -45,7 +45,7 @@ const Widget = ({ data, onClick }) => {
       axios.post('http://127.0.0.1:5000/participant-signup', {})
       .then(function (response) {
         console.log(response); 
-        navigate("/participant-signup");
+        navigate("/participant-search");
       
       })
     };

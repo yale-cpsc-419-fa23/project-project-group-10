@@ -227,7 +227,6 @@ const WidgetGrid = ({ serverData, selectedAge, selectedSex }) => {
                       </Dropdown>
                     </div>
                   </div>
-                  <input className="input-box" name="search" type="text" id="search"></input>
                   <input type="submit" value="search" id="sendToServerButton"></input>
                 </div>
               </div>
