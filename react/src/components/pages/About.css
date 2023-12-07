@@ -1,10 +1,10 @@
 /* About.css */
 
-.about-container {
-    padding: 20px;
-    text-align: center;
 
-  }
+.about-container {
+  padding: 80px 20px 20px; /* Adjust the top padding to create more space at the top */
+  text-align: center;
+}
   
   .about-text {
     padding-bottom: 20px;

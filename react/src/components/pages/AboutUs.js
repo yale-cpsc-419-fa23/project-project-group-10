@@ -20,19 +20,19 @@ function About() {
       <div className="team-members">
         <div className="team-member">
           <div className="circle">
-            <img src="jessica_le_image_url.jpg" alt="Jessica Le" />
+            <img src="/images/jess.png" alt="Jessica Le" />
           </div>
           <h3>Jessica Le</h3>
         </div>
         <div className="team-member">
           <div className="circle">
-            <img src="jessica_le_image_url.jpg" alt="Aly Moosa" />
+            <img src="/images/aly.png" alt="Aly Moosa" />
           </div>
           <h3>Aly Moosa</h3>
         </div>
         <div className="team-member">
           <div className="circle">
-            <img src="jessica_le_image_url.jpg" alt="Jennifer Truong" />
+            <img src="/images/jennifer.png" alt="Jennifer Truong" />
           </div>
           <h3>Jennifer Truong</h3>
         </div>
