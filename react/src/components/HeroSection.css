@@ -8,11 +8,6 @@ video {
   z-index: -1;
 }
 
-body {
-  overflow: hidden;
-}
-
-
 .hero-container {
   /* background: url('/images/img-home.jpg') center center/cover no-repeat; */
   height: 100vh;
