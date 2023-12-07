@@ -168,6 +168,22 @@ def favorite():
     
     return jsonify({'message': 'Widget added to favorites successfully'})
 
+@app.route('/all_favorites', methods=['POST'])
+@jwt_required() 
+def all_favorites(): 
+    print("we got here")
+    current_user_id = get_jwt_identity()
+    print("THIS IS CURR USER:", current_user_id)
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM trials JOIN saved ON trials.id = saved.trial_id WHERE saved.user_id = ?"
+    values = (current_user_id,)
+    cursor.execute(query, values)
+    columns = [column[0] for column in cursor.description]
+    server_data = [dict(zip(columns, row)) for row in cursor.fetchall()]
+    print(server_data)
+    return jsonify(server_data)
+
 
 @app.route('/participant-search', methods=['POST'])
 def participant_search():
@@ -179,8 +195,8 @@ def participant_search():
     data = request.json
     selectedAge = data.get('selectedAge')
     selectedSex = data.get('selectedSex')
-    print(selectedAge)
-    print(selectedSex)
+    # print(selectedAge)
+    # print(selectedSex)
     conn = get_db_connection()
     cursor = conn.cursor()
     if selectedAge == "18+":
@@ -313,7 +329,7 @@ def trial_form():
     cursor = conn.cursor()
     query = "INSERT INTO trials (researcher_id, department, description, location, age_min, age_max, sex, drink, smoke, diseases, race, title, compensation, duration, times) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     values = (current_user_id, department, description, location, age_min, age_max, sex_string, drink, smoke, disease, race_string, title, compensation, duration, date_string)
-    print(values)
+    # print(values)
     cursor.execute(query, values)
     conn.commit()  
 

@@ -9,7 +9,7 @@ import '../RegisterInfo.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Dropdown from 'react-bootstrap/Dropdown';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Card, Row, Col } from 'react-bootstrap'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -109,28 +109,44 @@ const Widget = ({ data, onClick }) => {
   };
 
 
-function ParProfile() {
-
-    const serverData = [
-        { id: 1, title: 'Sleep Study - favorite', description: 'a study on how drinking affects your sleep', details: "Location(s): SSS, Timeline: 09/09/2023 - 10/10/24, Compensation: $10/hr, Duration: 90mins, Age Group: 0-18, Sex: Open to All, Related to Drinking",  },
-        { id: 2, title: 'Computer Science Trial - favorite', description: 'Interact with our newly updated Shutter robot.', details: "Location(s): Remote, Timeline: 01/13/2022 - 11/11/24, Compensation: $5/hr, Duration: 10mins, Age Group: Open to All, Sex: Open to All",  },
-      ];
-
+  function ParProfile() {
+    const [serverData, setServerData] = useState([]);
+    const [token, setToken] = useState('');
+  
+    useEffect(() => {
+      const storedToken = localStorage.getItem('token');
+      if (storedToken) {
+        setToken(storedToken);
+      }
+  
+      // Fetch data from the Flask server when the component mounts
+      axios.post('http://127.0.0.1:5000/all_favorites', {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          console.log('Fetched data:', response.data);
+          setServerData(response.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    }, [token]);
 
     return (
-        <div>
-            <div className="hero-container" style={{ background: '#4169E1' }}>
-                <h1>hey you, your favorites</h1>
-
-                {/* <p>participant dummy photo here</p> */}
-                {/* TODO: create a link buttonn to listed favorites - do a jinja thing?  */}
-                {/* <p>favorites</p>  */}
-                
-            </div>
-            <div className="grid-container">
-        <WidgetGrid serverData={serverData} />
-      </div>
+      <div>
+        {/* Your JSX content goes here */}
+        <div className="hero-container" style={{ background: '#4169E1' }}>
+          <h1>hey you, your favorites</h1>
+          <div className="grid-container">
+          {/* Render your components using the fetched data */}
+          <WidgetGrid serverData={serverData} />
         </div>
-    )
-}
+        </div>
+      </div>
+    );
+  }
+  
+
 export default ParProfile
