@@ -29,29 +29,13 @@ const Widget = ({ data, onClick }) => {
   
   // Modal component
   const MyVerticallyCenteredModal = ({ data, show, onHide }) => {
-    const [token, setToken] = useState('');
-
-    useEffect(() => {
-      // Retrieve token from local storage
-      const storedToken = localStorage.getItem('token');
-      if (storedToken) {
-        setToken(storedToken);
-      }
-    }, []);
-
     const navigate = useNavigate();
     const handleFavorite = () => {
       // pass in selected file
-      console.log(data)
-      axios.post('http://127.0.0.1:5000/favorite', {data},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // Include the token in the request header
-        },
-      })
+      axios.post('http://127.0.0.1:5000/favorite', {data})
       .then(function (response) {
         console.log(response); 
-        navigate("/participant-profile");
+        navigate("/favorite");
       })
     };
     const handleSignup = () => {
