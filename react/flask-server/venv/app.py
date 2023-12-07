@@ -156,11 +156,12 @@ def favorite():
 
     data = request.json
     trial_id = data['data']['id']
+    print(trial_id)
     # print("THIS IS THE TRIAL_ID TO INSERT", trial_id)
     # print("this is from the fave button", data)
     conn = get_db_connection()
     cursor = conn.cursor()
-    query = "INSERT INTO saved (user_id, trial_id)"
+    query = "INSERT INTO saved (user_id, trial_id) VALUES (?, ?)"
     values = (current_user_id, trial_id)
     cursor.execute(query, values)
     conn.commit()
