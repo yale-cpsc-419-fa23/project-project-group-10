@@ -12,25 +12,6 @@ import { Link } from 'react-router-dom';
 // import React, { useState, useEffect } from 'react';
 
 function Home() {
-  // const [data, setData] = useState([]);
-  // useEffect(() => {
-    // Make a GET request to your Flask backend
-    // fetch('http://localhost:3000/', {
-      // method: 'GET',
-      // headers: {
-        // 'Content-Type': 'application/json',
-        // You can include additional headers if needed, like authorization headers
-      // },
-    // })
-      // .then((response) => response.json())
-      // .then((data) => {
-        // Handle the data from the backend
-        // setData(data);
-      // })
-      // .catch((error) => {
-        // console.error('Error fetching data:', error);
-      // });
-  // }, []);
   return (
     <div className='hero-container'>
     <video src='/videos/video-3.mp4' autoPlay loop muted />

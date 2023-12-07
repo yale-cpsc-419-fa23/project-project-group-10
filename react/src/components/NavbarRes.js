@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { Button } from './Buttons';
+import { Button } from './Buttons';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
@@ -51,7 +51,7 @@ function NavbarRes() {
               </Link>
             </li>
           </ul>
-          {/* {button && <Button buttonStyle='btn--outline'>LogOut?</Button>} */}
+          {button && <Button buttonStyle='btn--outline'>LogOut?</Button>}
                   </div>
       </nav>
     </>
