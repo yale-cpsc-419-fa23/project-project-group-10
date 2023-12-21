@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .label {
+    flex: 1;
+    padding: 5px;
+    }
+
+    .input-box {
+    flex: 2;
+    padding: 5px;
+    }
+    
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      max-width: 300px;
+    }
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+</style>
+<head>
+    <title>Login/RegistrationPage</title>
+</head>
+<body>
+
+    <h1>Please Login Below</h1>
+    <p>TEST LOGIN INFO <br>
+     <strong>Email:</strong> jessica.le@yale.edu <br>
+     <strong>Password:</strong> ilovefullstack!
+    </p>
+
+    <form action="/login" method="POST" id="searchForm">
+        <div class="form-container">
+          <div class="form-group">
+            <label class="label">Email:</label>
+            <input required class="input-box" name="email" type="text" id="email" value="{{label}}">
+          </div>
+          <div class="form-group">
+            <label class="label">Password:</label>
+            <input required class="input-box" name="password" type="text" id="password" value="{{classifier}}">
+          </div>
+        </div>
+        <input type="submit" value="Enter" id="sendToServerButton">
+      </form>
+
+    <br>
+    <hr>
+    <form action="/register" method="GET">
+      <button>REGISTER AS A PARTICIPANT</button>
+    </form>
+    <hr>
+    <br>
+    
+</body>
+</html>

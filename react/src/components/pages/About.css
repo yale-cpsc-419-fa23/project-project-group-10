@@ -1,0 +1,51 @@
+/* About.css */
+
+
+.about-container {
+  padding: 80px 20px 20px; /* Adjust the top padding to create more space at the top */
+  text-align: center;
+}
+  
+  .about-text {
+    padding-bottom: 20px;
+    text-align: center;
+  }
+
+  /* .highlighted-text {
+    background-color: red;
+    padding: 5px;
+  } */
+  
+  .team-members {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .team-member {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ccc; /* Placeholder color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  
+  .circle img {
+    width: 100%; /* Ensure the image fills the container */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Fill the content within the container */
+    border-radius: 50%; /* Apply circular clipping */
+  }
+
+  .space-after-text {
+    margin-bottom: 20px; /* Adjust the margin value as needed */
+  }

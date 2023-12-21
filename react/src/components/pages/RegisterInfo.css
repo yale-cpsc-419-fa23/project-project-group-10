@@ -1,0 +1,106 @@
+.buffer {
+  margin: 350px 0;
+}
+
+.small_buff {
+  margin: 30px 0;
+}
+
+/* Adjustments for login container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.register-container {
+  width: 600px; /* Adjust width as needed */
+  margin: 0 auto;
+  padding-top: 100px;
+  height: 90vh;
+
+}
+
+.register-container-login {
+  width: 600px; /* Adjust width as needed */
+  margin: 0 auto;
+  padding-top: 100px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 20px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.label {
+  margin-bottom: 5px;
+}
+
+.input-box {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%; /* Stretch input to fill the container */
+}
+
+.custom-primary {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-primary:hover {
+  background-color: #0056b3;
+}
+.form-group input {
+    margin-right: 20px; /* Adjust margin as needed */
+}
+
+.form-group {
+  padding-top: 20px; /* Adjust margin as needed */
+}
+
+
+  /* DateTimeInput.css */
+
+.dateTimeInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.dateTimeInputRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dateTimePicker {
+  width: 300px; /* Adjust the width as needed */
+}
+
+.addButton {
+  padding: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
